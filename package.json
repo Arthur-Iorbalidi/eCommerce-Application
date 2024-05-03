@@ -9,6 +9,7 @@
     "test": "vitest",
     "lint:fix": "eslint . --ext .tsx --fix",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --color",
+    "prettier": "prettier . --write",
     "preview": "vite preview",
     "prepare": "husky",
     "lint-staged": "lint-staged"
