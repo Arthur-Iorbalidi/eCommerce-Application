@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import Accordion from './Accordion';
+import './index.scss';
+import App from './App/App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Accordion />
+    <App />
   </React.StrictMode>,
 );
