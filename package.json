@@ -12,11 +12,6 @@
     "prettier": "prettier . --write",
     "preview": "vite preview",
     "prepare": "husky",
-    "husky": {
-      "hooks": {
-        "pre-commit": "lint-staged"
-      }
-    },
     "lint-staged": "lint-staged"
   },
   "dependencies": {
