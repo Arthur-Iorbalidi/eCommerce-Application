@@ -8,7 +8,6 @@ import Main from './components/Main/main';
 import Error from './components/Error/Error';
 
 function App() {
-  const [authState, changeAuthState] = useState(false);
   return (
     <BrowserRouter>
       <Routes>
