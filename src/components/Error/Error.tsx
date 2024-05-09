@@ -24,7 +24,7 @@ function Error() {
           alt="errorImage"
           className="error-main_content-wrapper_image"
         />
-        <Link to="/main" className="react-router-dom_link">
+        <Link to="/" className="react-router-dom_link">
           <Button
             variant="outline-dark"
             className="error-main_content-wrapper_button--goMain"
