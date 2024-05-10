@@ -1,7 +1,13 @@
 import './main.scss';
 
+import Header from './components/header/header';
+
 function Main() {
-  return <div>MainPage</div>;
+  return (
+    <div className="main-page">
+      <Header />
+    </div>
+  );
 }
 
 export default Main;

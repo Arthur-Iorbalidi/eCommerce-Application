@@ -1,0 +1,28 @@
+.button {
+  font-family: 'Poppins';
+  font-weight: 600;
+  cursor: pointer;
+  padding: 5px 15px;
+  border-radius: 15px;
+  position: relative;
+  user-select: none;
+  box-shadow: 1px 1px 0.5px 0px black;
+
+  &:active {
+    top: 1px;
+    left: 1px;
+    box-shadow: 0px 0px 0px 0px black;
+  }
+}
+
+.button:hover {
+  color: white;
+}
+
+.button.green {
+  background-color: rgb(212, 255, 0);
+
+  &:hover {
+    background-color: rgba(160, 255, 0, 0.871);
+  }
+}

@@ -6,6 +6,7 @@ This platform replicates real-world shopping experiences in a digital environmen
 It includes features such as user registration and login 📝🔐, product search 🔍, product categorization, and sorting to make the shopping experience more streamlined and convenient.
 
 Users can:
+
 - browse through a vast range of products 🌐
 - view products detailed descriptions 📄
 - add favorite items to the basket 🛒
@@ -24,16 +25,17 @@ Key pages in the application include:
 - About Us page 🙋‍♂️🙋‍♀️
 
 # Using Stack
+
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)![SCSS](https://img.shields.io/badge/SCSS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white)![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white)![Prettier](https://img.shields.io/badge/prettier-%23e534eb.svg?style=for-the-badge&logo=prettier&logoColor=white)![Vite](https://img.shields.io/badge/vite-%238737cc.svg?style=for-the-badge&logo=vite&logoColor=white)![Vitest](https://img.shields.io/badge/vitest-3ea34a.svg?style=for-the-badge&logo=vitest&logoColor=white)
 
-* **React** (an open-source library for developing user interfaces)
-* **Redux** (an open-source library designed to manage the state of an application)
-* **TypeScript** (a programming language positioned as a web application development tool that extends the capabilities of JavaScript)
-* **SCSS** (CSS framework for more efficient and flexible styling)
-* **Eslint** (an open-source linting tool that helps identify and fix problems in JavaScript code)
-* **Prettier** (an opinionated code formatter)
-* **Vite** (a build tool)
-* **Vitest** (a testing tool)
+- **React** (an open-source library for developing user interfaces)
+- **Redux** (an open-source library designed to manage the state of an application)
+- **TypeScript** (a programming language positioned as a web application development tool that extends the capabilities of JavaScript)
+- **SCSS** (CSS framework for more efficient and flexible styling)
+- **Eslint** (an open-source linting tool that helps identify and fix problems in JavaScript code)
+- **Prettier** (an opinionated code formatter)
+- **Vite** (a build tool)
+- **Vitest** (a testing tool)
 
 # Getting Started with App
 
@@ -51,15 +53,18 @@ Key pages in the application include:
 In the project directory, you can run:
 
 ### `npm run dev`
+
 Runs the app in the development mode.\
 Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
 
 The page will reload if you make edits.
 
 ### `npm run build`
+
 Builds the app for production to the `dist` folder.
 
 ### `npm run preview`
+
 Runs the app in the preview mode, to view the production build locally.\
 Open [http://localhost:4173](http://localhost:4173) to view it in the browser.
 
@@ -76,11 +81,13 @@ Starts fixing the `eslint` errors in the ts/tsx files.
 Starts fixing the `prettier` errors with the `--write` flag to automatically save the formatted code.
 
 ### `npm run lint-staged`
+
 Starts the `eslint` check only for those files that have been edited and are ready for commit, which significantly speeds up the verification process.
 
 ### `npm run prepare`
-Сonfigures Husky to automatically run `npm run prettier` and `npm run lint-staged` before  each commit.
+
+Сonfigures Husky to automatically run `npm run prettier` and `npm run lint-staged` before each commit.
 
 ### `npm run test`
-Runs tests in the project to quickly check the correctness of the code.
 
+Runs tests in the project to quickly check the correctness of the code.
