@@ -3,14 +3,22 @@
   height: 60px;
   padding: 0 20px;
   box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.538);
+  font-family: 'Poppins';
   & * {
     font-family: 'Poppins';
   }
 }
 
-.main-page_header_wrapper {
+.main-page_header_wrapper-all {
   height: 100%;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-page_header_wrapper {
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,9 +27,19 @@
 .main-page_header_wrapper_logo {
   border-radius: 50%;
   overflow: hidden;
+  margin-right: 100px;
+  cursor: pointer;
 
   & img {
     width: 40px;
     height: 40px;
   }
+}
+
+.main-page_header_wrapper-all_buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.header-button {
 }

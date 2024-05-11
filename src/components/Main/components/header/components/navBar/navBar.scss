@@ -1,0 +1,30 @@
+.main-page_header_wrapper_header_nav {
+  height: 100%;
+  display: flex;
+
+  & * {
+    text-decoration: none;
+    color: black;
+  }
+}
+
+.main-page_header_wrapper_header_nav_button {
+  height: 100%;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-right: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+
+  &.active {
+    border-left-color: black;
+    border-right-color: black;
+  }
+
+  &:hover:not(.active) {
+    border-bottom-color: black;
+  }
+}

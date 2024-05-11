@@ -39,6 +39,7 @@ module.exports = {
     'linebreak-style': 0,
     'prettier/prettier': 'error',
     '@typescript-eslint/indent': ['error', 2],
+    //Отключает в линте проверку разрыва строк перед и после фигурных скобок
     'object-curly-newline': [
       'error',
       {
