@@ -1,0 +1,25 @@
+.login_form {
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 15px;
+
+  padding: 35px 40px;
+  border-radius: 15px;
+
+  h2 {
+    margin-bottom: 30px;
+  }
+
+  button {
+    align-self: center;
+    margin: 15px 0;
+  }
+
+  span {
+    padding-left: 7px;
+    text-decoration: underline;
+  }
+}
