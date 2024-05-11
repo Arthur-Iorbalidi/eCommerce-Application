@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import LoaderSvg from '../../../assets/loader.svg';
+import LoaderSvg from '../../../assets/images/loader.svg';
 
 interface LoaderProps {
   width?: number;
