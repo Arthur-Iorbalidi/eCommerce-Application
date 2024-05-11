@@ -46,5 +46,9 @@ module.exports = {
         ObjectExpression: 'never',
       },
     ],
+    'react/function-component-definition': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
+    'react/require-default-props': 'off',
   },
 };
