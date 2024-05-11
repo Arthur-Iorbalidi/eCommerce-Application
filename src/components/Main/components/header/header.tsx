@@ -13,7 +13,10 @@ function Header() {
           <img alt="logo" src={logo} />
         </div>
         <NavBar />
-        <Button value="button" color="green" />
+        <div className="main-page_header_wrapper_buttons">
+          <Button value="Sign in" color="green" />
+          <Button value="Sign up" color="green" />
+        </div>
       </div>
     </div>
   );

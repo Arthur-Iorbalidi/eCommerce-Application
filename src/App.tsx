@@ -1,6 +1,5 @@
 import './App.scss';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useState } from 'react';
 
 import Registration from './components/Registration/registration';
 import Login from './components/Login/login';

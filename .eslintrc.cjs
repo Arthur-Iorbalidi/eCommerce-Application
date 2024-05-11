@@ -1,9 +1,12 @@
 module.exports = {
   root: true,
-  env: { browser: true, es2020: true },
+  env: {
+    browser: true,
+    es2020: true,
+  },
   extends: [
     'eslint:recommended',
-    'plugin:@typescript-eslint/recommended-type-checked',
+    'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
     'prettier',
     'airbnb',
@@ -22,15 +25,25 @@ module.exports = {
     'vitest.config.ts',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
+  plugins: ['@typescript-eslint', 'react-refresh', 'prettier'],
   rules: {
     'react-refresh/only-export-components': [
       'warn',
-      { allowConstantExport: true },
+      {
+        allowConstantExport: true,
+      },
     ],
     //Исключение нужно, чтобы Airbnb не ругался на ('React' must be in scope when using JSX react/react-in-jsx-scope)
     'react/react-in-jsx-scope': 'off',
     // Чтобы не помечало разрывы строки из-за разницы в ОС
     'linebreak-style': 0,
+    'prettier/prettier': 'error',
+    '@typescript-eslint/indent': ['error', 2],
+    'object-curly-newline': [
+      'error',
+      {
+        ObjectExpression: 'never',
+      },
+    ],
   },
 };
