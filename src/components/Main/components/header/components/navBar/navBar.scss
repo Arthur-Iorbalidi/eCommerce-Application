@@ -3,6 +3,7 @@
   display: flex;
 
   & * {
+    font-size: 1.8rem;
     text-decoration: none;
     color: black;
   }
@@ -18,10 +19,19 @@
   border-right: 2px solid transparent;
   border-left: 2px solid transparent;
   border-bottom: 2px solid transparent;
+  transition:
+    border-color 0.4s,
+    background-color 0.4s;
 
   &.active {
     border-left-color: black;
     border-right-color: black;
+  }
+
+  &:hover {
+    background-color: #f2f2f2;
+    border-right-color: #b5d43c;
+    border-left-color: #b5d43c;
   }
 
   &:hover:not(.active) {
