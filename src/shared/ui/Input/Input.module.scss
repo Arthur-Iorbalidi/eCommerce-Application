@@ -1,0 +1,32 @@
+.input_group {
+  width: 100%;
+}
+
+.input {
+  min-height: 40px;
+  width: 100%;
+  padding-left: 5px;
+  outline: none;
+  border: none;
+  border-radius: 40px;
+  box-shadow: 0 4px 15px #0000001a;
+
+  &:focus {
+    box-shadow: 0 0 0 1px #d9ef81b8;
+  }
+}
+
+.input__icon,
+.input__toggle_button {
+  padding: 10px;
+  color: #9a9a9a;
+  background-color: #fff;
+  border: none;
+  border-radius: 40px;
+  box-shadow: 0 4px 15px #0000001a;
+}
+
+.error_text {
+  color: #e50404ed;
+  font-size: 0.8rem;
+}
