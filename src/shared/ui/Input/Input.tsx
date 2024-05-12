@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode, forwardRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,59 +15,64 @@ interface InputProps {
   helperText?: string;
 }
 
-const Input: FC<InputProps> = (props: InputProps) => {
-  const {
-    icon,
-    placeholder,
-    className,
-    isSecretInput = false,
-    error,
-    helperText,
-    ...otherProps
-  } = props;
+const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
+  (props, ref) => {
+    const {
+      icon,
+      placeholder,
+      className,
+      isSecretInput = false,
+      error,
+      helperText,
+      ...otherProps
+    } = props;
 
-  const [isDataVisible, setIsDataVisible] = useState(false);
+    const [isDataVisible, setIsDataVisible] = useState(false);
 
-  const handleClickShowData = () => {
-    setIsDataVisible(!isDataVisible);
-  };
+    const handleClickShowData = () => {
+      setIsDataVisible(!isDataVisible);
+    };
 
-  let controlType;
-  if (isSecretInput) {
-    if (isDataVisible) {
-      controlType = 'text';
+    let controlType;
+    if (isSecretInput) {
+      if (isDataVisible) {
+        controlType = 'text';
+      } else {
+        controlType = 'password';
+      }
     } else {
-      controlType = 'password';
+      controlType = 'text';
     }
-  } else {
-    controlType = 'text';
-  }
 
-  return (
-    <div>
-      <InputGroup className={styles.input_group}>
-        <InputGroup.Text className={styles.input__icon}>{icon}</InputGroup.Text>
-        <Form.Control
-          className={styles.input}
-          type={controlType}
-          placeholder={placeholder}
-          {...otherProps}
-        />
-        {isSecretInput && (
-          <InputGroup.Text
-            className={styles.input__toggle_button}
-            onClick={handleClickShowData}
-            role="button"
-          >
-            {isDataVisible ? <BsFillEyeFill /> : <BsFillEyeSlashFill />}
+    return (
+      <div>
+        <InputGroup className={styles.input_group}>
+          <InputGroup.Text className={styles.input__icon}>
+            {icon}
           </InputGroup.Text>
+          <Form.Control
+            ref={ref}
+            className={styles.input}
+            type={controlType}
+            placeholder={placeholder}
+            {...otherProps}
+          />
+          {isSecretInput && (
+            <InputGroup.Text
+              className={styles.input__toggle_button}
+              onClick={handleClickShowData}
+              role="button"
+            >
+              {isDataVisible ? <BsFillEyeFill /> : <BsFillEyeSlashFill />}
+            </InputGroup.Text>
+          )}
+        </InputGroup>
+        {error && (
+          <Form.Text className={styles.error_text}>{helperText}</Form.Text>
         )}
-      </InputGroup>
-      {error && (
-        <Form.Text className={styles.error_text}>{helperText}</Form.Text>
-      )}
-    </div>
-  );
-};
+      </div>
+    );
+  },
+);
 
 export default Input;
