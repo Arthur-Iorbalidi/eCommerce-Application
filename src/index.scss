@@ -5,3 +5,16 @@
   font-family: 'Poppins';
   font-size: 10px;
 }
+
+@media (max-width: 768px) {
+  html {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 390px) {
+  html {
+    font-size: 6px;
+  }
+}
+

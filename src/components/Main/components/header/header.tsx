@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import NavBar from './components/navBar/navBar';
 import Button from '../../../../shared/ui/Button/Button';
-import logo from '../../../../assets/images/MainPage/Header/logo.png';
+import logo from '../../../../assets/images/MainPage/Header/logo.svg';
 
 function Header() {
   // const currentRoute = window.location.pathname;
@@ -20,7 +20,7 @@ function Header() {
 
         <div className="main-page_header_wrapper-all_buttons">
           <Button
-            value="Sign in"
+            value="Sign In"
             color="green"
             className="header-button"
             onClick={() => {
@@ -28,7 +28,7 @@ function Header() {
             }}
           />
           <Button
-            value="Sign up"
+            value="Sign Up"
             color="green"
             onClick={() => {
               navigate('registration');

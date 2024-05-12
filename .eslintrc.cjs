@@ -46,5 +46,8 @@ module.exports = {
         ObjectExpression: 'never',
       },
     ],
+    'react/function-component-definition': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'react/require-default-props': 'off',
   },
 };

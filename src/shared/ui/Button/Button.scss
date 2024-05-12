@@ -1,5 +1,6 @@
 .button {
   border: none;
+  font-size: 1.7rem;
   font-family: 'Poppins';
   font-weight: 600;
   cursor: pointer;
@@ -7,23 +8,20 @@
   border-radius: 15px;
   position: relative;
   user-select: none;
-  box-shadow: 1px 1px 0.5px 0px black;
+  box-shadow: 0 4px 15px #0000001a;
+  transition:
+    background-color 0.4s,
+    box-shadow 0.4s;
 
   &:active {
-    top: 1px;
-    left: 1px;
-    box-shadow: 0px 0px 0px 0px black;
+    box-shadow: none;
   }
 }
 
-.button:hover {
-  color: white;
-}
-
 .button.green {
-  background-color: rgb(212, 255, 0);
+  background-color: #d9ef81;
 
   &:hover {
-    background-color: rgba(160, 255, 0, 0.871);
+    background-color: #b5d43c;
   }
 }
