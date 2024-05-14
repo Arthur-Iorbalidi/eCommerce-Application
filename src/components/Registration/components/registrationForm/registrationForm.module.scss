@@ -1,59 +1,57 @@
 .registration_form {
-    width: 100%;
-    max-width: 380px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    gap: 15px;
-    padding: 35px 40px;
-    background-color: #fff;
-    border-radius: 15px;
-  
-    h2 {
-      font-size: 2.2rem;
-      font-weight: 600;
-      margin-bottom: 30px;
-    }
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 15px;
+  padding: 35px 40px;
+  background-color: #fff;
+  border-radius: 15px;
 
-    .adresses {
-      text-align: left;
+  h2 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+  }
+
+  .adresses {
+    text-align: left;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0;
+  }
+
+  input {
+    font-size: 1.6rem;
+  }
+
+  button {
+    align-self: center;
+    margin: 15px 0;
+  }
+
+  p {
+    font-size: 1.5rem;
+
+    a {
+      padding-left: 7px;
+      text-decoration: underline;
       font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 0;
-    }
-  
-    input {
-      font-size: 1.6rem;
-    }
-  
-    button {
-      align-self: center;
-      margin: 15px 0;
-    }
-  
-    p {
-      font-size: 1.5rem;
-  
-      a {
-        padding-left: 7px;
-        text-decoration: underline;
-        font-size: 1.5rem;
-        color: #000;
-        cursor: pointer;
-        transition: color 0.4s;
-  
-        &:hover {
-          color: #b5d43c;
-        }
+      color: #000;
+      cursor: pointer;
+      transition: color 0.4s;
+
+      &:hover {
+        color: #b5d43c;
       }
     }
   }
-  
-  @media (max-width: 768px) {
-    .registration_form {
-      // min-width: 360px;
-      padding: 35px 25px;
-    }
+}
+
+@media (max-width: 768px) {
+  .registration_form {
+    padding: 35px 25px;
   }
-  
+}

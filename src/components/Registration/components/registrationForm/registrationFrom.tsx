@@ -1,4 +1,3 @@
-/* eslint-disable object-curly-newline */
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -25,8 +24,20 @@ interface RegistrationFormFields {
 }
 
 const validationSchema = yup.object().shape({
-  firstName: yup.string().required('Name is required'),
-  lastName: yup.string().required('Last name is required'),
+  firstName: yup
+    .string()
+    .required('Name is required')
+    .matches(
+      /^[^!@#$%^&*()_\-=+~`[\]{}|\\;:,.<>/?0-9]+$/,
+      "Shouldn't contain special characters and numbers",
+    ),
+  lastName: yup
+    .string()
+    .required('Last name is required')
+    .matches(
+      /^[^!@#$%^&*()_\-=+~`[\]{}|\\;:,.<>/?0-9]+$/,
+      "Shouldn't contain special characters and numbers",
+    ),
   email: yup
     .string()
     .required('Email is required')
@@ -56,11 +67,31 @@ const validationSchema = yup.object().shape({
       },
     )
     .min(8, 'Password must be at least 8 characters'),
-  birthDate: yup.string().required('Birth date is required'),
+  birthDate: yup
+    .string()
+    .required('Birth date is required')
+    .matches(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/, 'dd/mm/yyyy')
+    .test('age', 'You must be at least 16 years old', (value) => {
+      const birthDate = new Date(value);
+      const now = new Date();
+
+      const ageDiff = now.getTime() - birthDate.getTime();
+      const ageDate = new Date(ageDiff);
+
+      const age = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+      return age >= 16;
+    }),
   streetName: yup.string().required('Street Name is required'),
-  city: yup.string().required('City is required'),
+  city: yup
+    .string()
+    .required('City is required')
+    .matches(
+      /^[^!@#$%^&*()_\-=+~`[\]{}|\\;:,.<>/?0-9]+$/,
+      "Shouldn't contain special characters and numbers",
+    ),
   postalCode: yup.string().required('Postal Code is required'),
-  country: yup.string().required('Country Code is required'),
+  country: yup.string().required('Country is required'),
 });
 
 function RegistrationForm() {
@@ -72,7 +103,7 @@ function RegistrationForm() {
   } = useForm({ resolver: yupResolver(validationSchema), mode: 'onChange' });
 
   const onSubmit: SubmitHandler<RegistrationFormFields> = () => {
-    reset({ email: '', password: '' });
+    reset();
   };
 
   // const onSubmit: SubmitHandler<LoginFormFields> = (data: LoginFormFields) => {

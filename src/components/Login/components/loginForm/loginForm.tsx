@@ -1,4 +1,3 @@
-/* eslint-disable object-curly-newline */
 import {
   Controller,
   SubmitHandler,
