@@ -42,12 +42,14 @@ module.exports = {
     //Отключает в линте проверку разрыва строк перед и после фигурных скобок
     'object-curly-newline': [
       'error',
-      {
-        ObjectExpression: 'never',
-      },
+      { ObjectExpression: { multiline: true, minProperties: 1 } },
     ],
     'react/function-component-definition': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/require-default-props': 'off',
+    'default-param-last': 'off',
+    '@typescript-eslint/default-param-last': 'off',
+    'implicit-arrow-linebreak': 'off',
+    'react-refresh/only-export-components': 'off',
   },
 };
