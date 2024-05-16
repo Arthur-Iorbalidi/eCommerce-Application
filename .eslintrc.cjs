@@ -40,10 +40,7 @@ module.exports = {
     'prettier/prettier': 'error',
     '@typescript-eslint/indent': ['error', 2],
     //Отключает в линте проверку разрыва строк перед и после фигурных скобок
-    'object-curly-newline': [
-      'error',
-      { ObjectExpression: { multiline: true, minProperties: 1 } },
-    ],
+    'object-curly-newline': 'off',
     'react/function-component-definition': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/require-default-props': 'off',
