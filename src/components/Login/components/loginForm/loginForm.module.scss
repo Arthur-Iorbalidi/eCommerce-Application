@@ -1,5 +1,6 @@
 .login_form {
-  min-width: 380px;
+  width: 100%;
+  max-width: 380px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -44,7 +45,6 @@
 
 @media (max-width: 768px) {
   .login_form {
-    min-width: 360px;
     padding: 35px 25px;
   }
 }

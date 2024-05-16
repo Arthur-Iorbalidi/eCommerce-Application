@@ -27,4 +27,4 @@ export default function Button({
   );
 }
 
-Button.defaultProps = { className: null, onClick: null };
+// Button.defaultProps = { className: null, onClick: null };

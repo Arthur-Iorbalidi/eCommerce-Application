@@ -1,11 +1,10 @@
-import { Link } from 'react-router-dom';
-import './registration.scss';
+import RegistrationForm from './components/registrationForm/registrationFrom';
+import styles from './registration.module.scss';
 
 function Registration() {
   return (
-    <div>
-      <div>Registration</div>
-      <Link to="123">GO 123</Link>
+    <div className={styles.registration_container}>
+      <RegistrationForm />
     </div>
   );
 }
