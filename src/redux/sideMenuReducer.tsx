@@ -2,23 +2,25 @@ enum Types {
   activateSideMenu = 'activateSideMenu',
 }
 
-export interface Store {
-  showSideMenu: boolean;
-}
-
-interface Action {
-  type: Types.activateSideMenu;
-  data: boolean;
-}
-
-const store: Store = {
+const store: { showSideMenu: boolean } = {
   showSideMenu: true,
 };
 
+export interface SideMenuReducerType {
+  state: typeof store;
+  action: {
+    type: Types.activateSideMenu;
+    data: boolean;
+  };
+}
+
 export default function sideMenuReducer(
-  state: Store = store,
-  action: Action,
-): Store {
+  state: typeof store = store,
+  action: {
+    type: Types.activateSideMenu;
+    data: boolean;
+  },
+): typeof store {
   switch (action.type) {
     case 'activateSideMenu':
       return {

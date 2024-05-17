@@ -1,3 +1,5 @@
+@import '../../../../constants/global.scss';
+
 .main-page_header_wrapper-all {
   height: 100%;
   width: 100%;
@@ -8,10 +10,10 @@
 }
 
 .main-page_header {
-  background-color: rgb(255, 255, 255);
+  background-color: $secondaryBackgroundColor;
   height: 50px;
   padding: 0 20px;
-  box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.538);
+  box-shadow: $box-shadow-mediumGrey;
   font-family: 'Poppins';
   & * {
     font-family: 'Poppins';
@@ -35,8 +37,9 @@
   height: 30px;
   width: 30px;
   left: 0;
+  transition: fill $shortDuration;
 
   &:hover {
-    fill: rgba(0, 0, 0, 0.599);
+    fill: $thirdColor;
   }
 }
