@@ -13,7 +13,7 @@ export default function Main() {
       <Routes>
         <Route index element={<div>Main</div>} />
         <Route path="catalog" element={<div>Catalog</div>} />
-        <Route path="aboutUs" element={<div>Amogus</div>} />
+        <Route path="about-us" element={<div>Amogus</div>} />
         <Route path="registration" element={<Registration />} />
         <Route path="login" element={<Login />} />
         <Route path="*" element={<Navigate to="error" />} />

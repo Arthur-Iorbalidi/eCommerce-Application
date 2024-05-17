@@ -5,16 +5,20 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { BsXLg } from 'react-icons/bs';
-import { Store } from '../../../../../../redux/sideMenuReducer';
+import { SideMenuReducerType } from '../../../../../../redux/sideMenuReducer';
 
 import NavBar from '../navBar/navBar';
 import Button from '../../../../../../shared/ui/Button/Button';
 
-function SideMenu({
-  activateSideMenu,
-}: {
+interface Props {
   activateSideMenu: (data: boolean) => { type: string; data: boolean };
-}) {
+}
+type DispatchType = Dispatch<{ type: string; data: boolean }>;
+type MapDispatch = {
+  activateSideMenu: (data: boolean) => { type: string; data: boolean };
+};
+
+function SideMenu({ activateSideMenu }: Props) {
   const navigate = useNavigate();
 
   return (
@@ -51,13 +55,11 @@ function SideMenu({
   );
 }
 
-function mapStateToProps(state: Store): Store {
+function mapStateToProps(state: SideMenuReducerType): SideMenuReducerType {
   return state;
 }
 
-function mapDispatchToProps(
-  dispatch: Dispatch<{ type: string; data: boolean }>,
-): { activateSideMenu: (data: boolean) => { type: string; data: boolean } } {
+function mapDispatchToProps(dispatch: DispatchType): MapDispatch {
   return {
     activateSideMenu: (data: boolean) =>
       dispatch({

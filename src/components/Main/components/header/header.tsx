@@ -11,7 +11,7 @@ import useWindowWidth from '../../../../shared/hooks/useWindowWidth';
 import logo from '../../../../assets/images/MainPage/Header/logo.svg';
 import TopMenu from './components/topMenu/topMenu';
 import SideMenu from './components/sideMenu/sideMenu';
-import { Store } from '../../../../redux/sideMenuReducer';
+import { SideMenuReducerType } from '../../../../redux/sideMenuReducer';
 
 interface Props {
   sideMenuReducer?: {
@@ -19,6 +19,10 @@ interface Props {
   };
   activateSideMenu: (data: boolean) => void;
 }
+type DispatchType = Dispatch<{ type: string; data: boolean }>;
+type MapDispatch = {
+  activateSideMenu: (data: boolean) => void;
+};
 
 function Header({ sideMenuReducer, activateSideMenu }: Props) {
   const currentWindowWidth = useWindowWidth();
@@ -54,13 +58,11 @@ function Header({ sideMenuReducer, activateSideMenu }: Props) {
   );
 }
 
-function mapStateToProps(state: Store): Store {
+function mapStateToProps(state: SideMenuReducerType): SideMenuReducerType {
   return state;
 }
 
-function mapDispatchToProps(
-  dispatch: Dispatch<{ type: string; data: boolean }>,
-): { activateSideMenu: (data: boolean) => void } {
+function mapDispatchToProps(dispatch: DispatchType): MapDispatch {
   return {
     activateSideMenu: (data: boolean) =>
       dispatch({

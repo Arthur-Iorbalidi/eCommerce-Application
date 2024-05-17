@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { Dispatch } from 'react';
-import { Store } from '../../../../../../redux/sideMenuReducer';
+import { SideMenuReducerType } from '../../../../../../redux/sideMenuReducer';
 
 interface Props {
   position: 'top' | 'side';
@@ -46,11 +46,11 @@ function NavBar({ position, activateSideMenu }: Props) {
         Catalog
       </Link>
       <Link
-        to="/aboutUs"
+        to="/about-us"
         onClick={() => {
           positionChecker();
         }}
-        className={`main-page_header_wrapper_header_nav_button ${position} ${routeChecker('/aboutUs')}`}
+        className={`main-page_header_wrapper_header_nav_button ${position} ${routeChecker('/about-us')}`}
       >
         About us
       </Link>
@@ -58,7 +58,7 @@ function NavBar({ position, activateSideMenu }: Props) {
   );
 }
 
-function mapStateToProps(state: Store): Store {
+function mapStateToProps(state: SideMenuReducerType): SideMenuReducerType {
   return state;
 }
 
