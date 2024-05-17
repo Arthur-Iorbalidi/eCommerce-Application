@@ -1,3 +1,5 @@
+@import '../../../constants/global.scss';
+
 .input_group {
   width: 100%;
 }
@@ -9,24 +11,24 @@
   outline: none;
   border: none;
   border-radius: 40px;
-  box-shadow: 0 4px 15px #0000001a;
+  box-shadow: $box-shadow-smallGrey;
 
   &:focus {
-    box-shadow: 0 0 0 1px #d9ef81b8;
+    box-shadow: $box-shadow-smallGreen;
   }
 }
 
 .input__icon,
 .input__toggle_button {
   padding: 10px;
-  color: #9a9a9a;
-  background-color: #fff;
+  color: $thirdColor;
+  background-color: $secondaryBackgroundColor;
   border: none;
   border-radius: 40px;
-  box-shadow: 0 4px 15px #0000001a;
+  box-shadow: $box-shadow-smallGrey;
 }
 
 .error_text {
-  color: #e50404ed;
+  color: $errorColor;
   font-size: 11px;
 }
