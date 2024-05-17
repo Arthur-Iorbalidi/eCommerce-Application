@@ -1,9 +1,4 @@
-import {
-  Controller,
-  SubmitHandler,
-  FieldValues,
-  useForm,
-} from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { BsEnvelopeFill, BsPersonFillLock } from 'react-icons/bs';
@@ -51,7 +46,6 @@ const validationSchema = yup.object().shape({
 
 function LoginForm() {
   const {
-    control,
     register,
     formState: { errors },
     handleSubmit,
@@ -59,7 +53,7 @@ function LoginForm() {
   } = useForm({ resolver: yupResolver(validationSchema), mode: 'onChange' });
 
   const onSubmit: SubmitHandler<LoginFormFields> = () => {
-    reset({ email: '', password: '' });
+    reset();
   };
 
   // const onSubmit: SubmitHandler<LoginFormFields> = (data: LoginFormFields) => {
@@ -71,35 +65,21 @@ function LoginForm() {
     <form className={styles.login_form} onSubmit={handleSubmit(onSubmit)}>
       <h2>Welcome Back!</h2>
 
-      <Controller
-        control={control}
+      <Input
         {...register('email')}
-        render={({ field }: { field: FieldValues }) => (
-          <Input
-            className={styles.email_input}
-            {...field}
-            icon={<BsEnvelopeFill />}
-            placeholder="E-mail"
-            error={Boolean(errors?.email?.message)}
-            helperText={String(errors?.email?.message ?? '')}
-          />
-        )}
+        icon={<BsEnvelopeFill />}
+        placeholder="E-mail"
+        error={Boolean(errors?.email?.message)}
+        helperText={String(errors?.email?.message ?? '')}
       />
 
-      <Controller
-        control={control}
+      <Input
         {...register('password')}
-        render={({ field }: { field: FieldValues }) => (
-          <Input
-            className={styles.password_input}
-            {...field}
-            icon={<BsPersonFillLock />}
-            placeholder="Password"
-            isSecretInput
-            error={Boolean(errors?.password?.message)}
-            helperText={String(errors?.password?.message ?? '')}
-          />
-        )}
+        icon={<BsPersonFillLock />}
+        placeholder="Password"
+        isSecretInput
+        error={Boolean(errors?.password?.message)}
+        helperText={String(errors?.password?.message ?? '')}
       />
 
       <div>
