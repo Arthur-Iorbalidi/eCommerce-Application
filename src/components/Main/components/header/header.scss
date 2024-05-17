@@ -1,3 +1,12 @@
+.main-page_header_wrapper-all {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .main-page_header {
   background-color: rgb(255, 255, 255);
   height: 50px;
@@ -9,32 +18,25 @@
   }
 }
 
-.main-page_header_wrapper-all {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.main-page_header_wrapper {
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .main-page_header_wrapper_logo {
   overflow: hidden;
-  margin-right: 70px;
   cursor: pointer;
+  user-select: none;
 
   & img {
     width: 100px;
+    padding: 5px;
   }
 }
 
-.main-page_header_wrapper-all_buttons {
-  display: flex;
-  gap: 10px;
+.burgerMenu {
+  position: absolute;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  left: 0;
+
+  &:hover {
+    fill: rgba(0, 0, 0, 0.599);
+  }
 }

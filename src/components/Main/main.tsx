@@ -6,17 +6,18 @@ import Registration from '../Registration/registration';
 import Header from './components/header/header';
 import Login from '../Login/login';
 
-function Main() {
+export default function Main() {
   return (
     <div className="main-page">
       <Header />
       <Routes>
+        <Route index element={<div>Main</div>} />
+        <Route path="catalog" element={<div>Catalog</div>} />
+        <Route path="aboutUs" element={<div>Amogus</div>} />
         <Route path="registration" element={<Registration />} />
         <Route path="login" element={<Login />} />
-        <Route path="*/*" element={<Navigate to="/error" />} />
+        <Route path="*" element={<Navigate to="error" />} />
       </Routes>
     </div>
   );
 }
-
-export default Main;

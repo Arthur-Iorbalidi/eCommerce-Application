@@ -1,11 +1,10 @@
-/* eslint-disable react/button-has-type */
 import './Button.scss';
 
 interface Props {
   value: string;
   color: 'green' | 'red';
   className?: string | undefined | null;
-  type?: 'reset' | 'submit' | 'button';
+  type?: 'reset' | 'submit' | 'button' | undefined;
   onClick?: (() => void) | undefined | null;
 }
 
@@ -18,6 +17,7 @@ export default function Button({
 }: Props) {
   return (
     <button
+      // eslint-disable-next-line react/button-has-type
       type={type}
       className={`button ${color} ${className}`}
       onClick={() => (onClick ? onClick() : null)}
@@ -26,5 +26,3 @@ export default function Button({
     </button>
   );
 }
-
-// Button.defaultProps = { className: null, onClick: null };

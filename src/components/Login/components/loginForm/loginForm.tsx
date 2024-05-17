@@ -73,6 +73,21 @@ function LoginForm() {
 
       <Controller
         control={control}
+        {...register('email')}
+        render={({ field }: { field: FieldValues }) => (
+          <Input
+            className={styles.email_input}
+            {...field}
+            icon={<BsEnvelopeFill />}
+            placeholder="E-mail"
+            error={Boolean(errors?.email?.message)}
+            helperText={String(errors?.email?.message ?? '')}
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
         {...register('password')}
         render={({ field }: { field: FieldValues }) => (
           <Input
@@ -83,21 +98,6 @@ function LoginForm() {
             isSecretInput
             error={Boolean(errors?.password?.message)}
             helperText={String(errors?.password?.message ?? '')}
-          />
-        )}
-      />
-
-      <Controller
-        control={control}
-        {...register('email')}
-        render={({ field }: { field: FieldValues }) => (
-          <Input
-            className={styles.email_input}
-            {...field}
-            icon={<BsEnvelopeFill />}
-            placeholder="E-mail"
-            error={Boolean(errors?.email?.message)}
-            helperText={String(errors?.email?.message ?? '')}
           />
         )}
       />
