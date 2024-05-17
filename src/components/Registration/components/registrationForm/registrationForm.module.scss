@@ -1,3 +1,5 @@
+@import '../../../../constants/global.scss';
+
 .registration_form {
   width: 100%;
   max-width: 380px;
@@ -7,7 +9,7 @@
   text-align: center;
   gap: 15px;
   padding: 35px 40px;
-  background-color: #fff;
+  background-color: $secondaryBackgroundColor;
   border-radius: 15px;
 
   h2 {
@@ -16,7 +18,7 @@
     margin-bottom: 30px;
   }
 
-  .adresses {
+  .addresses {
     text-align: left;
     font-size: 1.5rem;
     font-weight: 700;
@@ -39,12 +41,12 @@
       padding-left: 7px;
       text-decoration: underline;
       font-size: 1.5rem;
-      color: #000;
+      color: $universalColor;
       cursor: pointer;
-      transition: color 0.4s;
+      transition: color $shortDuration;
 
       &:hover {
-        color: #b5d43c;
+        color: $secondaryColor;
       }
     }
   }

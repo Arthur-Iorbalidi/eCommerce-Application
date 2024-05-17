@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
 }
 
@@ -49,14 +49,3 @@
   height: 3rem;
 }
 
-@media (max-width: 768px) {
-  html {
-    font-size: 8px;
-  }
-}
-
-@media (max-width: 390px) {
-  html {
-    font-size: 6px;
-  }
-}
