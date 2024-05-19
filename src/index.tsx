@@ -1,16 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import rootReducer from './redux/root';
-
+import { store } from './store/store';
 import App from './App';
-
-const store = createStore(rootReducer, composeWithDevTools());
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.scss';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

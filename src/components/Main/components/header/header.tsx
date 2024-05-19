@@ -1,42 +1,34 @@
 import './header.scss';
-import { useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
 import { BsList } from 'react-icons/bs';
 
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useEffect } from 'react';
+import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
+import useAppSelector from '../../../../shared/hooks/useAppSelector';
 import useWindowWidth from '../../../../shared/hooks/useWindowWidth';
+import { activateSideMenu } from '../../../../store/reducers/sideMenuSlice';
 
 import logo from '../../../../assets/images/MainPage/Header/logo.svg';
 import TopMenu from './components/topMenu/topMenu';
 import SideMenu from './components/sideMenu/sideMenu';
-import { SideMenuReducerType } from '../../../../redux/sideMenuReducer';
 
-interface Props {
-  sideMenuReducer?: {
-    showSideMenu: boolean;
-  };
-  activateSideMenu: (data: boolean) => void;
-}
-type DispatchType = Dispatch<{ type: string; data: boolean }>;
-type MapDispatch = {
-  activateSideMenu: (data: boolean) => void;
-};
-
-function Header({ sideMenuReducer, activateSideMenu }: Props) {
+export default function Header() {
   const currentWindowWidth = useWindowWidth();
-  const statusSideMenu = sideMenuReducer ? sideMenuReducer.showSideMenu : null;
+  const dispatch = useAppDispatch();
+  const showSideMenu = useAppSelector(
+    (state) => state.sideMenuReducer.showSideMenu,
+  );
 
   useEffect(() => {
     if (currentWindowWidth > 768) {
-      activateSideMenu(false);
+      dispatch(activateSideMenu(false));
     }
-  }, [currentWindowWidth, activateSideMenu]);
+  }, [currentWindowWidth, dispatch]);
 
   return (
     <div className="main-page_header">
-      {statusSideMenu ? <SideMenu /> : null}
+      {showSideMenu ? <SideMenu /> : null}
 
       <div className="main-page_header_wrapper-all">
         <Link to="/" className="main-page_header_wrapper_logo">
@@ -49,7 +41,7 @@ function Header({ sideMenuReducer, activateSideMenu }: Props) {
           <BsList
             className="burgerMenu"
             onClick={() => {
-              activateSideMenu(true);
+              dispatch(activateSideMenu(true));
             }}
           />
         )}
@@ -57,19 +49,3 @@ function Header({ sideMenuReducer, activateSideMenu }: Props) {
     </div>
   );
 }
-
-function mapStateToProps(state: SideMenuReducerType): SideMenuReducerType {
-  return state;
-}
-
-function mapDispatchToProps(dispatch: DispatchType): MapDispatch {
-  return {
-    activateSideMenu: (data: boolean) =>
-      dispatch({
-        type: 'activateSideMenu',
-        data,
-      }),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);

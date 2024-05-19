@@ -2,27 +2,31 @@ import './navBar.scss';
 
 import { Link, useLocation } from 'react-router-dom';
 
-import { connect } from 'react-redux';
-import { Dispatch } from 'react';
-import { SideMenuReducerType } from '../../../../../../redux/sideMenuReducer';
+import useAppDispatch from '../../../../../../shared/hooks/useAppDispatch';
+import useAppSelector from '../../../../../../shared/hooks/useAppSelector';
+import { activateSideMenu } from '../../../../../../store/reducers/sideMenuSlice';
 
 interface Props {
   position: 'top' | 'side';
-  activateSideMenu: (data: boolean) => void;
 }
 
-function NavBar({ position, activateSideMenu }: Props) {
+export default function NavBar({ position }: Props) {
   const location = useLocation();
   const currentLocation = location.pathname;
 
-  function routeChecker(value: string) {
-    return currentLocation === value ? 'active' : null;
-  }
+  const dispatch = useAppDispatch();
+  const showSideMenu = useAppSelector(
+    (state) => state.sideMenuReducer.showSideMenu,
+  );
 
   function positionChecker(): void {
     if (position === 'side') {
-      activateSideMenu(false);
+      dispatch(activateSideMenu(!showSideMenu));
     }
+  }
+
+  function routeChecker(value: string) {
+    return currentLocation === value ? 'active' : null;
   }
 
   return (
@@ -57,21 +61,3 @@ function NavBar({ position, activateSideMenu }: Props) {
     </div>
   );
 }
-
-function mapStateToProps(state: SideMenuReducerType): SideMenuReducerType {
-  return state;
-}
-
-function mapDispatchToProps(
-  dispatch: Dispatch<{ type: string; data: boolean }>,
-): { activateSideMenu: (data: boolean) => void } {
-  return {
-    activateSideMenu: (data: boolean) =>
-      dispatch({
-        type: 'activateSideMenu',
-        data,
-      }),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
