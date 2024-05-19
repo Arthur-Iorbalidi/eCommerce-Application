@@ -14,7 +14,10 @@ const Loader: FC<LoaderProps> = ({
     <img
       src={LoaderSvg}
       alt="Loader"
-      style={{ width: `${width}px`, height: `${height}px` }}
+      style={{
+        width: `${width}px`,
+        height: `${height}px`,
+      }}
     />
   </div>
 );

@@ -1,40 +1,45 @@
+@import '../../../../constants/global.scss';
+
+.main-page_header_wrapper-all {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .main-page_header {
-  background-color: rgb(255, 255, 255);
+  background-color: $secondaryBackgroundColor;
   height: 50px;
   padding: 0 20px;
-  box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.538);
+  box-shadow: $box-shadow-mediumGrey;
   font-family: 'Poppins';
   & * {
     font-family: 'Poppins';
   }
 }
 
-.main-page_header_wrapper-all {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.main-page_header_wrapper {
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .main-page_header_wrapper_logo {
   overflow: hidden;
-  margin-right: 70px;
   cursor: pointer;
+  user-select: none;
 
   & img {
     width: 100px;
+    padding: 5px;
   }
 }
 
-.main-page_header_wrapper-all_buttons {
-  display: flex;
-  gap: 10px;
+.burgerMenu {
+  position: absolute;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  left: 0;
+  transition: fill $shortDuration;
+
+  &:hover {
+    fill: $thirdColor;
+  }
 }

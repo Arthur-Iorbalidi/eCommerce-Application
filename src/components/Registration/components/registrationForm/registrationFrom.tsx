@@ -159,7 +159,7 @@ function RegistrationForm() {
         helperText={String(errors?.birthDate?.message ?? '')}
       />
 
-      <h3 className={styles.adresses}>Addresses:</h3>
+      <h3 className={styles.addresses}>Addresses:</h3>
 
       <Input
         {...register('streetName')}
