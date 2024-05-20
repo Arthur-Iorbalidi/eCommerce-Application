@@ -102,7 +102,9 @@ function RegistrationForm() {
     reset,
   } = useForm({ resolver: yupResolver(validationSchema), mode: 'onChange' });
 
-  const onSubmit: SubmitHandler<RegistrationFormFields> = () => {
+  const onSubmit: SubmitHandler<RegistrationFormFields> = (
+    data: RegistrationFormFields,
+  ) => {
     reset();
   };
 
