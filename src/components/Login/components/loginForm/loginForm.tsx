@@ -2,10 +2,12 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { BsEnvelopeFill, BsPersonFillLock } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
 import styles from './loginForm.module.scss';
+// api
+import { logInUser } from '../../../../services/api/actions';
 
 interface LoginFormFields {
   email: string;
@@ -45,6 +47,9 @@ const validationSchema = yup.object().shape({
 });
 
 function LoginForm() {
+  const navigate = useNavigate();
+  const errorHandler = () => 'asd'; // ТУТ ПИШИ КОЛЛБЭК ДЛЯ СТЕЙТА
+
   const {
     register,
     formState: { errors },
@@ -52,12 +57,20 @@ function LoginForm() {
     reset,
   } = useForm({ resolver: yupResolver(validationSchema), mode: 'onChange' });
 
-  const onSubmit: SubmitHandler<LoginFormFields> = () => {
+  const onSubmit: SubmitHandler<LoginFormFields> = (data: LoginFormFields) => {
+    logInUser(
+      data.email,
+      data.password,
+      () => navigate('/'),
+      () => {
+        errorHandler();
+      },
+    );
     reset();
   };
 
   // const onSubmit: SubmitHandler<LoginFormFields> = (data: LoginFormFields) => {
-  //   // console.log(data);
+  //   // console.log(data);с
   //   reset({ email: '', password: '' });
   // };
 

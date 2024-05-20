@@ -6,12 +6,17 @@ import { BsEnvelopeFill, BsPersonFillLock, BsPersonFill } from 'react-icons/bs';
 import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
 import { LiaCitySolid } from 'react-icons/lia';
 import { IoMdMail } from 'react-icons/io';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
 import styles from './registrationForm.module.scss';
+// api
+import {
+  ApiRegistrationFields,
+  createNewUser,
+} from '../../../../services/api/actions';
 
 interface RegistrationFormFields {
   firstName: string;
@@ -66,6 +71,9 @@ function transformData(isAlsoBilling: boolean, data: RegistrationFormFields) {
 }
 
 function RegistrationForm() {
+  const navigate = useNavigate();
+  const errorHandler = () => 'asd'; // ТУТ ПИШИ КОЛЛБЭК ДЛЯ СТЕЙТА
+
   const [isAlsoBilling, setIsAlsoBilling] = useState(false);
 
   const [currentCountryShipping, setCurrentCountryShipping] = useState('US');
@@ -202,6 +210,15 @@ function RegistrationForm() {
     data: RegistrationFormFields,
   ) => {
     const transformedData = transformData(isAlsoBilling, data);
+    createNewUser(
+      transformedData as ApiRegistrationFields,
+      () => {
+        navigate('/login');
+      },
+      () => {
+        errorHandler();
+      },
+    );
     reset();
   };
 
@@ -312,7 +329,7 @@ function RegistrationForm() {
           checked={isAlsoBilling}
           onChange={(event) => setIsAlsoBilling(event.target.checked)}
         />
-        <span>Alse use as a billing address</span>
+        <span>Else use as a billing address</span>
       </div>
 
       {!isAlsoBilling && (
