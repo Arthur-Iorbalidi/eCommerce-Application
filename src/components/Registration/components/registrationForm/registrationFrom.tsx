@@ -211,13 +211,6 @@ function RegistrationForm() {
     reset();
   };
 
-  // const currentCountry = watch('country');
-
-  // const onSubmit: SubmitHandler<LoginFormFields> = (data: LoginFormFields) => {
-  //   // console.log(data);
-  //   reset({ email: '', password: '' });
-  // };
-
   const handleCountryShippingChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -229,8 +222,6 @@ function RegistrationForm() {
   ) => {
     setCurrentCountryBilling(event.target.value);
   };
-
-  // const isAlsoBilling = watch('isAlsoBilling');
 
   return (
     <form
