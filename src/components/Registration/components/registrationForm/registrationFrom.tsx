@@ -23,13 +23,10 @@ interface RegistrationFormFields {
   city: string;
   postalCode: string;
   country: string;
-  // isDefaultShipping?: boolean;
-  // isAlsoBilling?: boolean;
   streetNameBilling?: string | unknown;
   cityBilling?: string | unknown;
   postalCodeBilling?: string | unknown;
   countryBilling?: string | unknown;
-  // isDefaultBilling: boolean;
 }
 
 interface CountryRegex {
@@ -153,7 +150,7 @@ function RegistrationForm() {
       .string()
       .required('Postal Code is required')
       .test('postal', 'Postal code should be valid', (value) => {
-        countries[currentCountryShipping].test(value);
+        return countries[currentCountryShipping].test(value);
       }),
 
     country: yup.string().required('Country is required'),
@@ -182,7 +179,7 @@ function RegistrationForm() {
             .string()
             .required('Postal Code is required')
             .test('postal', 'Postal code should be valid', (value) => {
-              countries[currentCountryBilling].test(value);
+              return countries[currentCountryBilling].test(value);
             }),
         }
       : {}),
@@ -208,13 +205,6 @@ function RegistrationForm() {
     reset();
   };
 
-  // const currentCountry = watch('country');
-
-  // const onSubmit: SubmitHandler<LoginFormFields> = (data: LoginFormFields) => {
-  //   // console.log(data);
-  //   reset({ email: '', password: '' });
-  // };
-
   const handleCountryShippingChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -226,8 +216,6 @@ function RegistrationForm() {
   ) => {
     setCurrentCountryBilling(event.target.value);
   };
-
-  // const isAlsoBilling = watch('isAlsoBilling');
 
   return (
     <form
