@@ -9,6 +9,7 @@ import { IoMdMail } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
+import Alert from 'react-bootstrap/Alert';
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
 import styles from './registrationForm.module.scss';
@@ -71,6 +72,15 @@ function RegistrationForm() {
   const [currentCountryShipping, setCurrentCountryShipping] = useState('US');
 
   const [currentCountryBilling, setCurrentCountryBilling] = useState('US');
+
+  const [modal, setModal] = useState({
+    variant: '',
+    isShowed: false,
+    text: '',
+    header: '',
+  });
+
+  // const [failModal, setFailModal] = useState({isShowed: false, text: ''})
 
   const validationSchema = yup.object().shape({
     firstName: yup
@@ -367,6 +377,20 @@ function RegistrationForm() {
           <Link to="/login">Sign in</Link>
         </p>
       </div>
+
+      {modal.isShowed && (
+        <Alert
+          className={styles.allert}
+          variant="danger"
+          onClose={() => {
+            setModal({ variant: '', isShowed: false, text: '', header: '' });
+          }}
+          dismissible
+        >
+          <Alert.Heading>{modal.header}</Alert.Heading>
+          <p>{modal.text}</p>
+        </Alert>
+      )}
     </form>
   );
 }
