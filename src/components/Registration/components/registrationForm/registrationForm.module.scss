@@ -25,6 +25,17 @@
     margin-bottom: 0;
   }
 
+  .country {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1019607843);
+    font-size: 1.6rem;
+  }
+
+  .isDefaultShipping,
+  .isBilling {
+    display: flex;
+    gap: 10px;
+  }
+
   input {
     font-size: 1.6rem;
   }
