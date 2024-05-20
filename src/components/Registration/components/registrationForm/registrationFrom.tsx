@@ -12,6 +12,11 @@ import { useState } from 'react';
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
 import styles from './registrationForm.module.scss';
+// api
+import {
+  ApiRegistrationFields,
+  createNewUser,
+} from '../../../../services/api/actions';
 
 interface RegistrationFormFields {
   firstName: string;
@@ -23,13 +28,10 @@ interface RegistrationFormFields {
   city: string;
   postalCode: string;
   country: string;
-  // isDefaultShipping?: boolean;
-  // isAlsoBilling?: boolean;
   streetNameBilling?: string | unknown;
   cityBilling?: string | unknown;
   postalCodeBilling?: string | unknown;
   countryBilling?: string | unknown;
-  // isDefaultBilling: boolean;
 }
 
 interface CountryRegex {
@@ -153,7 +155,7 @@ function RegistrationForm() {
       .string()
       .required('Postal Code is required')
       .test('postal', 'Postal code should be valid', (value) => {
-        countries[currentCountryShipping].test(value);
+        return countries[currentCountryShipping].test(value);
       }),
 
     country: yup.string().required('Country is required'),
@@ -182,7 +184,7 @@ function RegistrationForm() {
             .string()
             .required('Postal Code is required')
             .test('postal', 'Postal code should be valid', (value) => {
-              countries[currentCountryBilling].test(value);
+              return countries[currentCountryBilling].test(value);
             }),
         }
       : {}),
@@ -205,6 +207,7 @@ function RegistrationForm() {
     data: RegistrationFormFields,
   ) => {
     const transformedData = transformData(isAlsoBilling, data);
+    createNewUser(transformedData as ApiRegistrationFields);
     reset();
   };
 
@@ -324,7 +327,7 @@ function RegistrationForm() {
           checked={isAlsoBilling}
           onChange={(event) => setIsAlsoBilling(event.target.checked)}
         />
-        <span>Alse use as a billing address</span>
+        <span>Else use as a billing address</span>
       </div>
 
       {!isAlsoBilling && (
