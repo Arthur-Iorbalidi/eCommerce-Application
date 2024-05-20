@@ -74,13 +74,9 @@ function RegistrationForm() {
   const [currentCountryBilling, setCurrentCountryBilling] = useState('US');
 
   const [modal, setModal] = useState({
-    variant: '',
     isShowed: false,
     text: '',
-    header: '',
   });
-
-  // const [failModal, setFailModal] = useState({isShowed: false, text: ''})
 
   const validationSchema = yup.object().shape({
     firstName: yup
@@ -380,14 +376,13 @@ function RegistrationForm() {
 
       {modal.isShowed && (
         <Alert
-          className={styles.allert}
           variant="danger"
           onClose={() => {
-            setModal({ variant: '', isShowed: false, text: '', header: '' });
+            setModal({ isShowed: false, text: '' });
           }}
           dismissible
         >
-          <Alert.Heading>{modal.header}</Alert.Heading>
+          <Alert.Heading>Error</Alert.Heading>
           <p>{modal.text}</p>
         </Alert>
       )}
