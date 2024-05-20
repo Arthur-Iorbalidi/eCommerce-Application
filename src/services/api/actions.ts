@@ -27,6 +27,7 @@ export const logInUser = (
   email: string,
   password: string,
   navigateCallBack: () => void,
+  showModalWindow: (message: string) => void,
 ) =>
   zeroClientApi()
     .withProjectKey({ projectKey })
@@ -43,17 +44,27 @@ export const logInUser = (
         getTokenAuthed({ username: email, password });
         navigateCallBack();
       }
-    });
+    })
+    .catch((res) => showModalWindow(res.message));
 
-export const createNewUser = (userData: ApiRegistrationFields) =>
+export const createNewUser = (
+  userData: ApiRegistrationFields,
+  navigateCallBack: () => void,
+  showModalWindow: (message: string) => void,
+) =>
   zeroClientApi()
     .withProjectKey({ projectKey })
     .customers()
     .post({
       body: userData,
     })
-    .execute();
-// .then(console.log);
+    .execute()
+    .then((res) => {
+      if (res.statusCode === 201) {
+        navigateCallBack();
+      }
+    })
+    .catch((res) => showModalWindow(res.message));
 
 // export const getAllGoods = () =>
 //   zeroClientApi()

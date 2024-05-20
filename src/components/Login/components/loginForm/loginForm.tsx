@@ -48,6 +48,8 @@ const validationSchema = yup.object().shape({
 
 function LoginForm() {
   const navigate = useNavigate();
+  const errorHandler = () => 'asd'; // ТУТ ПИШИ КОЛЛБЭК ДЛЯ СТЕЙТА
+
   const {
     register,
     formState: { errors },
@@ -56,7 +58,14 @@ function LoginForm() {
   } = useForm({ resolver: yupResolver(validationSchema), mode: 'onChange' });
 
   const onSubmit: SubmitHandler<LoginFormFields> = (data: LoginFormFields) => {
-    logInUser(data.email, data.password, () => navigate('/'));
+    logInUser(
+      data.email,
+      data.password,
+      () => navigate('/'),
+      () => {
+        errorHandler();
+      },
+    );
     reset();
   };
 

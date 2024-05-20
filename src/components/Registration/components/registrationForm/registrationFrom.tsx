@@ -6,7 +6,7 @@ import { BsEnvelopeFill, BsPersonFillLock, BsPersonFill } from 'react-icons/bs';
 import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
 import { LiaCitySolid } from 'react-icons/lia';
 import { IoMdMail } from 'react-icons/io';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
 import Button from '../../../../shared/ui/Button/Button';
@@ -71,6 +71,9 @@ function transformData(isAlsoBilling: boolean, data: RegistrationFormFields) {
 }
 
 function RegistrationForm() {
+  const navigate = useNavigate();
+  const errorHandler = () => 'asd'; // ТУТ ПИШИ КОЛЛБЭК ДЛЯ СТЕЙТА
+
   const [isAlsoBilling, setIsAlsoBilling] = useState(false);
 
   const [currentCountryShipping, setCurrentCountryShipping] = useState('US');
@@ -207,7 +210,15 @@ function RegistrationForm() {
     data: RegistrationFormFields,
   ) => {
     const transformedData = transformData(isAlsoBilling, data);
-    createNewUser(transformedData as ApiRegistrationFields);
+    createNewUser(
+      transformedData as ApiRegistrationFields,
+      () => {
+        navigate('/login');
+      },
+      () => {
+        errorHandler();
+      },
+    );
     reset();
   };
 

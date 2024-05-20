@@ -27,7 +27,7 @@ export default function zeroClientApi(): ApiRoot {
     .withProjectKey(projectKey)
     .withClientCredentialsFlow(authMiddlewareOptions)
     .withHttpMiddleware(httpMiddlewareOptions)
-    .withLoggerMiddleware()
+    // .withLoggerMiddleware()
     .build();
   return createApiBuilderFromCtpClient(client);
 }

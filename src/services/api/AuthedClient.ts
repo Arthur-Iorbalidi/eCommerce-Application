@@ -40,7 +40,7 @@ export default function authClientApi(userData: {
       name: 'мидлвар после действий',
       middleware: aftere,
     })
-    .withLoggerMiddleware() // Выводит в консоль отправленный запрос
+    // .withLoggerMiddleware() // Выводит в консоль отправленный запрос
     .build();
 
   return createApiBuilderFromCtpClient(client);
