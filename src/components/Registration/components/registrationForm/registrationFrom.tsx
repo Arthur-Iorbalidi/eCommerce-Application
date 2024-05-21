@@ -218,7 +218,7 @@ function RegistrationForm() {
     createNewUser(
       transformedData as ApiRegistrationFields,
       () => {
-        navigate('/login');
+        navigate('/');
       },
       (message: string) => {
         setModal(() => {
