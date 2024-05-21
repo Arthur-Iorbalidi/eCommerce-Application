@@ -10,6 +10,10 @@ export interface ApiRegistrationFields {
   lastName: string;
   dateOfBirth: string;
   addresses: BaseAddress[];
+  billingAddresses: number[];
+  shippingAddresses: number[];
+  defaultBillingAddress?: number;
+  defaultShippingAddress?: number;
 }
 const getTokenAuthed = (userData: { username: string; password: string }) =>
   authClientApi(userData).withProjectKey({ projectKey }).get().execute();
