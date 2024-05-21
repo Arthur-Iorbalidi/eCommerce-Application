@@ -1,4 +1,4 @@
-import RegistrationForm from './components/registrationForm/registrationFrom';
+import RegistrationForm from './components/registrationForm/registrationForm';
 import styles from './registration.module.scss';
 
 function Registration() {

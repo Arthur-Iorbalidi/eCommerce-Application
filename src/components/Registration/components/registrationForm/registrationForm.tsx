@@ -352,7 +352,7 @@ function RegistrationForm() {
           checked={isDefaultShipping}
           onChange={(event) => setIsDefaultShipping(event.target.checked)}
         />
-        <span>Set as default adress</span>
+        <span>Set as default address</span>
       </div>
 
       <div className={styles.isBilling}>
