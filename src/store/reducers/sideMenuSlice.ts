@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const sideMenuSlice = createSlice({
   name: 'sideMenu',
-  initialState: { showSideMenu: true },
+  initialState: { showSideMenu: false },
   reducers: {
     activateSideMenu: (state, action: PayloadAction<boolean>) => {
       // eslint-disable-next-line no-param-reassign
