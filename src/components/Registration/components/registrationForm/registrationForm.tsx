@@ -45,7 +45,12 @@ const countries: CountryRegex = {
   BY: /^\d{6}$/,
 };
 
-function transformData(isAlsoBilling: boolean, data: RegistrationFormFields) {
+function transformData(
+  isAlsoBilling: boolean,
+  isDefaultBilling: boolean,
+  isDefaultShipping: boolean,
+  data: RegistrationFormFields,
+) {
   return {
     email: data.email,
     password: data.password,
@@ -68,6 +73,10 @@ function transformData(isAlsoBilling: boolean, data: RegistrationFormFields) {
         country: isAlsoBilling ? data.country : data.countryBilling,
       },
     ],
+    billingAddresses: [1],
+    shippingAddresses: [0],
+    ...(isDefaultBilling ? { defaultBillingAddress: 1 } : {}),
+    ...(isDefaultShipping ? { defaultShippingAddress: 0 } : {}),
   };
 }
 
@@ -84,6 +93,10 @@ function RegistrationForm() {
   const [currentCountryShipping, setCurrentCountryShipping] = useState('US');
 
   const [currentCountryBilling, setCurrentCountryBilling] = useState('US');
+
+  const [isDefaultBilling, setIsDefaultBilling] = useState(false);
+
+  const [isDefaultShipping, setIsDefaultShipping] = useState(false);
 
   const validationSchema = yup.object().shape({
     firstName: yup
@@ -214,7 +227,12 @@ function RegistrationForm() {
   const onSubmit: SubmitHandler<RegistrationFormFields> = (
     data: RegistrationFormFields,
   ) => {
-    const transformedData = transformData(isAlsoBilling, data);
+    const transformedData = transformData(
+      isAlsoBilling,
+      isDefaultBilling,
+      isDefaultShipping,
+      data,
+    );
     createNewUser(
       transformedData as ApiRegistrationFields,
       () => {
@@ -329,8 +347,12 @@ function RegistrationForm() {
       </Form.Select>
 
       <div className={styles.isDefaultShipping}>
-        <input type="checkbox" />
-        <span>Set as default adress</span>
+        <input
+          type="checkbox"
+          checked={isDefaultShipping}
+          onChange={(event) => setIsDefaultShipping(event.target.checked)}
+        />
+        <span>Set as default address</span>
       </div>
 
       <div className={styles.isBilling}>
@@ -381,7 +403,11 @@ function RegistrationForm() {
           </Form.Select>
 
           <div className={styles.isDefaultShipping}>
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={isDefaultBilling}
+              onChange={(event) => setIsDefaultBilling(event.target.checked)}
+            />
             <span>Set as default adress</span>
           </div>
         </>
