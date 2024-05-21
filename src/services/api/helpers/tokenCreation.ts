@@ -25,7 +25,7 @@ export default function makePersistentTokenCache(): TokenCache {
   }
 
   return {
-    get: (tokenCacheOptions?: TokenCacheOptions) => {
+    get: (_tokenCacheOptions?: TokenCacheOptions) => {
       if (current) {
         return current as TokenStore;
       }
@@ -43,7 +43,7 @@ export default function makePersistentTokenCache(): TokenCache {
       }
       return {} as TokenStore;
     },
-    set: (newValue: TokenStore, tokenCacheOptions?: TokenCacheOptions) => {
+    set: (newValue: TokenStore, _tokenCacheOptions?: TokenCacheOptions) => {
       current = newValue;
       localStorage.setItem(
         ANONYMOUS_TOKEN_STORAGE_KEY,

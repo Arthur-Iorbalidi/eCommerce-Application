@@ -3,6 +3,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { BsEnvelopeFill, BsPersonFillLock } from 'react-icons/bs';
 import { Link, useNavigate } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
+import { useState } from 'react';
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
 import styles from './loginForm.module.scss';
@@ -48,7 +50,6 @@ const validationSchema = yup.object().shape({
 
 function LoginForm() {
   const navigate = useNavigate();
-  const errorHandler = () => 'asd'; // ТУТ ПИШИ КОЛЛБЭК ДЛЯ СТЕЙТА
 
   const {
     register,
@@ -57,13 +58,23 @@ function LoginForm() {
     reset,
   } = useForm({ resolver: yupResolver(validationSchema), mode: 'onChange' });
 
+  const [modal, setModal] = useState({
+    isShowed: false,
+    text: '',
+  });
+
   const onSubmit: SubmitHandler<LoginFormFields> = (data: LoginFormFields) => {
     logInUser(
       data.email,
       data.password,
       () => navigate('/'),
-      () => {
-        errorHandler();
+      (message: string) => {
+        setModal(() => {
+          return {
+            isShowed: true,
+            text: message,
+          };
+        });
       },
     );
     reset();
@@ -102,6 +113,20 @@ function LoginForm() {
           <Link to="/registration">Create</Link>
         </p>
       </div>
+
+      {modal.isShowed && (
+        <Alert
+          className={styles.allert}
+          variant="danger"
+          onClose={() => {
+            setModal({ isShowed: false, text: '' });
+          }}
+          dismissible
+        >
+          <Alert.Heading>Error</Alert.Heading>
+          <p>{modal.text}</p>
+        </Alert>
+      )}
     </form>
   );
 }

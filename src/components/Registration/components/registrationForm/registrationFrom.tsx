@@ -9,6 +9,7 @@ import { IoMdMail } from 'react-icons/io';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
+import Alert from 'react-bootstrap/Alert';
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
 import styles from './registrationForm.module.scss';
@@ -72,7 +73,11 @@ function transformData(isAlsoBilling: boolean, data: RegistrationFormFields) {
 
 function RegistrationForm() {
   const navigate = useNavigate();
-  const errorHandler = () => 'asd'; // ТУТ ПИШИ КОЛЛБЭК ДЛЯ СТЕЙТА
+
+  const [modal, setModal] = useState({
+    isShowed: false,
+    text: '',
+  });
 
   const [isAlsoBilling, setIsAlsoBilling] = useState(false);
 
@@ -215,8 +220,13 @@ function RegistrationForm() {
       () => {
         navigate('/login');
       },
-      () => {
-        errorHandler();
+      (message: string) => {
+        setModal(() => {
+          return {
+            isShowed: true,
+            text: message,
+          };
+        });
       },
     );
     reset();
@@ -384,6 +394,19 @@ function RegistrationForm() {
           <Link to="/login">Sign in</Link>
         </p>
       </div>
+
+      {modal.isShowed && (
+        <Alert
+          variant="danger"
+          onClose={() => {
+            setModal({ isShowed: false, text: '' });
+          }}
+          dismissible
+        >
+          <Alert.Heading>Error</Alert.Heading>
+          <p>{modal.text}</p>
+        </Alert>
+      )}
     </form>
   );
 }
