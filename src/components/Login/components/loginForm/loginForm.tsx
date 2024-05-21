@@ -5,6 +5,8 @@ import { BsEnvelopeFill, BsPersonFillLock } from 'react-icons/bs';
 import { Link, useNavigate } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
 import { useState } from 'react';
+import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
+import { activateAuthorizationState } from '../../../../store/reducers/authorizationState';
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
 import styles from './loginForm.module.scss';
@@ -50,6 +52,7 @@ const validationSchema = yup.object().shape({
 
 function LoginForm() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -67,7 +70,10 @@ function LoginForm() {
     logInUser(
       data.email,
       data.password,
-      () => navigate('/'),
+      () => {
+        navigate('/');
+        dispatch(activateAuthorizationState(true));
+      },
       (message: string) => {
         setModal(() => {
           return {
@@ -79,11 +85,6 @@ function LoginForm() {
     );
     reset();
   };
-
-  // const onSubmit: SubmitHandler<LoginFormFields> = (data: LoginFormFields) => {
-  //   // console.log(data);с
-  //   reset({ email: '', password: '' });
-  // };
 
   return (
     <form className={styles.login_form} onSubmit={handleSubmit(onSubmit)}>

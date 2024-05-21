@@ -8,8 +8,10 @@ import { LiaCitySolid } from 'react-icons/lia';
 import { IoMdMail } from 'react-icons/io';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
-import { useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
+import { useState } from 'react';
+import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
+import { activateAuthorizationState } from '../../../../store/reducers/authorizationState';
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
 import styles from './registrationForm.module.scss';
@@ -82,6 +84,7 @@ function transformData(
 
 function RegistrationForm() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [modal, setModal] = useState({
     isShowed: false,
@@ -237,6 +240,7 @@ function RegistrationForm() {
       transformedData as ApiRegistrationFields,
       () => {
         navigate('/');
+        dispatch(activateAuthorizationState(true));
       },
       (message: string) => {
         setModal(() => {
