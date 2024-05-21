@@ -339,7 +339,7 @@ function RegistrationForm() {
           checked={isAlsoBilling}
           onChange={(event) => setIsAlsoBilling(event.target.checked)}
         />
-        <span>Else use as a billing address</span>
+        <span>Also use as a billing address</span>
       </div>
 
       {!isAlsoBilling && (
