@@ -27,7 +27,6 @@ export default function authClientApi(userData: {
       },
     },
     tokenCache: makePersistentTokenCache(),
-
     scopes: ['manage_project:ecomcraft'],
     fetch,
   };

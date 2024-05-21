@@ -3,11 +3,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { BsEnvelopeFill, BsPersonFillLock } from 'react-icons/bs';
 import { Link, useNavigate } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
+import { useState } from 'react';
+import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
+import { activateAuthorizationState } from '../../../../store/reducers/authorizationState';
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
 import styles from './loginForm.module.scss';
 // api
-import { logInUser } from '../../../../services/api/actions';
+import logInUser from '../../../../services/api/actions/logInUser';
 
 interface LoginFormFields {
   email: string;
@@ -48,7 +52,25 @@ const validationSchema = yup.object().shape({
 
 function LoginForm() {
   const navigate = useNavigate();
-  const errorHandler = () => 'asd'; // ТУТ ПИШИ КОЛЛБЭК ДЛЯ СТЕЙТА
+  const dispatch = useAppDispatch();
+  const [modal, setModal] = useState({
+    isShowed: false,
+    text: '',
+  });
+  const successUserReg = () => {
+    navigate('/');
+    dispatch(activateAuthorizationState(true));
+  };
+  const errorUserReg = (message: string | undefined) => {
+    if (message) {
+      setModal(() => {
+        return {
+          isShowed: true,
+          text: message,
+        };
+      });
+    }
+  };
 
   const {
     register,
@@ -58,21 +80,9 @@ function LoginForm() {
   } = useForm({ resolver: yupResolver(validationSchema), mode: 'onChange' });
 
   const onSubmit: SubmitHandler<LoginFormFields> = (data: LoginFormFields) => {
-    logInUser(
-      data.email,
-      data.password,
-      () => navigate('/'),
-      () => {
-        errorHandler();
-      },
-    );
+    logInUser(data.email, data.password, successUserReg, errorUserReg);
     reset();
   };
-
-  // const onSubmit: SubmitHandler<LoginFormFields> = (data: LoginFormFields) => {
-  //   // console.log(data);с
-  //   reset({ email: '', password: '' });
-  // };
 
   return (
     <form className={styles.login_form} onSubmit={handleSubmit(onSubmit)}>
@@ -102,6 +112,20 @@ function LoginForm() {
           <Link to="/registration">Create</Link>
         </p>
       </div>
+
+      {modal.isShowed && (
+        <Alert
+          className={styles.allert}
+          variant="danger"
+          onClose={() => {
+            setModal({ isShowed: false, text: '' });
+          }}
+          dismissible
+        >
+          <Alert.Heading>Error</Alert.Heading>
+          <p>{modal.text}</p>
+        </Alert>
+      )}
     </form>
   );
 }

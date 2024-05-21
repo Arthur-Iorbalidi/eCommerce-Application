@@ -1,10 +1,12 @@
-import RegistrationForm from './components/registrationForm/registrationFrom';
+import RegistrationForm from './components/registrationForm/registrationForm';
 import styles from './registration.module.scss';
 
 function Registration() {
   return (
     <div className={styles.registration_container}>
-      <RegistrationForm />
+      <div className={styles.wrapper}>
+        <RegistrationForm />
+      </div>
     </div>
   );
 }

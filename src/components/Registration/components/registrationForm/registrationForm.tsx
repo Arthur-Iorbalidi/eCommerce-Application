@@ -8,15 +8,16 @@ import { LiaCitySolid } from 'react-icons/lia';
 import { IoMdMail } from 'react-icons/io';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
+import Alert from 'react-bootstrap/Alert';
 import { useState } from 'react';
+import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
+import { activateAuthorizationState } from '../../../../store/reducers/authorizationState';
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
 import styles from './registrationForm.module.scss';
 // api
-import {
-  ApiRegistrationFields,
-  createNewUser,
-} from '../../../../services/api/actions';
+import createNewUser from '../../../../services/api/actions/createNewUser';
+import { ApiRegistrationFields } from '../../../../services/api/types';
 
 interface RegistrationFormFields {
   firstName: string;
@@ -44,7 +45,12 @@ const countries: CountryRegex = {
   BY: /^\d{6}$/,
 };
 
-function transformData(isAlsoBilling: boolean, data: RegistrationFormFields) {
+function transformData(
+  isAlsoBilling: boolean,
+  isDefaultBilling: boolean,
+  isDefaultShipping: boolean,
+  data: RegistrationFormFields,
+) {
   return {
     email: data.email,
     password: data.password,
@@ -67,18 +73,44 @@ function transformData(isAlsoBilling: boolean, data: RegistrationFormFields) {
         country: isAlsoBilling ? data.country : data.countryBilling,
       },
     ],
+    billingAddresses: [1],
+    shippingAddresses: [0],
+    ...(isDefaultBilling ? { defaultBillingAddress: 1 } : {}),
+    ...(isDefaultShipping ? { defaultShippingAddress: 0 } : {}),
   };
 }
 
 function RegistrationForm() {
   const navigate = useNavigate();
-  const errorHandler = () => 'asd'; // ТУТ ПИШИ КОЛЛБЭК ДЛЯ СТЕЙТА
+  const dispatch = useAppDispatch();
+  const [modal, setModal] = useState({
+    isShowed: false,
+    text: '',
+  });
+  const successUserReg = () => {
+    navigate('/');
+    dispatch(activateAuthorizationState(true));
+  };
+  const errorUserReg = (message: string | undefined) => {
+    if (message) {
+      setModal(() => {
+        return {
+          isShowed: true,
+          text: message,
+        };
+      });
+    }
+  };
 
   const [isAlsoBilling, setIsAlsoBilling] = useState(false);
 
   const [currentCountryShipping, setCurrentCountryShipping] = useState('US');
 
   const [currentCountryBilling, setCurrentCountryBilling] = useState('US');
+
+  const [isDefaultBilling, setIsDefaultBilling] = useState(false);
+
+  const [isDefaultShipping, setIsDefaultShipping] = useState(false);
 
   const validationSchema = yup.object().shape({
     firstName: yup
@@ -209,15 +241,16 @@ function RegistrationForm() {
   const onSubmit: SubmitHandler<RegistrationFormFields> = (
     data: RegistrationFormFields,
   ) => {
-    const transformedData = transformData(isAlsoBilling, data);
+    const transformedData = transformData(
+      isAlsoBilling,
+      isDefaultBilling,
+      isDefaultShipping,
+      data,
+    );
     createNewUser(
       transformedData as ApiRegistrationFields,
-      () => {
-        navigate('/login');
-      },
-      () => {
-        errorHandler();
-      },
+      successUserReg,
+      errorUserReg,
     );
     reset();
   };
@@ -319,8 +352,12 @@ function RegistrationForm() {
       </Form.Select>
 
       <div className={styles.isDefaultShipping}>
-        <input type="checkbox" />
-        <span>Set as default adress</span>
+        <input
+          type="checkbox"
+          checked={isDefaultShipping}
+          onChange={(event) => setIsDefaultShipping(event.target.checked)}
+        />
+        <span>Set as default address</span>
       </div>
 
       <div className={styles.isBilling}>
@@ -329,7 +366,7 @@ function RegistrationForm() {
           checked={isAlsoBilling}
           onChange={(event) => setIsAlsoBilling(event.target.checked)}
         />
-        <span>Else use as a billing address</span>
+        <span>Also use as a billing address</span>
       </div>
 
       {!isAlsoBilling && (
@@ -371,7 +408,11 @@ function RegistrationForm() {
           </Form.Select>
 
           <div className={styles.isDefaultShipping}>
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={isDefaultBilling}
+              onChange={(event) => setIsDefaultBilling(event.target.checked)}
+            />
             <span>Set as default adress</span>
           </div>
         </>
@@ -384,6 +425,19 @@ function RegistrationForm() {
           <Link to="/login">Sign in</Link>
         </p>
       </div>
+
+      {modal.isShowed && (
+        <Alert
+          variant="danger"
+          onClose={() => {
+            setModal({ isShowed: false, text: '' });
+          }}
+          dismissible
+        >
+          <Alert.Heading>Error</Alert.Heading>
+          <p>{modal.text}</p>
+        </Alert>
+      )}
     </form>
   );
 }
