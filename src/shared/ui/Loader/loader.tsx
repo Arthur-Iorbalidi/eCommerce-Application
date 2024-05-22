@@ -6,17 +6,14 @@ interface LoaderProps {
   height?: number;
 }
 
-const Loader: FC<LoaderProps> = ({
-  width = 100,
-  height = 100,
-}: LoaderProps) => (
+const Loader: FC<LoaderProps> = ({ width = 15, height = 15 }: LoaderProps) => (
   <div>
     <img
       src={LoaderSvg}
       alt="Loader"
       style={{
-        width: `${width}px`,
-        height: `${height}px`,
+        width: `${width}rem`,
+        height: `${height}rem`,
       }}
     />
   </div>

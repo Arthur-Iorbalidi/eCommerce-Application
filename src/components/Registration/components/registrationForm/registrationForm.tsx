@@ -14,6 +14,7 @@ import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
 import { activateAuthorizationState } from '../../../../store/reducers/authorizationState';
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
+import Loader from '../../../../shared/ui/Loader/loader';
 import styles from './registrationForm.module.scss';
 // api
 import createNewUser from '../../../../services/api/actions/createNewUser';
@@ -87,11 +88,17 @@ function RegistrationForm() {
     isShowed: false,
     text: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
+
   const successUserReg = () => {
+    setIsLoading(false);
     navigate('/');
     dispatch(activateAuthorizationState(true));
   };
+
   const errorUserReg = (message: string | undefined) => {
+    setIsLoading(false);
+
     if (message) {
       setModal(() => {
         return {
@@ -241,6 +248,7 @@ function RegistrationForm() {
   const onSubmit: SubmitHandler<RegistrationFormFields> = (
     data: RegistrationFormFields,
   ) => {
+    setIsLoading(true);
     const transformedData = transformData(
       isAlsoBilling,
       isDefaultBilling,
@@ -268,177 +276,185 @@ function RegistrationForm() {
   };
 
   return (
-    <form
-      className={styles.registration_form}
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <h2>Create account:</h2>
-
-      <Input
-        {...register('firstName')}
-        icon={<BsPersonFill />}
-        placeholder="First Name"
-        error={Boolean(errors?.firstName?.message)}
-        helperText={String(errors?.firstName?.message ?? '')}
-      />
-
-      <Input
-        {...register('lastName')}
-        icon={<BsPersonFill />}
-        placeholder="Last name"
-        error={Boolean(errors?.lastName?.message)}
-        helperText={String(errors?.lastName?.message ?? '')}
-      />
-
-      <Input
-        {...register('email')}
-        icon={<BsEnvelopeFill />}
-        placeholder="E-mail"
-        error={Boolean(errors?.email?.message)}
-        helperText={String(errors?.email?.message ?? '')}
-      />
-
-      <Input
-        {...register('password')}
-        icon={<BsPersonFillLock />}
-        placeholder="Password"
-        isSecretInput
-        error={Boolean(errors?.password?.message)}
-        helperText={String(errors?.password?.message ?? '')}
-      />
-
-      <Input
-        {...register('birthDate')}
-        icon={<FaCalendarAlt />}
-        placeholder="Birth date"
-        error={Boolean(errors?.birthDate?.message)}
-        helperText={String(errors?.birthDate?.message ?? '')}
-      />
-
-      <h3 className={styles.addresses}>Shipping address</h3>
-
-      <Input
-        {...register('streetName')}
-        icon={<FaMapMarkerAlt />}
-        placeholder="Street Name"
-        error={Boolean(errors?.streetName?.message)}
-        helperText={String(errors?.streetName?.message ?? '')}
-      />
-
-      <Input
-        {...register('city')}
-        icon={<LiaCitySolid />}
-        placeholder="City"
-        error={Boolean(errors?.city?.message)}
-        helperText={String(errors?.city?.message ?? '')}
-      />
-
-      <Input
-        {...register('postalCode')}
-        icon={<IoMdMail />}
-        placeholder="Postal Code"
-        error={Boolean(errors?.postalCode?.message)}
-        helperText={String(errors?.postalCode?.message ?? '')}
-      />
-
-      <Form.Select
-        {...register('country')}
-        onChange={handleCountryShippingChange}
-        className={styles.country}
+    <>
+      <form
+        className={styles.registration_form}
+        onSubmit={handleSubmit(onSubmit)}
       >
-        {Object.keys(countries).map((countryCode) => (
-          <option key={countryCode}>{countryCode}</option>
-        ))}
-      </Form.Select>
+        <h2>Create account:</h2>
 
-      <div className={styles.isDefaultShipping}>
-        <input
-          type="checkbox"
-          checked={isDefaultShipping}
-          onChange={(event) => setIsDefaultShipping(event.target.checked)}
+        <Input
+          {...register('firstName')}
+          icon={<BsPersonFill />}
+          placeholder="First Name"
+          error={Boolean(errors?.firstName?.message)}
+          helperText={String(errors?.firstName?.message ?? '')}
         />
-        <span>Set as default address</span>
-      </div>
 
-      <div className={styles.isBilling}>
-        <input
-          type="checkbox"
-          checked={isAlsoBilling}
-          onChange={(event) => setIsAlsoBilling(event.target.checked)}
+        <Input
+          {...register('lastName')}
+          icon={<BsPersonFill />}
+          placeholder="Last name"
+          error={Boolean(errors?.lastName?.message)}
+          helperText={String(errors?.lastName?.message ?? '')}
         />
-        <span>Also use as a billing address</span>
-      </div>
 
-      {!isAlsoBilling && (
-        <>
-          <h3 className={styles.addresses}>Billing address</h3>
+        <Input
+          {...register('email')}
+          icon={<BsEnvelopeFill />}
+          placeholder="E-mail"
+          error={Boolean(errors?.email?.message)}
+          helperText={String(errors?.email?.message ?? '')}
+        />
 
-          <Input
-            {...register('streetNameBilling')}
-            icon={<FaMapMarkerAlt />}
-            placeholder="Street Name"
-            error={Boolean(errors?.streetNameBilling?.message)}
-            helperText={String(errors?.streetNameBilling?.message ?? '')}
-          />
+        <Input
+          {...register('password')}
+          icon={<BsPersonFillLock />}
+          placeholder="Password"
+          isSecretInput
+          error={Boolean(errors?.password?.message)}
+          helperText={String(errors?.password?.message ?? '')}
+        />
 
-          <Input
-            {...register('cityBilling')}
-            icon={<LiaCitySolid />}
-            placeholder="City"
-            error={Boolean(errors?.cityBilling?.message)}
-            helperText={String(errors?.cityBilling?.message ?? '')}
-          />
+        <Input
+          {...register('birthDate')}
+          icon={<FaCalendarAlt />}
+          placeholder="Birth date"
+          error={Boolean(errors?.birthDate?.message)}
+          helperText={String(errors?.birthDate?.message ?? '')}
+        />
 
-          <Input
-            {...register('postalCodeBilling')}
-            icon={<IoMdMail />}
-            placeholder="Postal Code"
-            error={Boolean(errors?.postalCodeBilling?.message)}
-            helperText={String(errors?.postalCodeBilling?.message ?? '')}
-          />
+        <h3 className={styles.addresses}>Shipping address</h3>
 
-          <Form.Select
-            {...register('countryBilling')}
-            onChange={handleCountryBillingChange}
-            className={styles.country}
-          >
-            {Object.keys(countries).map((countryCode) => (
-              <option key={countryCode}>{countryCode}</option>
-            ))}
-          </Form.Select>
+        <Input
+          {...register('streetName')}
+          icon={<FaMapMarkerAlt />}
+          placeholder="Street Name"
+          error={Boolean(errors?.streetName?.message)}
+          helperText={String(errors?.streetName?.message ?? '')}
+        />
 
-          <div className={styles.isDefaultShipping}>
-            <input
-              type="checkbox"
-              checked={isDefaultBilling}
-              onChange={(event) => setIsDefaultBilling(event.target.checked)}
-            />
-            <span>Set as default adress</span>
-          </div>
-        </>
-      )}
+        <Input
+          {...register('city')}
+          icon={<LiaCitySolid />}
+          placeholder="City"
+          error={Boolean(errors?.city?.message)}
+          helperText={String(errors?.city?.message ?? '')}
+        />
 
-      <div>
-        <Button value="Sign Up" color="green" type="submit" />
-        <p>
-          Already have an account?
-          <Link to="/login">Sign in</Link>
-        </p>
-      </div>
+        <Input
+          {...register('postalCode')}
+          icon={<IoMdMail />}
+          placeholder="Postal Code"
+          error={Boolean(errors?.postalCode?.message)}
+          helperText={String(errors?.postalCode?.message ?? '')}
+        />
 
-      {modal.isShowed && (
-        <Alert
-          variant="danger"
-          onClose={() => {
-            setModal({ isShowed: false, text: '' });
-          }}
-          dismissible
+        <Form.Select
+          {...register('country')}
+          onChange={handleCountryShippingChange}
+          className={styles.country}
         >
-          <Alert.Heading>Error</Alert.Heading>
-          <p>{modal.text}</p>
-        </Alert>
+          {Object.keys(countries).map((countryCode) => (
+            <option key={countryCode}>{countryCode}</option>
+          ))}
+        </Form.Select>
+
+        <div className={styles.isDefaultShipping}>
+          <input
+            type="checkbox"
+            checked={isDefaultShipping}
+            onChange={(event) => setIsDefaultShipping(event.target.checked)}
+          />
+          <span>Set as default address</span>
+        </div>
+
+        <div className={styles.isBilling}>
+          <input
+            type="checkbox"
+            checked={isAlsoBilling}
+            onChange={(event) => setIsAlsoBilling(event.target.checked)}
+          />
+          <span>Also use as a billing address</span>
+        </div>
+
+        {!isAlsoBilling && (
+          <>
+            <h3 className={styles.addresses}>Billing address</h3>
+
+            <Input
+              {...register('streetNameBilling')}
+              icon={<FaMapMarkerAlt />}
+              placeholder="Street Name"
+              error={Boolean(errors?.streetNameBilling?.message)}
+              helperText={String(errors?.streetNameBilling?.message ?? '')}
+            />
+
+            <Input
+              {...register('cityBilling')}
+              icon={<LiaCitySolid />}
+              placeholder="City"
+              error={Boolean(errors?.cityBilling?.message)}
+              helperText={String(errors?.cityBilling?.message ?? '')}
+            />
+
+            <Input
+              {...register('postalCodeBilling')}
+              icon={<IoMdMail />}
+              placeholder="Postal Code"
+              error={Boolean(errors?.postalCodeBilling?.message)}
+              helperText={String(errors?.postalCodeBilling?.message ?? '')}
+            />
+
+            <Form.Select
+              {...register('countryBilling')}
+              onChange={handleCountryBillingChange}
+              className={styles.country}
+            >
+              {Object.keys(countries).map((countryCode) => (
+                <option key={countryCode}>{countryCode}</option>
+              ))}
+            </Form.Select>
+
+            <div className={styles.isDefaultShipping}>
+              <input
+                type="checkbox"
+                checked={isDefaultBilling}
+                onChange={(event) => setIsDefaultBilling(event.target.checked)}
+              />
+              <span>Set as default adress</span>
+            </div>
+          </>
+        )}
+
+        <div>
+          <Button value="Sign Up" color="green" type="submit" />
+          <p>
+            Already have an account?
+            <Link to="/login">Sign in</Link>
+          </p>
+        </div>
+
+        {modal.isShowed && (
+          <Alert
+            variant="danger"
+            onClose={() => {
+              setModal({ isShowed: false, text: '' });
+            }}
+            dismissible
+          >
+            <Alert.Heading>Error</Alert.Heading>
+            <p>{modal.text}</p>
+          </Alert>
+        )}
+      </form>
+
+      {isLoading && (
+        <div className={styles.loader_container}>
+          <Loader />
+        </div>
       )}
-    </form>
+    </>
   );
 }
 
