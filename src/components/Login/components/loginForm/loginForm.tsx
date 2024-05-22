@@ -11,7 +11,7 @@ import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
 import styles from './loginForm.module.scss';
 // api
-import { logInUser } from '../../../../services/api/actions';
+import logInUser from '../../../../services/api/actions/logInUser';
 
 interface LoginFormFields {
   email: string;
@@ -53,6 +53,24 @@ const validationSchema = yup.object().shape({
 function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [modal, setModal] = useState({
+    isShowed: false,
+    text: '',
+  });
+  const successUserReg = () => {
+    navigate('/');
+    dispatch(activateAuthorizationState(true));
+  };
+  const errorUserReg = (message: string | undefined) => {
+    if (message) {
+      setModal(() => {
+        return {
+          isShowed: true,
+          text: message,
+        };
+      });
+    }
+  };
 
   const {
     register,
@@ -61,28 +79,8 @@ function LoginForm() {
     reset,
   } = useForm({ resolver: yupResolver(validationSchema), mode: 'onChange' });
 
-  const [modal, setModal] = useState({
-    isShowed: false,
-    text: '',
-  });
-
   const onSubmit: SubmitHandler<LoginFormFields> = (data: LoginFormFields) => {
-    logInUser(
-      data.email,
-      data.password,
-      () => {
-        navigate('/');
-        dispatch(activateAuthorizationState(true));
-      },
-      (message: string) => {
-        setModal(() => {
-          return {
-            isShowed: true,
-            text: message,
-          };
-        });
-      },
-    );
+    logInUser(data.email, data.password, successUserReg, errorUserReg);
     reset();
   };
 

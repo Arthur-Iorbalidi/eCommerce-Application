@@ -7,6 +7,7 @@ import { activateAuthorizationState } from '../../../../../../store/reducers/aut
 
 import NavBar from '../navBar/navBar';
 import Button from '../../../../../../shared/ui/Button/Button';
+import checkToken from '../../../../../../services/api/actions/checkToken';
 
 interface Props {
   position: 'top' | 'side';
@@ -19,6 +20,10 @@ export default function TopMenu({ position }: Props) {
   const authorizationState = useAppSelector(
     (state) => state.authorizationStateReducer.isAuthorized,
   );
+
+  function authCheckCallback(value: boolean) {
+    dispatch(activateAuthorizationState(value));
+  }
 
   return (
     <div className="main-page_header_wrapper">
@@ -48,7 +53,8 @@ export default function TopMenu({ position }: Props) {
             color="green"
             className="header-button"
             onClick={() => {
-              dispatch(activateAuthorizationState(false));
+              localStorage.removeItem('token');
+              checkToken(authCheckCallback);
             }}
           />
         )}

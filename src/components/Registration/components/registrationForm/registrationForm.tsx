@@ -16,10 +16,8 @@ import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
 import styles from './registrationForm.module.scss';
 // api
-import {
-  ApiRegistrationFields,
-  createNewUser,
-} from '../../../../services/api/actions';
+import createNewUser from '../../../../services/api/actions/createNewUser';
+import { ApiRegistrationFields } from '../../../../services/api/types';
 
 interface RegistrationFormFields {
   firstName: string;
@@ -85,11 +83,24 @@ function transformData(
 function RegistrationForm() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
   const [modal, setModal] = useState({
     isShowed: false,
     text: '',
   });
+  const successUserReg = () => {
+    navigate('/');
+    dispatch(activateAuthorizationState(true));
+  };
+  const errorUserReg = (message: string | undefined) => {
+    if (message) {
+      setModal(() => {
+        return {
+          isShowed: true,
+          text: message,
+        };
+      });
+    }
+  };
 
   const [isAlsoBilling, setIsAlsoBilling] = useState(false);
 
@@ -238,18 +249,8 @@ function RegistrationForm() {
     );
     createNewUser(
       transformedData as ApiRegistrationFields,
-      () => {
-        navigate('/');
-        dispatch(activateAuthorizationState(true));
-      },
-      (message: string) => {
-        setModal(() => {
-          return {
-            isShowed: true,
-            text: message,
-          };
-        });
-      },
+      successUserReg,
+      errorUserReg,
     );
     reset();
   };

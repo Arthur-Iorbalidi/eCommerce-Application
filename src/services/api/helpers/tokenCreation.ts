@@ -7,7 +7,7 @@ import {
   TokenCacheOptions,
 } from '@commercetools/sdk-client-v2';
 
-const ANONYMOUS_TOKEN_STORAGE_KEY = 'ct-anonymous-token';
+const ANONYMOUS_TOKEN_STORAGE_KEY = 'token';
 
 export default function makePersistentTokenCache(): TokenCache {
   let current: TokenStore | object = {};
