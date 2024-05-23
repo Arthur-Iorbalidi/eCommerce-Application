@@ -90,25 +90,6 @@ function RegistrationForm() {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const successUserReg = () => {
-    setIsLoading(false);
-    navigate('/');
-    dispatch(activateAuthorizationState(true));
-  };
-
-  const errorUserReg = (message: string | undefined) => {
-    setIsLoading(false);
-
-    if (message) {
-      setModal(() => {
-        return {
-          isShowed: true,
-          text: message,
-        };
-      });
-    }
-  };
-
   const [isAlsoBilling, setIsAlsoBilling] = useState(false);
 
   const [currentCountryShipping, setCurrentCountryShipping] = useState('US');
@@ -245,6 +226,26 @@ function RegistrationForm() {
     reset,
   } = useForm({ resolver: yupResolver(validationSchema), mode: 'onChange' });
 
+  const successUserReg = () => {
+    reset();
+    setIsLoading(false);
+    navigate('/');
+    dispatch(activateAuthorizationState(true));
+  };
+
+  const errorUserReg = (message: string | undefined) => {
+    setIsLoading(false);
+
+    if (message) {
+      setModal(() => {
+        return {
+          isShowed: true,
+          text: message,
+        };
+      });
+    }
+  };
+
   const onSubmit: SubmitHandler<RegistrationFormFields> = (
     data: RegistrationFormFields,
   ) => {
@@ -260,7 +261,6 @@ function RegistrationForm() {
       successUserReg,
       errorUserReg,
     );
-    reset();
   };
 
   const handleCountryShippingChange = (
