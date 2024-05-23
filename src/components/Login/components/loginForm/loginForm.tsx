@@ -60,7 +60,15 @@ function LoginForm() {
   });
   const [isLoading, setIsLoading] = useState(false);
 
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm({ resolver: yupResolver(validationSchema), mode: 'onChange' });
+
   const successUserReg = () => {
+    reset();
     setIsLoading(false);
     navigate('/');
     dispatch(activateAuthorizationState(true));
@@ -79,17 +87,9 @@ function LoginForm() {
     }
   };
 
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    reset,
-  } = useForm({ resolver: yupResolver(validationSchema), mode: 'onChange' });
-
   const onSubmit: SubmitHandler<LoginFormFields> = (data: LoginFormFields) => {
     setIsLoading(true);
     logInUser(data.email, data.password, successUserReg, errorUserReg);
-    reset();
   };
 
   return (
