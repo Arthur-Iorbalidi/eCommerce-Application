@@ -13,7 +13,7 @@ import Alert from 'react-bootstrap/Alert';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import moment, { Moment } from 'moment';
 import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
 import { activateAuthorizationState } from '../../../../store/reducers/authorizationState';
@@ -172,6 +172,8 @@ function RegistrationForm() {
     return selectedDate.isSameOrBefore(today);
   };
 
+  const inputRef = useRef(null);
+
   return (
     <>
       <form
@@ -219,6 +221,7 @@ function RegistrationForm() {
           render={({ field }) => (
             <Datetime
               {...field}
+              ref={inputRef}
               isValidDate={isValidDate}
               className={styles.rdtPicker}
               timeFormat={false}
@@ -235,6 +238,7 @@ function RegistrationForm() {
                   placeholder="Birth date"
                   error={Boolean(errors?.birthDate?.message)}
                   helperText={String(errors?.birthDate?.message ?? '')}
+                  readOnly
                   {...props}
                 />
               )}
