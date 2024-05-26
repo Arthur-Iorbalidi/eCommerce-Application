@@ -26,7 +26,7 @@
   }
 
   .country {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1019607843);
+    box-shadow: $box-shadow-smallGrey;
     font-size: 1.6rem;
   }
 
@@ -36,8 +36,21 @@
     gap: 10px;
   }
 
-  input {
+  input,
+  span,
+  option {
     font-size: 1.6rem;
+  }
+
+  select {
+    border: none;
+    outline: none;
+    min-height: 30px;
+    border-radius: 15px;
+  }
+
+  select:focus {
+    box-shadow: $box-shadow-smallGreen;
   }
 
   button {
@@ -60,6 +73,17 @@
         color: $secondaryColor;
       }
     }
+  }
+
+  .rdtPicker td,
+  .rdtPicker th {
+    max-width: 300px !important;
+    height: 1.2rem !important;
+    font-size: 1.5rem !important;
+  }
+
+  .rdtPicker div {
+    border-radius: 15px !important;
   }
 }
 
