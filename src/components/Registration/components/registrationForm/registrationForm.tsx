@@ -1,21 +1,30 @@
-/* eslint-disable @typescript-eslint/indent */
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+
 import { BsEnvelopeFill, BsPersonFillLock, BsPersonFill } from 'react-icons/bs';
 import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
 import { LiaCitySolid } from 'react-icons/lia';
 import { IoMdMail } from 'react-icons/io';
-import { Link, useNavigate } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import Alert from 'react-bootstrap/Alert';
-import { useState } from 'react';
+
+import Datetime from 'react-datetime';
+import 'react-datetime/css/react-datetime.css';
+
+import { useEffect, useState } from 'react';
+import moment, { Moment } from 'moment';
 import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
 import { activateAuthorizationState } from '../../../../store/reducers/authorizationState';
+
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
 import Loader from '../../../../shared/ui/Loader/loader';
 import styles from './registrationForm.module.scss';
+
+import getValidationSchema, { countries } from './validationSchema';
+
 // api
 import createNewUser from '../../../../services/api/actions/createNewUser';
 import { ApiRegistrationFields } from '../../../../services/api/types';
@@ -35,16 +44,6 @@ interface RegistrationFormFields {
   postalCodeBilling?: string | unknown;
   countryBilling?: string | unknown;
 }
-
-interface CountryRegex {
-  [key: string]: RegExp;
-}
-
-const countries: CountryRegex = {
-  US: /^([0-9]{5})(?:-([0-9]{4}))?$/,
-  RU: /^\d{6}$/,
-  BY: /^\d{6}$/,
-};
 
 function transformData(
   isAlsoBilling: boolean,
@@ -100,127 +99,21 @@ function RegistrationForm() {
 
   const [isDefaultShipping, setIsDefaultShipping] = useState(false);
 
-  const validationSchema = yup.object().shape({
-    firstName: yup
-      .string()
-      .required('Name is required')
-      .matches(
-        /^[^!@#$%^&*()_\-=+~`[\]{}|\\;:,.<>/?0-9]+$/,
-        "Shouldn't contain special characters and numbers",
-      ),
+  const [today, setToday] = useState(moment());
 
-    lastName: yup
-      .string()
-      .required('Last name is required')
-      .matches(
-        /^[^!@#$%^&*()_\-=+~`[\]{}|\\;:,.<>/?0-9]+$/,
-        "Shouldn't contain special characters and numbers",
-      ),
+  useEffect(() => {
+    setToday(moment());
+  }, []);
 
-    email: yup
-      .string()
-      .required('Email is required')
-      .matches(/^[^\s]*$/, "Email mustn't contain spaces")
-      .test('containsAtSymbol', 'Email must contain @ symbol', (value) => {
-        const atRegex = /@/;
-        return atRegex.test(value);
-      })
-      .test('domain', 'Email must contain a domain name', (value) => {
-        const domainRegex = /@[^\s@]+\.[^\s@]+$/;
-        return domainRegex.test(value);
-      })
-      .email('Email is invalid'),
-
-    password: yup
-      .string()
-      .required('Password is required')
-      .matches(/^[^\s]*$/, "Password mustn't contain spaces")
-      .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
-      .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
-      .matches(/[0-9]/, 'Password must contain at least one digit')
-      .test(
-        'specialChar',
-        'Password must contain at least one special character',
-        (value) => {
-          const specialCharRegex = /[@#$%^&*-+]/;
-          return specialCharRegex.test(value);
-        },
-      )
-      .min(8, 'Password must be at least 8 characters'),
-
-    birthDate: yup
-      .string()
-      .required('Birth date is required')
-      .matches(/^\d{4}-\d{2}-\d{2}$/, 'yyyy-mm-dd')
-      .test('age', 'You must be at least 16 years old', (value) => {
-        const birthDate = new Date(value);
-        const now = new Date();
-
-        const ageDiff = now.getTime() - birthDate.getTime();
-        const ageDate = new Date(ageDiff);
-
-        const age = Math.abs(ageDate.getUTCFullYear() - 1970);
-
-        return age >= 16;
-      }),
-
-    streetName: yup.string().required('Street Name is required'),
-
-    city: yup
-      .string()
-      .required('City is required')
-      .matches(
-        /^[^!@#$%^&*()_\-=+~`[\]{}|\\;:,.<>/?0-9]+$/,
-        "Shouldn't contain special characters and numbers",
-      ),
-
-    postalCode: yup
-      .string()
-      .required('Postal Code is required')
-      .test('postal', 'Postal code should be valid', (value) => {
-        return countries[currentCountryShipping].test(value);
-      }),
-
-    country: yup.string().required('Country is required'),
-
-    ...(!isAlsoBilling
-      ? {
-          streetNameBilling: yup.string().required('Street Name is required'),
-        }
-      : {}),
-
-    ...(!isAlsoBilling
-      ? {
-          cityBilling: yup
-            .string()
-            .required('City is required')
-            .matches(
-              /^[^!@#$%^&*()_\-=+~`[\]{}|\\;:,.<>/?0-9]+$/,
-              "Shouldn't contain special characters and numbers",
-            ),
-        }
-      : {}),
-
-    ...(!isAlsoBilling
-      ? {
-          postalCodeBilling: yup
-            .string()
-            .required('Postal Code is required')
-            .test('postal', 'Postal code should be valid', (value) => {
-              return countries[currentCountryBilling].test(value);
-            }),
-        }
-      : {}),
-
-    ...(!isAlsoBilling
-      ? {
-          countryBilling: yup.string().required('Country is required'),
-        }
-      : {}),
-  });
+  const validationSchema = getValidationSchema(
+    isAlsoBilling,
+    currentCountryShipping,
+    currentCountryBilling,
+  );
 
   const {
     register,
+    control,
     formState: { errors },
     handleSubmit,
     reset,
@@ -275,6 +168,10 @@ function RegistrationForm() {
     setCurrentCountryBilling(event.target.value);
   };
 
+  const isValidDate = (selectedDate: Moment) => {
+    return selectedDate.isSameOrBefore(today);
+  };
+
   return (
     <>
       <form
@@ -316,12 +213,33 @@ function RegistrationForm() {
           helperText={String(errors?.password?.message ?? '')}
         />
 
-        <Input
-          {...register('birthDate')}
-          icon={<FaCalendarAlt />}
-          placeholder="Birth date"
-          error={Boolean(errors?.birthDate?.message)}
-          helperText={String(errors?.birthDate?.message ?? '')}
+        <Controller
+          name="birthDate"
+          control={control}
+          render={({ field }) => (
+            <Datetime
+              {...field}
+              isValidDate={isValidDate}
+              className={styles.rdtPicker}
+              timeFormat={false}
+              dateFormat="YYYY-MM-DD"
+              closeOnSelect
+              closeOnClickOutside
+              locale="en-US"
+              onChange={(date) => {
+                field.onChange(moment(date).format('YYYY-MM-DD'));
+              }}
+              renderInput={(props) => (
+                <Input
+                  icon={<FaCalendarAlt />}
+                  placeholder="Birth date"
+                  error={Boolean(errors?.birthDate?.message)}
+                  helperText={String(errors?.birthDate?.message ?? '')}
+                  {...props}
+                />
+              )}
+            />
+          )}
         />
 
         <h3 className={styles.addresses}>Shipping address</h3>
@@ -422,7 +340,7 @@ function RegistrationForm() {
                 checked={isDefaultBilling}
                 onChange={(event) => setIsDefaultBilling(event.target.checked)}
               />
-              <span>Set as default adress</span>
+              <span>Set as default address</span>
             </div>
           </>
         )}
