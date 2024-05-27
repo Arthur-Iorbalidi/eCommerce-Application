@@ -1,7 +1,7 @@
 import { BaseAddress } from '@commercetools/platform-sdk';
 import { projectKey } from './index';
 import zeroClientApi from './ZeroClient';
-import authClientApi from './AuthedClient';
+// import authClientApi from './AuthedClient';
 
 export interface ApiRegistrationFields {
   email: string;
