@@ -26,7 +26,7 @@ export default function TopMenu({ position }: Props) {
   }
 
   return (
-    <div className="main-page_header_wrapper">
+    <div data-testid="top_menu" className="main-page_header_wrapper">
       <NavBar position={position} />
       <div className={`main-page_header_wrapper-all_buttons ${position}`}>
         {!authorizationState ? (

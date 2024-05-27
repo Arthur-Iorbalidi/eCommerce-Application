@@ -14,7 +14,7 @@ export default function Main() {
   );
 
   return (
-    <div className="main-page">
+    <div data-testid="main" className="main-page">
       <Header />
       <Routes>
         <Route index element={<div>Main</div>} />

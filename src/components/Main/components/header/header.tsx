@@ -27,7 +27,7 @@ export default function Header() {
   }, [currentWindowWidth, dispatch]);
 
   return (
-    <div className="main-page_header">
+    <div data-testid="header" className="main-page_header">
       {showSideMenu ? <SideMenu /> : null}
 
       <div className="main-page_header_wrapper-all">
@@ -39,6 +39,7 @@ export default function Header() {
           <TopMenu position="top" />
         ) : (
           <BsList
+            data-testid="burger_menu"
             className="burgerMenu"
             onClick={() => {
               dispatch(activateSideMenu(true));

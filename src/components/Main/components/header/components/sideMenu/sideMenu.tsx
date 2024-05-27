@@ -22,6 +22,7 @@ export default function SideMenu() {
   return (
     <div className="main-page_side-menu">
       <BsXLg
+        data-testid="burger_menu-close"
         className="main-page_side-menu_close"
         onClick={() => {
           dispatch(activateSideMenu(false));

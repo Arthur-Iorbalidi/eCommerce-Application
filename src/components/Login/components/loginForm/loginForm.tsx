@@ -69,7 +69,11 @@ function LoginForm() {
 
   return (
     <>
-      <form className={styles.login_form} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        data-testid="login_form"
+        className={styles.login_form}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <h2>Welcome Back!</h2>
 
         <Input

@@ -177,6 +177,7 @@ function RegistrationForm() {
   return (
     <>
       <form
+        data-testid="registration_form"
         className={styles.registration_form}
         onSubmit={handleSubmit(onSubmit)}
       >
@@ -193,7 +194,7 @@ function RegistrationForm() {
         <Input
           {...register('lastName')}
           icon={<BsPersonFill />}
-          placeholder="Last name"
+          placeholder="Last Name"
           error={Boolean(errors?.lastName?.message)}
           helperText={String(errors?.lastName?.message ?? '')}
         />
