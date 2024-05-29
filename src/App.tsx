@@ -6,7 +6,7 @@ import Main from './components/Main/main';
 import Error from './components/Error/Error';
 // api
 // import { getTokenZero } from './services/api/actions';
-import checkToken from './services/api/actions/checkToken';
+import checkToken from './services/api/auth/checkToken';
 import useAppDispatch from './shared/hooks/useAppDispatch';
 import { activateAuthorizationState } from './store/reducers/authorizationState';
 

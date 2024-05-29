@@ -7,7 +7,7 @@ import { activateAuthorizationState } from '../../../../../../store/reducers/aut
 
 import NavBar from '../navBar/navBar';
 import Button from '../../../../../../shared/ui/Button/Button';
-import checkToken from '../../../../../../services/api/actions/checkToken';
+import checkToken from '../../../../../../services/api/auth/checkToken';
 
 interface Props {
   position: 'top' | 'side';

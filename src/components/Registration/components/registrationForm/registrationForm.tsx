@@ -26,7 +26,7 @@ import styles from './registrationForm.module.scss';
 import getValidationSchema, { countries } from './validationSchema';
 
 // api
-import createNewUser from '../../../../services/api/actions/createNewUser';
+import createNewUser from '../../../../services/api/auth/createNewUser';
 import { ApiRegistrationFields } from '../../../../services/api/types';
 
 interface RegistrationFormFields {

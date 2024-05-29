@@ -16,7 +16,7 @@ import Loader from '../../../../shared/ui/Loader/loader';
 import styles from './loginForm.module.scss';
 
 // api
-import logInUser from '../../../../services/api/actions/logInUser';
+import logInUser from '../../../../services/api/auth/logInUser';
 import getValidationSchema from './validationSchema';
 
 interface LoginFormFields {
