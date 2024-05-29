@@ -1,0 +1,26 @@
+.productItem {
+  border-radius: 15px;
+  border: 2px solid rgb(226, 226, 226);
+  overflow: hidden;
+  background-color: #fff;
+  .photo {
+    width: 100%;
+    border-bottom: 2px solid rgb(226, 226, 226);
+    aspect-ratio: 1/1;
+  }
+  .content {
+    padding: 20px;
+    .usuallPrice {
+      text-decoration: line-through;
+      padding-left: 10px;
+      color: #8b96a5;
+    }
+    .name_link {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+}

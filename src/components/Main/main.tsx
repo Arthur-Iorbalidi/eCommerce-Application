@@ -7,6 +7,7 @@ import Header from './components/header/header';
 import Login from '../Login/login';
 
 import useAppSelector from '../../shared/hooks/useAppSelector';
+import Catalog from './components/Catalog/catalog';
 
 export default function Main() {
   const authorizationState = useAppSelector(
@@ -18,7 +19,7 @@ export default function Main() {
       <Header />
       <Routes>
         <Route index element={<div>Main</div>} />
-        <Route path="catalog" element={<div>Catalog</div>} />
+        <Route path="catalog" element={<Catalog />} />
         <Route path="about-us" element={<div>Amogus</div>} />
         <Route
           path="registration"
