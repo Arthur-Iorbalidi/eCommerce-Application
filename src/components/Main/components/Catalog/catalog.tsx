@@ -6,7 +6,7 @@ import {
 } from '@commercetools/platform-sdk';
 import styles from './catalog.module.scss';
 import getProductsZero from '../../../../services/api/products/getProducts_zero';
-import ProductItem from '../../../../shared/ui/Product/product';
+import ProductItem from '../../../../shared/ui/Product/productItem';
 import Button from '../../../../shared/ui/Button/Button';
 
 function Catalog() {

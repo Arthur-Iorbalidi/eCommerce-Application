@@ -1,6 +1,6 @@
 import { Product } from '@commercetools/platform-sdk';
 import Button from '../Button/Button';
-import styles from './product.module.scss';
+import styles from './productItem.module.scss';
 
 interface Props {
   key: string;
@@ -14,11 +14,13 @@ function ProductItem(product: Props) {
 
   return (
     <div className={styles.productItem}>
-      <img
-        className={styles.photo}
-        src={product.value.masterData.current.masterVariant.images?.[0].url}
-        alt=""
-      />
+      <div className={styles.photoWrapper}>
+        <img
+          className={styles.photo}
+          src={product.value.masterData.current.masterVariant.images?.[0].url}
+          alt=""
+        />
+      </div>
       <div className={styles.content}>
         <div className={styles.prices}>
           <span className={styles.currentPrice}>

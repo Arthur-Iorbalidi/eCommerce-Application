@@ -3,10 +3,13 @@
   border: 2px solid rgb(226, 226, 226);
   overflow: hidden;
   background-color: #fff;
-  .photo {
-    width: 100%;
+  .photoWrapper {
+    padding: 5%;
     border-bottom: 2px solid rgb(226, 226, 226);
-    aspect-ratio: 1/1;
+    .photo {
+      width: 100%;
+      aspect-ratio: 1/1;
+    }
   }
   .content {
     padding: 20px;
