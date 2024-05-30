@@ -1,7 +1,8 @@
+import { ReactNode } from 'react';
 import './Button.scss';
 
 interface Props {
-  value: string;
+  value: string | ReactNode;
   color: 'green' | 'red';
   className?: string | undefined | null;
   type?: 'reset' | 'submit' | 'button' | undefined;
