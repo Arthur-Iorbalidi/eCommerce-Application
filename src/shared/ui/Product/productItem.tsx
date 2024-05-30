@@ -1,4 +1,6 @@
 import { Product } from '@commercetools/platform-sdk';
+import { FaShoppingBasket } from 'react-icons/fa';
+import { ReactNode } from 'react';
 import Button from '../Button/Button';
 import styles from './productItem.module.scss';
 
@@ -46,7 +48,7 @@ function ProductItem(product: Props) {
           <span className={styles.name}>
             {product.value.masterData.current.name.en}
           </span>
-          <Button value="🡢" color="green" />
+          <Button value={(<FaShoppingBasket />) as ReactNode} color="green" />
         </div>
       </div>
     </div>
