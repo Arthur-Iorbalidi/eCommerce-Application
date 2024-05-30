@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Customer } from '@commercetools/platform-sdk';
 
 import { BsEnvelopeFill, BsPersonFillLock, BsPersonFill } from 'react-icons/bs';
 import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
@@ -16,7 +17,10 @@ import 'react-datetime/css/react-datetime.css';
 import { useEffect, useRef, useState } from 'react';
 import moment, { Moment } from 'moment';
 import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
-import { activateAuthorizationState } from '../../../../store/reducers/authorizationState';
+import {
+  activateAuthorizationState,
+  changeUserInfo,
+} from '../../../../store/reducers/authorizationState';
 
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
@@ -119,11 +123,12 @@ function RegistrationForm() {
     reset,
   } = useForm({ resolver: yupResolver(validationSchema), mode: 'onChange' });
 
-  const successUserReg = () => {
+  const successUserReg = (value: Customer) => {
     reset();
     setIsLoading(false);
     navigate('/');
     dispatch(activateAuthorizationState(true));
+    dispatch(changeUserInfo(value));
   };
 
   const errorUserReg = (message: string | undefined) => {

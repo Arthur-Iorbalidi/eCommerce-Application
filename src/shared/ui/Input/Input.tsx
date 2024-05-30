@@ -8,6 +8,7 @@ import styles from './Input.module.scss';
 
 interface InputProps {
   icon?: ReactNode;
+  value?: string;
   placeholder?: string;
   className?: string;
   isSecretInput?: boolean;
@@ -19,6 +20,7 @@ const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
   (props, ref) => {
     const {
       icon,
+      value,
       placeholder,
       className,
       isSecretInput = false,
@@ -52,6 +54,7 @@ const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
           </InputGroup.Text>
           <Form.Control
             ref={ref}
+            value={value}
             className={styles.input}
             type={controlType}
             placeholder={placeholder}

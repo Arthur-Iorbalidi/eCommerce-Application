@@ -1,14 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { Customer } from '@commercetools/platform-sdk';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { BsEnvelopeFill, BsPersonFillLock } from 'react-icons/bs';
 import Alert from 'react-bootstrap/Alert';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
-import { activateAuthorizationState } from '../../../../store/reducers/authorizationState';
+import useAppSelector from '../../../../shared/hooks/useAppSelector';
+import {
+  activateAuthorizationState,
+  changeUserInfo,
+} from '../../../../store/reducers/authorizationState';
 
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
@@ -26,6 +31,11 @@ interface LoginFormFields {
 
 function LoginForm() {
   const navigate = useNavigate();
+
+  // const res = useAppSelector(
+  //   (state) => state.authorizationStateReducer.isAuthorized,
+  // );
+
   const dispatch = useAppDispatch();
   const [modal, setModal] = useState({
     isShowed: false,
@@ -42,11 +52,12 @@ function LoginForm() {
     reset,
   } = useForm({ resolver: yupResolver(validationSchema), mode: 'onChange' });
 
-  const successUserReg = () => {
+  const successUserReg = (value: Customer) => {
     reset();
     setIsLoading(false);
     navigate('/');
     dispatch(activateAuthorizationState(true));
+    dispatch(changeUserInfo(value));
   };
 
   const errorUserReg = (message: string | undefined) => {

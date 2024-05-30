@@ -1,8 +1,10 @@
+import { Customer } from '@commercetools/platform-sdk';
+
 import { projectKey } from '../index';
 import tokenClientApi from '../TokenAuth';
 
 export default function checkToken(
-  resultCallBack: (val: boolean) => void,
+  resultCallBack: (val: boolean, userInfo: Customer | null) => void,
 ): void {
   let userToken: string;
   if (localStorage.getItem('token')) {
@@ -18,15 +20,15 @@ export default function checkToken(
         .execute()
         .then((res) => {
           if (res.statusCode === 200) {
-            resultCallBack(true);
+            resultCallBack(true, res.body);
           } else {
-            resultCallBack(false);
+            resultCallBack(false, null);
           }
         });
     } catch {
-      resultCallBack(false);
+      resultCallBack(false, null);
     }
   } else {
-    resultCallBack(false);
+    resultCallBack(false, null);
   }
 }
