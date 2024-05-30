@@ -1,26 +1,33 @@
-@import '../../../../constants/global.scss';
+@import '../../constants/global.scss';
 
 .registration_form {
   width: 100%;
-  max-width: 380px;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
   gap: 15px;
   padding: 35px 40px;
-  background-color: $secondaryBackgroundColor;
   border-radius: 15px;
+  margin: 0 auto;
 
   h2 {
     font-size: 2.2rem;
     font-weight: 600;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
   }
 
   .addresses {
-    text-align: left;
-    font-size: 1.5rem;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0;
+  }
+
+  .addresses_main {
+    text-align: center;
+    font-size: 1.7rem;
     font-weight: 700;
     margin-bottom: 0;
   }
@@ -97,6 +104,21 @@
   align-items: center;
   justify-content: center;
   z-index: 2;
+}
+
+.profile_string {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & p {
+    margin: 0;
+    font-size: 20px;
+  }
+  & > div,
+  & > select {
+    width: 60%;
+  }
 }
 
 @media (max-width: 768px) {

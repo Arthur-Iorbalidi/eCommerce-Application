@@ -1,3 +1,4 @@
+import { Customer } from '@commercetools/platform-sdk';
 import zeroClientApi from '../ZeroClient';
 import { projectKey } from '../index';
 import getAuthedToken from './getTokenAuthed';
@@ -5,7 +6,7 @@ import getAuthedToken from './getTokenAuthed';
 export default function logInUser(
   email: string,
   password: string,
-  successCallback?: () => void,
+  successCallback?: (value: Customer) => void,
   errorCallback?: (message?: string) => void,
 ) {
   zeroClientApi()
@@ -22,13 +23,17 @@ export default function logInUser(
       if (res.statusCode === 200) {
         getAuthedToken({ username: email, password });
         if (successCallback) {
-          successCallback();
+          successCallback(res.body.customer);
         }
       }
     })
     .catch((res) => {
       if (errorCallback) {
-        errorCallback(res.message);
+        if (res.status === 400) {
+          errorCallback(res.message);
+        } else {
+          errorCallback('Something went wrong, try again later...');
+        }
       }
     });
 }
