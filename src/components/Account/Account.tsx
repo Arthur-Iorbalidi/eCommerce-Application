@@ -192,7 +192,7 @@ function RegistrationForm() {
           <Input
             {...register('firstName')}
             icon={<BsPersonFill />}
-            value={firstName}
+            // value={firstName}
             error={Boolean(errors?.firstName?.message)}
             helperText={String(errors?.firstName?.message ?? '')}
           />
@@ -203,7 +203,7 @@ function RegistrationForm() {
           <Input
             {...register('lastName')}
             icon={<BsPersonFill />}
-            value={lastName}
+            // value={lastName}
             error={Boolean(errors?.lastName?.message)}
             helperText={String(errors?.lastName?.message ?? '')}
           />
@@ -214,7 +214,7 @@ function RegistrationForm() {
           <Input
             {...register('email')}
             icon={<BsEnvelopeFill />}
-            value={email}
+            // value={email}
             error={Boolean(errors?.email?.message)}
             helperText={String(errors?.email?.message ?? '')}
           />
@@ -235,7 +235,7 @@ function RegistrationForm() {
           <p>Birth date:</p>
           <Controller
             name="birthDate"
-            value={dateOfBirth}
+            // value={dateOfBirth}
             control={control}
             render={({ field }) => (
               <Datetime
