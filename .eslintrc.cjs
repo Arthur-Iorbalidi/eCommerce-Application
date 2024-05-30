@@ -50,5 +50,7 @@ module.exports = {
     'react-refresh/only-export-components': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
     'arrow-body-style': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
+    'jsx-a11y/no-static-element-interactions': 'off',
   },
 };
