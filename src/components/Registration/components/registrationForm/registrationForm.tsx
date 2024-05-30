@@ -136,6 +136,10 @@ function RegistrationForm() {
           text: message,
         };
       });
+
+      setTimeout(() => {
+        setModal({ isShowed: false, text: '' });
+      }, 6000);
     }
   };
 

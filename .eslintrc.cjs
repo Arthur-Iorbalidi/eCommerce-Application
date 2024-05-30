@@ -50,6 +50,6 @@ module.exports = {
     'react-refresh/only-export-components': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
     'arrow-body-style': 'off',
-    "react/destructuring-assignment": "off"
+    'react/destructuring-assignment': 'off',
   },
 };
