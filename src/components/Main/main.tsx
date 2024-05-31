@@ -2,13 +2,11 @@ import './main.scss';
 
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import Registration from '../Registration/registration';
 import Header from './components/header/header';
-import Login from '../Login/login';
 import Account from '../Account/Account';
 
 import useAppSelector from '../../shared/hooks/useAppSelector';
-import Catalog from './components/Catalog/catalog';
+import Catalog from '../Catalog/catalog';
 
 export default function Main() {
   const authorizationState = useAppSelector(
