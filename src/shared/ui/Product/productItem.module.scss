@@ -10,7 +10,7 @@
     border-bottom: 2px solid rgb(226, 226, 226);
     &::before {
       transition: 300ms all;
-      content: "";
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
@@ -39,7 +39,7 @@
   }
 }
 
-@media (hover:hover) {
+@media (hover: hover) {
   .productItem:hover {
     .photoWrapper {
       &::before {
