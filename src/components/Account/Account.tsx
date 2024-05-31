@@ -82,9 +82,9 @@ function transformData(
 }
 
 function RegistrationForm() {
-  // const { firstName, lastName, email, dateOfBirth, addresses } = useAppSelector(
-  //   (state) => state.authorizationStateReducer.userInfo,
-  // );
+  const userInfo = useAppSelector(
+    (state) => state.authorizationStateReducer.userInfo,
+  );
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [modal, setModal] = useState({
@@ -114,14 +114,31 @@ function RegistrationForm() {
     currentCountryShipping,
     currentCountryBilling,
   );
-
   const {
     register,
     control,
     formState: { errors },
     handleSubmit,
     reset,
-  } = useForm({ resolver: yupResolver(validationSchema), mode: 'onChange' });
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+    mode: 'onChange',
+    defaultValues: {
+      firstName: userInfo.firstName,
+      lastName: userInfo.lastName,
+      email: userInfo.email,
+      password: '',
+      birthDate: userInfo.dateOfBirth,
+      streetName: userInfo.addresses[0].streetName,
+      city: userInfo.addresses[0].city,
+      postalCode: userInfo.addresses[0].postalCode,
+      country: userInfo.addresses[0].country,
+      streetNameBilling: userInfo.addresses[1].streetName,
+      cityBilling: userInfo.addresses[1].city,
+      postalCodeBilling: userInfo.addresses[1].postalCode,
+      countryBilling: userInfo.addresses[1].country,
+    },
+  });
 
   const successUserReg = () => {
     reset();
@@ -192,7 +209,6 @@ function RegistrationForm() {
           <Input
             {...register('firstName')}
             icon={<BsPersonFill />}
-            // value={firstName}
             error={Boolean(errors?.firstName?.message)}
             helperText={String(errors?.firstName?.message ?? '')}
           />
@@ -203,7 +219,6 @@ function RegistrationForm() {
           <Input
             {...register('lastName')}
             icon={<BsPersonFill />}
-            // value={lastName}
             error={Boolean(errors?.lastName?.message)}
             helperText={String(errors?.lastName?.message ?? '')}
           />
@@ -214,7 +229,6 @@ function RegistrationForm() {
           <Input
             {...register('email')}
             icon={<BsEnvelopeFill />}
-            // value={email}
             error={Boolean(errors?.email?.message)}
             helperText={String(errors?.email?.message ?? '')}
           />
@@ -364,7 +378,7 @@ function RegistrationForm() {
             </div>
 
             <div className={styles.profile_string}>
-              <p>City:</p>
+              <p>Country:</p>
               <Form.Select
                 {...register('countryBilling')}
                 onChange={handleCountryBillingChange}
