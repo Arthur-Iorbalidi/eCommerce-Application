@@ -70,6 +70,10 @@ function LoginForm() {
           text: message,
         };
       });
+
+      setTimeout(() => {
+        setModal({ isShowed: false, text: '' });
+      }, 6000);
     }
   };
 
