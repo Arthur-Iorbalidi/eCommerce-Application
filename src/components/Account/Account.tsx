@@ -27,6 +27,7 @@ import styles from './Account.module.scss';
 import getValidationSchema, { countries } from './validationSchema';
 
 // api
+import changeUserSettings from '../../services/api/userAccount/changeUserSettings';
 import createNewUser from '../../services/api/auth/createNewUser';
 import { ApiRegistrationFields } from '../../services/api/types';
 
@@ -48,8 +49,8 @@ interface RegistrationFormFields {
 
 function transformData(
   isAlsoBilling: boolean,
-  isDefaultBilling: boolean,
-  isDefaultShipping: boolean,
+  // isDefaultBilling: boolean,
+  // isDefaultShipping: boolean,
   data: RegistrationFormFields,
 ) {
   return {
@@ -85,12 +86,20 @@ function RegistrationForm() {
   const userInfo = useAppSelector(
     (state) => state.authorizationStateReducer.userInfo,
   );
-  const navigate = useNavigate();
+  // console.log(userInfo);
+  function changeUser() {
+    const token = JSON.parse(localStorage.getItem('token')).refreshToken;
+    // console.log(JSON.parse(localStorage.getItem('token')).refreshToken);
+    changeUserSettings(token, userInfo.id);
+  }
+  // changeUser();
   const dispatch = useAppDispatch();
+
   const [modal, setModal] = useState({
-    isShowed: false,
-    text: '',
+    isShowed: true,
+    text: 'ErrorHandle',
   });
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [isAlsoBilling, setIsAlsoBilling] = useState(false);
@@ -99,9 +108,9 @@ function RegistrationForm() {
 
   const [currentCountryBilling, setCurrentCountryBilling] = useState('US');
 
-  const [isDefaultBilling, setIsDefaultBilling] = useState(false);
+  // const [isDefaultBilling, setIsDefaultBilling] = useState(false);
 
-  const [isDefaultShipping, setIsDefaultShipping] = useState(false);
+  // const [isDefaultShipping, setIsDefaultShipping] = useState(false);
 
   const [today, setToday] = useState(moment());
 
@@ -110,16 +119,16 @@ function RegistrationForm() {
   }, []);
 
   const validationSchema = getValidationSchema(
-    isAlsoBilling,
+    // isAlsoBilling,
     currentCountryShipping,
     currentCountryBilling,
   );
+
   const {
     register,
     control,
     formState: { errors },
     handleSubmit,
-    reset,
   } = useForm({
     resolver: yupResolver(validationSchema),
     mode: 'onChange',
@@ -141,10 +150,7 @@ function RegistrationForm() {
   });
 
   const successUserReg = () => {
-    reset();
     setIsLoading(false);
-    navigate('/');
-    dispatch(activateAuthorizationState(true));
   };
 
   const errorUserReg = (message: string | undefined) => {
@@ -166,15 +172,11 @@ function RegistrationForm() {
     setIsLoading(true);
     const transformedData = transformData(
       isAlsoBilling,
-      isDefaultBilling,
-      isDefaultShipping,
+      // isDefaultBilling,
+      // isDefaultShipping,
       data,
     );
-    createNewUser(
-      transformedData as ApiRegistrationFields,
-      successUserReg,
-      errorUserReg,
-    );
+    // console.log(data);
   };
 
   const handleCountryShippingChange = (
@@ -195,232 +197,232 @@ function RegistrationForm() {
 
   const inputRef = useRef(null);
 
+  const [activateProfile, changeActivateProfile] = useState(true);
+  const [activatePassword, changeActivatePassword] = useState(true);
+  const [activateShipping, changeShipping] = useState(true);
+  const [activateBilling, changeBilling] = useState(true);
+
   return (
-    <>
-      <form
-        data-testid="registration_form"
-        className={styles.registration_form}
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <h2>My Profile</h2>
+    <form
+      data-testid="ccountInfo"
+      className={styles.registration_form}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <h2>My Profile</h2>
 
-        <div className={styles.profile_string}>
-          <p>First Name:</p>
-          <Input
-            {...register('firstName')}
-            icon={<BsPersonFill />}
-            error={Boolean(errors?.firstName?.message)}
-            helperText={String(errors?.firstName?.message ?? '')}
+      <div className={styles.profile_string}>
+        <p>First Name:</p>
+        <Input
+          {...register('firstName')}
+          icon={<BsPersonFill />}
+          error={Boolean(errors?.firstName?.message)}
+          helperText={String(errors?.firstName?.message ?? '')}
+          disabled={activateProfile}
+        />
+      </div>
+
+      <div className={styles.profile_string}>
+        <p>Last Name:</p>
+        <Input
+          {...register('lastName')}
+          icon={<BsPersonFill />}
+          error={Boolean(errors?.lastName?.message)}
+          helperText={String(errors?.lastName?.message ?? '')}
+          disabled={activateProfile}
+        />
+      </div>
+
+      <div className={styles.profile_string}>
+        <p>E-mail:</p>
+        <Input
+          {...register('email')}
+          icon={<BsEnvelopeFill />}
+          error={Boolean(errors?.email?.message)}
+          helperText={String(errors?.email?.message ?? '')}
+          disabled={activateProfile}
+        />
+      </div>
+
+      <div className={styles.profile_string}>
+        <p>Birth date:</p>
+        <Controller
+          name="birthDate"
+          disabled
+          control={control}
+          render={({ field }) => (
+            <Datetime
+              {...field}
+              ref={inputRef}
+              isValidDate={isValidDate}
+              className={styles.rdtPicker}
+              timeFormat={false}
+              dateFormat="YYYY-MM-DD"
+              closeOnSelect
+              closeOnClickOutside
+              locale="en-US"
+              onChange={(date) => {
+                field.onChange(moment(date).format('YYYY-MM-DD'));
+              }}
+              renderInput={(props) => (
+                <Input
+                  icon={<FaCalendarAlt />}
+                  error={Boolean(errors?.birthDate?.message)}
+                  helperText={String(errors?.birthDate?.message ?? '')}
+                  readOnly
+                  disabled={activateProfile}
+                  {...props}
+                />
+              )}
+            />
+          )}
+        />
+      </div>
+      <Button
+        value={activateProfile ? 'Edit' : 'Ok'}
+        color="green"
+        type="button"
+        onClick={() => changeActivateProfile((state) => !state)}
+      />
+
+      <div className={styles.profile_string}>
+        <p>Password:</p>
+        <Input
+          {...register('password')}
+          icon={<BsPersonFillLock />}
+          isSecretInput
+          error={Boolean(errors?.password?.message)}
+          helperText={String(errors?.password?.message ?? '')}
+          disabled={activatePassword}
+        />
+      </div>
+      <Button
+        value={activatePassword ? 'Edit' : 'Ok'}
+        color="green"
+        type="button"
+        onClick={() => changeActivatePassword((state) => !state)}
+      />
+
+      <h3 className={styles.addresses_main}>Addresses</h3>
+      <h3 className={styles.addresses}>Shipping address</h3>
+
+      <div className={styles.profile_string}>
+        <p>Street Name:</p>
+        <Input
+          {...register('streetName')}
+          icon={<FaMapMarkerAlt />}
+          error={Boolean(errors?.streetName?.message)}
+          helperText={String(errors?.streetName?.message ?? '')}
+          disabled={activateShipping}
+        />
+      </div>
+
+      <div className={styles.profile_string}>
+        <p>City:</p>
+        <Input
+          {...register('city')}
+          icon={<LiaCitySolid />}
+          error={Boolean(errors?.city?.message)}
+          helperText={String(errors?.city?.message ?? '')}
+          disabled={activateShipping}
+        />
+      </div>
+
+      <div className={styles.profile_string}>
+        <p>Postal Code:</p>
+        <Input
+          {...register('postalCode')}
+          icon={<IoMdMail />}
+          error={Boolean(errors?.postalCode?.message)}
+          helperText={String(errors?.postalCode?.message ?? '')}
+          disabled={activateShipping}
+        />
+      </div>
+
+      <div className={styles.profile_string}>
+        <p>Country:</p>
+        <Form.Select
+          {...register('country')}
+          onChange={handleCountryShippingChange}
+          className={styles.country}
+          disabled={activateShipping}
+        >
+          {Object.keys(countries).map((countryCode) => (
+            <option key={countryCode}>{countryCode}</option>
+          ))}
+        </Form.Select>
+      </div>
+      <Button
+        value={activateShipping ? 'Edit' : 'Ok'}
+        color="green"
+        type="button"
+        onClick={() => changeShipping((state) => !state)}
+      />
+
+      {!isAlsoBilling && (
+        <>
+          <h3 className={styles.addresses}>Billing address</h3>
+
+          <div className={styles.profile_string}>
+            <p>Street Name:</p>
+            <Input
+              {...register('streetNameBilling')}
+              icon={<FaMapMarkerAlt />}
+              error={Boolean(errors?.streetNameBilling?.message)}
+              helperText={String(errors?.streetNameBilling?.message ?? '')}
+              disabled={activateBilling}
+            />
+          </div>
+
+          <div className={styles.profile_string}>
+            <p>City:</p>
+            <Input
+              {...register('cityBilling')}
+              icon={<LiaCitySolid />}
+              error={Boolean(errors?.cityBilling?.message)}
+              helperText={String(errors?.cityBilling?.message ?? '')}
+              disabled={activateBilling}
+            />
+          </div>
+
+          <div className={styles.profile_string}>
+            <p>Postal Code:</p>
+            <Input
+              {...register('postalCodeBilling')}
+              icon={<IoMdMail />}
+              error={Boolean(errors?.postalCodeBilling?.message)}
+              helperText={String(errors?.postalCodeBilling?.message ?? '')}
+              disabled={activateBilling}
+            />
+          </div>
+
+          <div className={styles.profile_string}>
+            <p>Country:</p>
+            <Form.Select
+              {...register('countryBilling')}
+              onChange={handleCountryBillingChange}
+              className={styles.country}
+              disabled={activateBilling}
+            >
+              {Object.keys(countries).map((countryCode) => (
+                <option key={countryCode}>{countryCode}</option>
+              ))}
+            </Form.Select>
+          </div>
+          <Button
+            value={activateBilling ? 'Edit' : 'Ok'}
+            color="green"
+            type="button"
+            onClick={() => changeBilling((state) => !state)}
           />
-        </div>
-
-        <div className={styles.profile_string}>
-          <p>Last Name:</p>
-          <Input
-            {...register('lastName')}
-            icon={<BsPersonFill />}
-            error={Boolean(errors?.lastName?.message)}
-            helperText={String(errors?.lastName?.message ?? '')}
-          />
-        </div>
-
-        <div className={styles.profile_string}>
-          <p>E-mail:</p>
-          <Input
-            {...register('email')}
-            icon={<BsEnvelopeFill />}
-            error={Boolean(errors?.email?.message)}
-            helperText={String(errors?.email?.message ?? '')}
-          />
-        </div>
-
-        <div className={styles.profile_string}>
-          <p>Password:</p>
-          <Input
-            {...register('password')}
-            icon={<BsPersonFillLock />}
-            isSecretInput
-            error={Boolean(errors?.password?.message)}
-            helperText={String(errors?.password?.message ?? '')}
-          />
-        </div>
-
-        <div className={styles.profile_string}>
-          <p>Birth date:</p>
-          <Controller
-            name="birthDate"
-            // value={dateOfBirth}
-            control={control}
-            render={({ field }) => (
-              <Datetime
-                {...field}
-                ref={inputRef}
-                isValidDate={isValidDate}
-                className={styles.rdtPicker}
-                timeFormat={false}
-                dateFormat="YYYY-MM-DD"
-                closeOnSelect
-                closeOnClickOutside
-                locale="en-US"
-                onChange={(date) => {
-                  field.onChange(moment(date).format('YYYY-MM-DD'));
-                }}
-                renderInput={(props) => (
-                  <Input
-                    icon={<FaCalendarAlt />}
-                    error={Boolean(errors?.birthDate?.message)}
-                    helperText={String(errors?.birthDate?.message ?? '')}
-                    readOnly
-                    {...props}
-                  />
-                )}
-              />
-            )}
-          />
-        </div>
-
-        <h3 className={styles.addresses_main}>Addresses</h3>
-        <h3 className={styles.addresses}>Shipping address</h3>
-
-        <div className={styles.profile_string}>
-          <p>Street Name:</p>
-          <Input
-            {...register('streetName')}
-            icon={<FaMapMarkerAlt />}
-            error={Boolean(errors?.streetName?.message)}
-            helperText={String(errors?.streetName?.message ?? '')}
-          />
-        </div>
-
-        <div className={styles.profile_string}>
-          <p>City:</p>
-          <Input
-            {...register('city')}
-            icon={<LiaCitySolid />}
-            error={Boolean(errors?.city?.message)}
-            helperText={String(errors?.city?.message ?? '')}
-          />
-        </div>
-
-        <div className={styles.profile_string}>
-          <p>Postal Code:</p>
-          <Input
-            {...register('postalCode')}
-            icon={<IoMdMail />}
-            error={Boolean(errors?.postalCode?.message)}
-            helperText={String(errors?.postalCode?.message ?? '')}
-          />
-        </div>
-
-        <div className={styles.profile_string}>
-          <p>Country:</p>
-          <Form.Select
-            {...register('country')}
-            onChange={handleCountryShippingChange}
-            className={styles.country}
-          >
-            {Object.keys(countries).map((countryCode) => (
-              <option key={countryCode}>{countryCode}</option>
-            ))}
-          </Form.Select>
-        </div>
-
-        {/* <div className={styles.isDefaultShipping}>
-          <input
-            type="checkbox"
-            checked={isDefaultShipping}
-            onChange={(event) => setIsDefaultShipping(event.target.checked)}
-          />
-          <span>Set as default address</span>
-        </div>
-
-        <div className={styles.isBilling}>
-          <input
-            type="checkbox"
-            checked={isAlsoBilling}
-            onChange={(event) => setIsAlsoBilling(event.target.checked)}
-          />
-          <span>Also use as a billing address</span>
-        </div> */}
-
-        {!isAlsoBilling && (
-          <>
-            <h3 className={styles.addresses}>Billing address</h3>
-
-            <div className={styles.profile_string}>
-              <p>Street Name:</p>
-              <Input
-                {...register('streetNameBilling')}
-                icon={<FaMapMarkerAlt />}
-                error={Boolean(errors?.streetNameBilling?.message)}
-                helperText={String(errors?.streetNameBilling?.message ?? '')}
-              />
-            </div>
-
-            <div className={styles.profile_string}>
-              <p>City:</p>
-              <Input
-                {...register('cityBilling')}
-                icon={<LiaCitySolid />}
-                error={Boolean(errors?.cityBilling?.message)}
-                helperText={String(errors?.cityBilling?.message ?? '')}
-              />
-            </div>
-
-            <div className={styles.profile_string}>
-              <p>Postal Code:</p>
-              <Input
-                {...register('postalCodeBilling')}
-                icon={<IoMdMail />}
-                error={Boolean(errors?.postalCodeBilling?.message)}
-                helperText={String(errors?.postalCodeBilling?.message ?? '')}
-              />
-            </div>
-
-            <div className={styles.profile_string}>
-              <p>Country:</p>
-              <Form.Select
-                {...register('countryBilling')}
-                onChange={handleCountryBillingChange}
-                className={styles.country}
-              >
-                {Object.keys(countries).map((countryCode) => (
-                  <option key={countryCode}>{countryCode}</option>
-                ))}
-              </Form.Select>
-            </div>
-
-            {/* <div className={styles.isDefaultShipping}>
-              <input
-                type="checkbox"
-                checked={isDefaultBilling}
-                onChange={(event) => setIsDefaultBilling(event.target.checked)}
-              />
-              <span>Set as default address</span>
-            </div> */}
-          </>
-        )}
-
-        {modal.isShowed && (
-          <Alert
-            variant="danger"
-            onClose={() => {
-              setModal({ isShowed: false, text: '' });
-            }}
-            dismissible
-          >
-            <Alert.Heading>Error</Alert.Heading>
-            <p>{modal.text}</p>
-          </Alert>
-        )}
-      </form>
-
-      {isLoading && (
-        <div className={styles.loader_container}>
-          <Loader />
-        </div>
+        </>
       )}
-    </>
+
+      {modal.isShowed && <Alert variant="danger">{modal.text}</Alert>}
+
+      <div className={styles.saveButtonString}>
+        <Button value="Save" color="grey" type="submit" />
+      </div>
+    </form>
   );
 }
 

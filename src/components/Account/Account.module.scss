@@ -121,6 +121,12 @@
   }
 }
 
+.saveButtonString {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
 @media (max-width: 768px) {
   .registration_form {
     padding: 35px 25px;

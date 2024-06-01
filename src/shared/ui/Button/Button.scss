@@ -27,3 +27,11 @@
     background-color: $secondaryColor;
   }
 }
+
+.button.grey {
+  background-color: $thirdColor;
+
+  &:hover {
+    background-color: $secondaryColor;
+  }
+}
