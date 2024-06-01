@@ -24,17 +24,35 @@
   }
   .content {
     padding: 20px;
-    .usuallPrice {
-      text-decoration: line-through;
-      padding-left: 10px;
-      color: #8b96a5;
-    }
-    .name_link {
-      margin-top: 30px;
+    .prices_link {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      .prices {
+        .currentPrice {
+          font-size: 2rem;
+        }
+        .usuallPrice {
+          font-size: 2rem;
+          text-decoration: line-through;
+          padding-left: 10px;
+          color: #8b96a5;
+        }
+      }
+    }
+    .nameBlock {
+      margin-top: 30px;
+      .name {
+        font-size: 2.1rem;
+      }
+    }
+    .descriptionBlock {
+      margin-top: 10px;
+      .description {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
     }
   }
 }
