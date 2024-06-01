@@ -14,6 +14,41 @@ function ProductItem(product: Props) {
     return price / 10 ** fractionDigits;
   }
 
+  function addDiscountedPrice() {
+    if (
+      !product.value.masterData.current.masterVariant.prices?.[0].discounted
+        ?.value.centAmount
+    ) {
+      return `$${calculatePrice(
+        product.value.masterData.current.masterVariant.prices?.[0].value
+          .centAmount as number,
+        product.value.masterData.current.masterVariant.prices?.[0].value
+          .fractionDigits as number,
+      )}`;
+    }
+    return `$${calculatePrice(
+      product.value.masterData.current.masterVariant.prices?.[0].discounted
+        ?.value.centAmount as number,
+      product.value.masterData.current.masterVariant.prices?.[0].discounted
+        ?.value.fractionDigits as number,
+    )}`;
+  }
+
+  function addStartPrice() {
+    if (
+      !product.value.masterData.current.masterVariant.prices?.[0].discounted
+        ?.value.centAmount
+    ) {
+      return '';
+    }
+    return `$${calculatePrice(
+      product.value.masterData.current.masterVariant.prices?.[0].value
+        .centAmount as number,
+      product.value.masterData.current.masterVariant.prices?.[0].value
+        .fractionDigits as number,
+    )}`;
+  }
+
   function addDiscription(text?: string) {
     if (!text) {
       return [];
@@ -37,26 +72,8 @@ function ProductItem(product: Props) {
       <div className={styles.content}>
         <div className={styles.prices_link}>
           <div className={styles.prices}>
-            <span className={styles.currentPrice}>
-              $
-              {Math.round(
-                calculatePrice(
-                  product.value.masterData.current.masterVariant.prices?.[0]
-                    .value.centAmount as number,
-                  product.value.masterData.current.masterVariant.prices?.[0]
-                    .value.fractionDigits as number,
-                ) * 0.9,
-              )}
-            </span>
-            <span className={styles.usuallPrice}>
-              $
-              {calculatePrice(
-                product.value.masterData.current.masterVariant.prices?.[0].value
-                  .centAmount as number,
-                product.value.masterData.current.masterVariant.prices?.[0].value
-                  .fractionDigits as number,
-              )}
-            </span>
+            <span className={styles.currentPrice}>{addDiscountedPrice()}</span>
+            <span className={styles.usuallPrice}>{addStartPrice()}</span>
           </div>
           <Button value={(<FaShoppingBasket />) as ReactNode} color="green" />
         </div>
