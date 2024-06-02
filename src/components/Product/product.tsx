@@ -118,9 +118,13 @@ function ProductPage() {
           <div className={styles.price_wrapper}>
             <div className={styles.prices}>
               <span className={styles.currentPrice}>
-                {getDiscountedPrice(product)}
+                {getDiscountedPrice(
+                  product.masterData.current.masterVariant.prices!,
+                )}
               </span>
-              <span className={styles.fullPrice}>{getFullPrice(product)}</span>
+              <span className={styles.fullPrice}>
+                {getFullPrice(product.masterData.current.masterVariant.prices!)}
+              </span>
             </div>
             <Button
               className={styles.basket_btn}
