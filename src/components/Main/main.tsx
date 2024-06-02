@@ -7,6 +7,7 @@ import Account from '../Account/Account';
 
 import useAppSelector from '../../shared/hooks/useAppSelector';
 import Catalog from '../Catalog/catalog';
+import ProductPage from '../Product/product';
 
 export default function Main() {
   const authorizationState = useAppSelector(
@@ -19,6 +20,7 @@ export default function Main() {
       <Routes>
         <Route index element={<div>Main</div>} />
         <Route path="catalog" element={<Catalog />} />
+        <Route path="catalog/product/:key" element={<ProductPage />} />
         <Route path="about-us" element={<div>Amogus</div>} />
 
         <Route
