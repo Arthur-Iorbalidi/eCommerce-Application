@@ -34,6 +34,10 @@ function Catalog() {
 
   const [orderOption, setOrderOption] = useState(orderOptions[0].value);
 
+  const [searchText, setSearchText] = useState('');
+
+  const [inputSearchText, setInputSearchText] = useState('');
+
   const selectSortOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOption(event.target.value);
   };
@@ -42,17 +46,35 @@ function Catalog() {
     setOrderOption(event.target.value);
   };
 
+  const search = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSearchText(inputSearchText);
+  };
+
   useEffect(() => {
     setIsLoading(true);
-    getProducts(showProducts, 100, sortOption, orderOption);
-  }, [sortOption, orderOption]);
+    getProducts(showProducts, 100, sortOption, orderOption, searchText);
+  }, [sortOption, orderOption, searchText]);
 
   return (
     <div className={styles.catalog}>
       <div className={styles.search}>
         <Button className={styles.filterBtn} value="Filter" color="green" />
-        <input className={styles.input} type="text" placeholder="Search" />
-        <Button className={styles.searchBtn} value="Search" color="green" />
+        <form onSubmit={search} className={styles.form}>
+          <input
+            onChange={(event) => setInputSearchText(event.target.value)}
+            value={inputSearchText}
+            className={styles.input}
+            type="text"
+            placeholder="Search"
+          />
+          <Button
+            type="submit"
+            className={styles.searchBtn}
+            value="Search"
+            color="green"
+          />
+        </form>
       </div>
 
       <div className={styles.sortField}>

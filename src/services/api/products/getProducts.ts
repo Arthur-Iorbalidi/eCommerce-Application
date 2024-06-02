@@ -10,8 +10,9 @@ export default function getProducts(
     value: ClientResponse<ProductProjectionPagedSearchResponse>,
   ) => void,
   limit: number = 100,
-  sortOption?: string,
-  orderOption?: string,
+  sortOption: string,
+  orderOption: string,
+  searchText: string,
 ): void {
   zeroClientApi()
     .withProjectKey({ projectKey })
@@ -21,6 +22,7 @@ export default function getProducts(
       queryArgs: {
         limit,
         sort: `${sortOption} ${orderOption}`,
+        'text.EN': searchText,
       },
     })
     .execute()
