@@ -3,7 +3,7 @@ import './Button.scss';
 
 interface Props {
   value: string | ReactNode;
-  color: 'green' | 'red';
+  color: 'green' | 'red' | 'grey';
   className?: string | undefined | null;
   type?: 'reset' | 'submit' | 'button' | undefined;
   onClick?: (() => void) | undefined | null;

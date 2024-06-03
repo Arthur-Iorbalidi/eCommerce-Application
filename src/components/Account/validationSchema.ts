@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 import * as yup from 'yup';
 
 export interface CountryRegex {
@@ -12,9 +11,8 @@ export const countries: CountryRegex = {
 };
 
 const getValidationSchema = (
-  isAlsoBilling: boolean,
-  currentCountryShipping: string,
-  currentCountryBilling: string,
+  currentCountryShipping?: string,
+  currentCountryBilling?: string,
 ) =>
   yup.object().shape({
     firstName: yup
@@ -55,7 +53,7 @@ const getValidationSchema = (
       })
       .email('Email is invalid'),
 
-    password: yup
+    currentPassword: yup
       .string()
       .required('Password is required')
       .test(
@@ -80,6 +78,30 @@ const getValidationSchema = (
       )
       .min(8, 'Password must be at least 8 characters'),
 
+    newPassword: yup
+      .string()
+      .required('Password is required')
+      .test(
+        'noRussianChars',
+        'Password must contain only English alphabet',
+        (value) => {
+          const noRussianCharsRegex = /^[^А-ЯЁа-яё\s]*$/u;
+          return noRussianCharsRegex.test(value);
+        },
+      )
+      .matches(/^[^\s]*$/, "Password mustn't contain spaces")
+      .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+      .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+      .matches(/[0-9]/, 'Password must contain at least one digit')
+      .test(
+        'specialChar',
+        'Password must contain at least one special character (!@#$%^&*-+_)',
+        (value) => {
+          const specialCharRegex = /[-_!@#$%^&*+]/;
+          return specialCharRegex.test(value);
+        },
+      )
+      .min(8, 'Password must be at least 8 characters'),
     birthDate: yup
       .string()
       .required('Birth date is required')
@@ -109,30 +131,32 @@ const getValidationSchema = (
       .string()
       .required('Postal Code is required')
       .test('postal', 'Postal code should be valid', (value) => {
-        return countries[currentCountryShipping].test(value);
+        if (currentCountryShipping) {
+          return countries[currentCountryShipping].test(value);
+        }
+        return undefined;
       }),
 
     country: yup.string().required('Country is required'),
 
-    ...(!isAlsoBilling
-      ? {
-          streetNameBilling: yup.string().required('Street Name is required'),
-          cityBilling: yup
-            .string()
-            .required('City is required')
-            .matches(
-              /^[^!@#$%^&*()_\-=+~`[\]{}|\\;:,.<>/?0-9]+$/,
-              "Shouldn't contain special characters and numbers",
-            ),
-          postalCodeBilling: yup
-            .string()
-            .required('Postal Code is required')
-            .test('postal', 'Postal code should be valid', (value) => {
-              return countries[currentCountryBilling].test(value);
-            }),
-          countryBilling: yup.string().required('Country is required'),
+    streetNameBilling: yup.string().required('Street Name is required'),
+    cityBilling: yup
+      .string()
+      .required('City is required')
+      .matches(
+        /^[^!@#$%^&*()_\-=+~`[\]{}|\\;:,.<>/?0-9]+$/,
+        "Shouldn't contain special characters and numbers",
+      ),
+    postalCodeBilling: yup
+      .string()
+      .required('Postal Code is required')
+      .test('postal', 'Postal code should be valid', (value) => {
+        if (currentCountryBilling) {
+          return countries[currentCountryBilling].test(value);
         }
-      : {}),
+        return undefined;
+      }),
+    countryBilling: yup.string().required('Country is required'),
   });
 
 export default getValidationSchema;

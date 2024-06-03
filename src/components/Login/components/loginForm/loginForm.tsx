@@ -7,9 +7,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { BsEnvelopeFill, BsPersonFillLock } from 'react-icons/bs';
 import Alert from 'react-bootstrap/Alert';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
-import useAppSelector from '../../../../shared/hooks/useAppSelector';
 import {
   activateAuthorizationState,
   changeUserInfo,
