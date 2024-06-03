@@ -1,3 +1,4 @@
+import { Customer, ClientResponse } from '@commercetools/platform-sdk';
 import tokenClientApi from '../TokenAuth';
 import { projectKey } from '..';
 
@@ -12,7 +13,7 @@ export default function changeUserSettings({
   id,
   version,
 }: UserSettingsProps) {
-  return (callBack) =>
+  return (callBack: (a: ClientResponse<Customer>) => void) =>
     tokenClientApi(token)
       .withProjectKey({ projectKey })
       .customers()

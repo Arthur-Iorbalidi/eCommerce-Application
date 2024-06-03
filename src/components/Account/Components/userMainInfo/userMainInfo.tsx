@@ -132,6 +132,7 @@ function UserMainInfo() {
   const onSubmit: SubmitHandler<RegistrationFormFields> = (
     data: RegistrationFormFields,
   ) => {
+    return data;
     // setIsLoading(true);
     // changeUser();
   };

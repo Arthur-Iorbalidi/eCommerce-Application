@@ -102,6 +102,7 @@ function UserPassword() {
   ) => {
     // setIsLoading(true);
     // changeUser();
+    return data;
   };
 
   const [activatePassword, changeActivatePassword] = useState(true);
