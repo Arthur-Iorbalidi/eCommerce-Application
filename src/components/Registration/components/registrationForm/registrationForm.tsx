@@ -20,7 +20,7 @@ import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
 import {
   activateAuthorizationState,
   changeUserInfo,
-} from '../../../../store/reducers/authorizationState';
+} from '../../../../store/reducers/authorizationSlice';
 
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';

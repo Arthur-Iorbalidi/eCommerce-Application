@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import useAppDispatch from '../../../../../../shared/hooks/useAppDispatch';
 import { activateSideMenu } from '../../../../../../store/reducers/sideMenuSlice';
 import useAppSelector from '../../../../../../shared/hooks/useAppSelector';
-import { activateAuthorizationState } from '../../../../../../store/reducers/authorizationState';
+import { activateAuthorizationState } from '../../../../../../store/reducers/authorizationSlice';
 
 import NavBar from '../navBar/navBar';
 import Button from '../../../../../../shared/ui/Button/Button';

@@ -12,7 +12,7 @@ import useAppDispatch from './shared/hooks/useAppDispatch';
 import {
   activateAuthorizationState,
   changeUserInfo,
-} from './store/reducers/authorizationState';
+} from './store/reducers/authorizationSlice';
 import useAppSelector from './shared/hooks/useAppSelector';
 import Registration from './components/Registration/registration';
 import Login from './components/Login/login';

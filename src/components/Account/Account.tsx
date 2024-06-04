@@ -17,7 +17,7 @@ import { useEffect, useRef, useState } from 'react';
 import moment, { Moment } from 'moment';
 import useAppDispatch from '../../shared/hooks/useAppDispatch';
 import useAppSelector from '../../shared/hooks/useAppSelector';
-import { activateAuthorizationState } from '../../store/reducers/authorizationState';
+import { activateAuthorizationState } from '../../store/reducers/authorizationSlice';
 
 import Button from '../../shared/ui/Button/Button';
 import Input from '../../shared/ui/Input/Input';
