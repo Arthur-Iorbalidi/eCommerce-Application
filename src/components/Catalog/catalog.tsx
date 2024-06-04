@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import {
   Category,
@@ -5,20 +6,32 @@ import {
   ProductProjection,
   ProductProjectionPagedSearchResponse,
 } from '@commercetools/platform-sdk';
+
 import { useNavigate } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
+
 import useAppDispatch from '../../shared/hooks/useAppDispatch';
-import getProducts from '../../services/api/products/getProducts';
+import useAppSelector from '../../shared/hooks/useAppSelector';
+import {
+  setBrands,
+  setCategories,
+  setDisplayDiagonals,
+  setOsArray,
+} from '../../store/reducers/filtersSlice';
+
 import Button from '../../shared/ui/Button/Button';
 import ProductItem from '../../shared/ui/ProductItem/productItem';
 import Loader from '../../shared/ui/Loader/loader';
 import Filters from './components/filters';
+
+import filterAttributes from './components/filterAttributes';
+
 import { orderOptions, sortOptions } from './sortOptions';
-import getCategories from '../../services/api/categories/getCategories';
-import { setCategories } from '../../store/reducers/filtersSlice';
-import useAppSelector from '../../shared/hooks/useAppSelector';
 import convertDollarsToCents from '../../services/helpers/convertDollarsToCents';
-// import getUniqueProductsBrands from '../../services/helpers/getUniqueProductsBrands';
+import getUniqueProductAttributes from '../../services/helpers/getUniqueProductAttributes';
+
+import getCategories from '../../services/api/categories/getCategories';
+import getProducts from '../../services/api/products/getProducts';
 
 import styles from './catalog.module.scss';
 
@@ -26,50 +39,66 @@ const PRODUCTS_LIMIT = 100;
 
 function Catalog() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState<ProductProjection[]>([]);
   const [showFilters, setShowFilters] = useState(false);
 
-  const dispatch = useAppDispatch();
   const activeCategoryId = useAppSelector(
     (state) => state.filtersReducer.activeCategoryId,
   );
   const priceRange = useAppSelector((state) => state.filtersReducer.priceRange);
-  // const activeBrands = useAppSelector(
-  //   (state) => state.filtersReducer.activeBrands,
-  // );
-
-  function showProducts(
-    value: ClientResponse<ProductProjectionPagedSearchResponse>,
-  ) {
-    setProducts(value.body.results);
-    setIsLoading(false);
-  }
-
-  const navigateToProduct = (productKey: string) => {
-    navigate(`product/${productKey}`);
-  };
+  const activeBrands = useAppSelector(
+    (state) => state.filtersReducer.activeBrands,
+  );
+  const activeOsArray = useAppSelector(
+    (state) => state.filtersReducer.activeOsArray,
+  );
+  const activeDisplayDiagonals = useAppSelector(
+    (state) => state.filtersReducer.activeDisplayDiagonals,
+  );
 
   const [sortOption, setSortOption] = useState(sortOptions[0].value);
-
   const [orderOption, setOrderOption] = useState(orderOptions[0].value);
-
   const [searchText, setSearchText] = useState('');
-
   const [inputSearchText, setInputSearchText] = useState('');
 
   const selectSortOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOption(event.target.value);
   };
-
   const selectOrderOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setOrderOption(event.target.value);
   };
-
   const search = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSearchText(inputSearchText);
   };
+
+  function processProductsResponse(
+    value: ClientResponse<ProductProjectionPagedSearchResponse>,
+  ) {
+    setProducts(value.body.results);
+    setIsLoading(false);
+    dispatch(
+      setBrands(
+        getUniqueProductAttributes(value.body.results, filterAttributes.BRAND),
+      ),
+    );
+    dispatch(
+      setOsArray(
+        getUniqueProductAttributes(value.body.results, filterAttributes.OS),
+      ),
+    );
+    dispatch(
+      setDisplayDiagonals(
+        getUniqueProductAttributes(
+          value.body.results,
+          filterAttributes.DISPLAY_DIAGONAL,
+        ),
+      ),
+    );
+  }
 
   useEffect(() => {
     setIsLoading(true);
@@ -85,14 +114,16 @@ function Catalog() {
     };
 
     getProducts(
-      showProducts,
+      processProductsResponse,
       PRODUCTS_LIMIT,
       sortOption,
       orderOption,
       searchText,
       activeCategoryId,
       convertedPriceRange,
-      // activeBrands,
+      activeBrands,
+      activeOsArray,
+      activeDisplayDiagonals,
     );
   }, [
     sortOption,
@@ -100,9 +131,15 @@ function Catalog() {
     searchText,
     activeCategoryId,
     priceRange,
-    // activeBrands,
+    activeBrands,
+    activeOsArray,
+    activeDisplayDiagonals,
     dispatch,
   ]);
+
+  const navigateToProduct = (productKey: string) => {
+    navigate(`product/${productKey}`);
+  };
 
   return (
     <div className={styles.catalog}>
@@ -176,11 +213,7 @@ function Catalog() {
       )}
 
       {showFilters && (
-        <Filters
-          // brands={getUniqueProductsBrands(products)}
-          showFilters={showFilters}
-          setShowFilters={setShowFilters}
-        />
+        <Filters showFilters={showFilters} setShowFilters={setShowFilters} />
       )}
     </div>
   );

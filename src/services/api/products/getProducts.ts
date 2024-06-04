@@ -4,11 +4,13 @@ import {
 } from '@commercetools/platform-sdk';
 import zeroClientApi from '../ZeroClient';
 import { projectKey } from '../index';
+
 import {
-  createBrandFilter,
+  createAttributeFilter,
   createCategoryFilter,
   createPriceRangeFilter,
 } from '../../helpers/createFilterParams';
+import filterAttributes from '../../../components/Catalog/components/filterAttributes';
 
 type QueryParam = string | string[];
 
@@ -31,6 +33,8 @@ export default function getProducts(
   categoryId?: string,
   priceRange?: { min: number; max: number },
   brands?: string[],
+  osArray?: string[],
+  displayDiagonals?: string[],
 ): void {
   const queryArgs: QueryArgs = {
     limit,
@@ -40,12 +44,28 @@ export default function getProducts(
 
   const categoryFilter = createCategoryFilter(categoryId);
   const priceRangeFilter = createPriceRangeFilter(priceRange);
-  const brandFilter = createBrandFilter(brands);
+  const brandFilter = createAttributeFilter(
+    filterAttributes.BRAND.value,
+    brands,
+    filterAttributes.BRAND.isLocalized,
+  );
+  const osFilter = createAttributeFilter(
+    filterAttributes.OS.value,
+    osArray,
+    filterAttributes.OS.isLocalized,
+  );
+  const displayDiagonalsFilter = createAttributeFilter(
+    filterAttributes.DISPLAY_DIAGONAL.value,
+    displayDiagonals,
+    filterAttributes.DISPLAY_DIAGONAL.isLocalized,
+  );
 
   const filters: Array<string> = [
     ...(categoryFilter ? [categoryFilter] : []),
     ...(priceRangeFilter ? [priceRangeFilter] : []),
     ...(brandFilter ? [brandFilter] : []),
+    ...(osFilter ? [osFilter] : []),
+    ...(displayDiagonalsFilter ? [displayDiagonalsFilter] : []),
   ];
 
   if (filters.length > 0) {

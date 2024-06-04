@@ -1,11 +1,12 @@
 import ListGroup from 'react-bootstrap/ListGroup';
+
 import useAppSelector from '../../../../../shared/hooks/useAppSelector';
-import { setActiveCategoryId } from '../../../../../store/reducers/filtersSlice';
 import useAppDispatch from '../../../../../shared/hooks/useAppDispatch';
+import { setActiveCategoryId } from '../../../../../store/reducers/filtersSlice';
 
 import styles from './categories.module.scss';
 
-const Categories = () => {
+const Categories: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const categories = useAppSelector((state) => state.filtersReducer.categories);
@@ -21,7 +22,7 @@ const Categories = () => {
 
   return (
     <div className={styles.categories}>
-      <div className={styles.categories_title}>Categories</div>
+      <div className={styles.categories_title}>Categories:</div>
       <ListGroup className={styles.categories_list} variant="flush">
         {categories.map((category) => (
           <ListGroup.Item

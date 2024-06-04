@@ -1,20 +1,23 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import ReactSlider from 'react-slider';
-import styles from './priceRange.module.scss';
 import Button from '../../../../../shared/ui/Button/Button';
+
+import styles from './priceRangeFilter.module.scss';
 
 export const enum PriceRanges {
   MIN = 1,
   MAX = 5000,
 }
 
-interface PriceRangeProps {
+interface PriceRangeFilterProps {
   inputValues: number[];
   setInputValues: (values: number[]) => void;
   onApply: () => void;
 }
 
-const PriceRange: React.FC<PriceRangeProps> = (props: PriceRangeProps) => {
+const PriceRangeFilter: React.FC<PriceRangeFilterProps> = (
+  props: PriceRangeFilterProps,
+) => {
   const { inputValues, setInputValues, onApply } = props;
 
   return (
@@ -31,7 +34,11 @@ const PriceRange: React.FC<PriceRangeProps> = (props: PriceRangeProps) => {
         min={PriceRanges.MIN}
         max={PriceRanges.MAX}
         renderThumb={(props, state) => (
-          <div {...props} key={state.index}>
+          <div
+            className={`thumb_${state.index} ${styles.thumb}`}
+            {...props}
+            key={state.index}
+          >
             {state.valueNow}
           </div>
         )}
@@ -49,4 +56,4 @@ const PriceRange: React.FC<PriceRangeProps> = (props: PriceRangeProps) => {
   );
 };
 
-export default PriceRange;
+export default PriceRangeFilter;

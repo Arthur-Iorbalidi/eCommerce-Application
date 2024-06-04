@@ -1,32 +1,36 @@
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useEffect, useState } from 'react';
+
 import Categories from './components/categories/categories';
-import PriceRange from './components/priceRange/priceRange';
+import PriceRangeFilter from './components/priceRangeFilter/priceRangeFilter';
+import BrandsFilter from './components/brandsFilter/brandsFilter';
+import OsFilter from './components/osFilter/osFilter';
+import DisplayDiagonalFilter from './components/displayDiagonalFilter/displayDiagonalFilter';
 import Button from '../../../shared/ui/Button/Button';
-// import Brands from './components/brands/brands';
+
 import useAppDispatch from '../../../shared/hooks/useAppDispatch';
+import useAppSelector from '../../../shared/hooks/useAppSelector';
 import {
   resetActiveBrands,
   resetActiveCategoryId,
+  resetActiveDisplayDiagonals,
+  resetActiveOsArray,
   resetPriceRange,
   setPriceRange,
 } from '../../../store/reducers/filtersSlice';
-import useAppSelector from '../../../shared/hooks/useAppSelector';
 
 import styles from './filters.module.scss';
 
 interface FiltersProps {
-  // brands: string[];
   showFilters: boolean;
   setShowFilters: (show: boolean) => void;
 }
 
 const Filters: React.FC<FiltersProps> = (props: FiltersProps) => {
-  // const { brands, showFilters, setShowFilters } = props;
-
   const { showFilters, setShowFilters } = props;
 
   const dispatch = useAppDispatch();
+
   const priceRange = useAppSelector((state) => state.filtersReducer.priceRange);
 
   const [inputValues, setInputValues] = useState<number[]>([
@@ -34,19 +38,21 @@ const Filters: React.FC<FiltersProps> = (props: FiltersProps) => {
     priceRange.max,
   ]);
 
-  const handlePricesApply = () => {
-    dispatch(setPriceRange({ min: inputValues[0], max: inputValues[1] }));
-  };
-
   useEffect(() => {
     setInputValues([priceRange.min, priceRange.max]);
   }, [priceRange]);
 
+  const handlePricesApply = () => {
+    dispatch(setPriceRange({ min: inputValues[0], max: inputValues[1] }));
+  };
+
   const handleFiltersReset = () => {
-    dispatch(resetActiveBrands());
     dispatch(resetActiveCategoryId());
     dispatch(resetPriceRange());
     setInputValues([priceRange.min, priceRange.max]);
+    dispatch(resetActiveBrands());
+    dispatch(resetActiveOsArray());
+    dispatch(resetActiveDisplayDiagonals());
   };
 
   return (
@@ -65,14 +71,18 @@ const Filters: React.FC<FiltersProps> = (props: FiltersProps) => {
         <hr />
         <Categories />
         <hr />
-        <PriceRange
+        <PriceRangeFilter
           inputValues={inputValues}
           setInputValues={setInputValues}
           onApply={handlePricesApply}
         />
         <hr />
-        {/* <Brands brands={brands} />
-        <hr /> */}
+        <BrandsFilter />
+        <hr />
+        <OsFilter />
+        <hr />
+        <DisplayDiagonalFilter />
+        <hr />
         <Button
           className={styles.filters_reset_btn}
           value="Reset"
