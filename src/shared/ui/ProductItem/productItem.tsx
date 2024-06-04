@@ -3,9 +3,9 @@ import { FaShoppingBasket } from 'react-icons/fa';
 import { ReactNode } from 'react';
 import Button from '../Button/Button';
 import styles from './productItem.module.scss';
-import splitTextIntoLines from '../../../services/api/helpers/splitTextIntoLines';
-import getDiscountedPrice from '../../../services/api/helpers/getDiscountedPrice';
-import getFullPrice from '../../../services/api/helpers/getFullPrice';
+import splitTextIntoLines from '../../../services/helpers/splitTextIntoLines';
+import getDiscountedPrice from '../../../services/helpers/getDiscountedPrice';
+import getFullPrice from '../../../services/helpers/getFullPrice';
 
 interface Props {
   key: string;

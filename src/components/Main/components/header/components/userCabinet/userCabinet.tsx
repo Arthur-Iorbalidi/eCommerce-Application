@@ -12,7 +12,7 @@ import useAppDispatch from '../../../../../../shared/hooks/useAppDispatch';
 import {
   activateAuthorizationState,
   changeUserInfo,
-} from '../../../../../../store/reducers/authorizationState';
+} from '../../../../../../store/reducers/authorizationSlice';
 
 export default function UserCabinet() {
   const navigate = useNavigate();

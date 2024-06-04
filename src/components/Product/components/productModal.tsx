@@ -38,7 +38,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
         />
       </Modal.Header>
 
-      <Modal.Body>
+      <Modal.Body className={styles.modal_body}>
         <Carousel
           className={styles.carousel}
           data-bs-theme="dark"
