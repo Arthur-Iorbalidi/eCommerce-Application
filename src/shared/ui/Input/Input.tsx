@@ -14,6 +14,7 @@ interface InputProps {
   isSecretInput?: boolean;
   error?: boolean;
   helperText?: string;
+  disabled?: boolean;
 }
 
 const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(

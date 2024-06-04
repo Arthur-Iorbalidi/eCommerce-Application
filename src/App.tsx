@@ -25,7 +25,7 @@ function App() {
   );
 
   useEffect(() => {
-    function authCheckCallback(value: boolean, userInfo?: Customer) {
+    function authCheckCallback(value: boolean, userInfo?: Customer | null) {
       dispatch(activateAuthorizationState(value));
       dispatch(changeUserInfo(userInfo));
     }

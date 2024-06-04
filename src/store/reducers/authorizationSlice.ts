@@ -4,7 +4,7 @@ const authorizationStateSlice = createSlice({
   name: 'authorizationState',
   initialState: {
     isAuthorized: false,
-    userInfo: null,
+    userInfo: undefined,
   },
   reducers: {
     activateAuthorizationState: (state, action: PayloadAction<boolean>) => ({
