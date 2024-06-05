@@ -42,9 +42,9 @@ const FilterComponent: React.FC<FilterProps> = ({
 
   return (
     <div className={styles.filter_container}>
-      <div className={styles.filter_title}>{filterTitle}</div>
       {allValues.length > 0 ? (
         <>
+          <div className={styles.filter_title}>{filterTitle}</div>
           <Form className={styles.filter_list}>
             {allValues.map((value) => (
               <Form.Check
@@ -73,10 +73,9 @@ const FilterComponent: React.FC<FilterProps> = ({
               onClick={onReset}
             />
           </div>
+          <hr />
         </>
-      ) : (
-        <p className={styles.notFound_message}>Not found</p>
-      )}
+      ) : null}
     </div>
   );
 };
