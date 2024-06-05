@@ -13,7 +13,7 @@ import 'react-datetime/css/react-datetime.css';
 
 import { useEffect, useRef, useState } from 'react';
 import moment, { Moment } from 'moment';
-import { ClientResponse, Customer } from '@commercetools/platform-sdk';
+import { Customer } from '@commercetools/platform-sdk';
 
 import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
 import useAppSelector from '../../../../shared/hooks/useAppSelector';
