@@ -23,6 +23,7 @@ export default function Main() {
         <Route path="about-us" element={<div>Amogus</div>} />
 
         <Route path="account" element={<Account />} />
+
         <Route path="purchases" element={<div>purchases</div>} />
         <Route path="*" element={<Navigate to="error" />} />
       </Routes>

@@ -83,6 +83,7 @@ function SelectCurrentUserInfo(userInfo: Customer) {
   };
 }
 
+
 function UserMainInfo() {
   //   const dispatch = useAppDispatch();
 
@@ -213,6 +214,7 @@ function UserMainInfo() {
     ) {
       changeUser(TransformData(data, userInfo));
     }
+
     // setIsLoading(true);
   };
 

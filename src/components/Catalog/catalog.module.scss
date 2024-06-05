@@ -1,8 +1,9 @@
 @import '../../constants/global.scss';
 
 .catalog {
+  height: calc(100dvh - 50px);
   padding: 25px;
-  overflow: auto;
+  overflow-y: auto;
 }
 
 .search {
@@ -65,7 +66,7 @@
 }
 
 .productList {
-  max-width: 1440px;
+  max-width: 1300px;
   margin: 0 auto;
   margin-top: 30px;
   display: grid;
