@@ -49,120 +49,127 @@ function ProductPage() {
   }
 
   return (
-    <div className={styles.product_container}>
-      <div className={styles.product_box}>
-        <div className={styles.goBack_btn_wrapper}>
-          <Link to="/catalog">
-            <Button
-              className={styles.goBack_btn}
-              value={
-                (
-                  <BsArrowLeftShort className={styles.goBack_btn_arrow} />
-                ) as ReactNode
-              }
-              color="green"
-            />
-          </Link>
-        </div>
-        {product && (
-          <h2 className={styles.product_title}>
-            {product.masterData.current.name.en}
-          </h2>
-        )}
-        <div className={styles.product_box_container}>
-          <Carousel
-            className={styles.carousel}
-            data-bs-theme="dark"
-            slide={false}
-            nextIcon=""
-            prevIcon=""
-            keyboard
-            interval={null}
-          >
-            {product &&
-              product.masterData.current.masterVariant.images!.map(
-                (image, index) => (
-                  <Carousel.Item
-                    className={styles.carousel_item}
-                    onClick={() => setShowModal(true)}
-                    key={`item-${index}`}
-                  >
-                    <img
-                      className={styles.slide_img}
-                      alt={`device-${index}`}
-                      src={image.url}
-                    />
-                  </Carousel.Item>
-                ),
-              )}
-          </Carousel>
+    <div className={styles.product_wrapper}>
+      <div className={styles.product_container}>
+        <div className={styles.product_box}>
+          <div className={styles.goBack_btn_wrapper}>
+            <Link to="/catalog">
+              <Button
+                className={styles.goBack_btn}
+                value={
+                  (
+                    <BsArrowLeftShort className={styles.goBack_btn_arrow} />
+                  ) as ReactNode
+                }
+                color="green"
+              />
+            </Link>
+          </div>
+          {product && (
+            <h2 className={styles.product_title}>
+              {product.masterData.current.name.en}
+            </h2>
+          )}
+          <div className={styles.product_box_container}>
+            <Carousel
+              className={styles.carousel}
+              data-bs-theme="dark"
+              slide={false}
+              nextIcon=""
+              prevIcon=""
+              keyboard
+              interval={null}
+            >
+              {product &&
+                product.masterData.current.masterVariant.images!.map(
+                  (image, index) => (
+                    <Carousel.Item
+                      className={styles.carousel_item}
+                      onClick={() => setShowModal(true)}
+                      key={`item-${index}`}
+                    >
+                      <img
+                        className={styles.slide_img}
+                        alt={`device-${index}`}
+                        src={image.url}
+                      />
+                    </Carousel.Item>
+                  ),
+                )}
+            </Carousel>
+
+            {product && (
+              <div>
+                {product.masterData.current.masterVariant
+                  .attributes!.slice(-1)
+                  .map((characteristics) => (
+                    <div
+                      className={styles.characteristics}
+                      key="characteristics"
+                    >
+                      <strong className={styles.characteristics_title}>
+                        Characteristics:
+                      </strong>
+                      {splitTextIntoLines(characteristics.value, true)}
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
+
+          <hr />
+          {product && (
+            <div className={styles.price_wrapper}>
+              <div className={styles.prices}>
+                <span className={styles.currentPrice}>
+                  {getDiscountedPrice(
+                    product.masterData.current.masterVariant.prices!,
+                  )}
+                </span>
+                <span className={styles.fullPrice}>
+                  {getFullPrice(
+                    product.masterData.current.masterVariant.prices!,
+                  )}
+                </span>
+              </div>
+              <Button
+                className={styles.basket_btn}
+                value={(<FaShoppingBasket />) as ReactNode}
+                color="green"
+              />
+            </div>
+          )}
+          <hr />
 
           {product && (
             <div>
               {product.masterData.current.masterVariant
-                .attributes!.slice(-1)
-                .map((characteristics) => (
-                  <div className={styles.characteristics} key="characteristics">
-                    <strong className={styles.characteristics_title}>
-                      Characteristics:
+                .attributes!.slice(-2, -1)
+                .map((description) => (
+                  <div className={styles.description} key="description">
+                    <strong className={styles.description_title}>
+                      Description:
                     </strong>
-                    {splitTextIntoLines(characteristics.value, true)}
+                    {splitTextIntoLines(description.value)}
                   </div>
                 ))}
             </div>
           )}
         </div>
-
-        <hr />
-        {product && (
-          <div className={styles.price_wrapper}>
-            <div className={styles.prices}>
-              <span className={styles.currentPrice}>
-                {getDiscountedPrice(
-                  product.masterData.current.masterVariant.prices!,
-                )}
-              </span>
-              <span className={styles.fullPrice}>
-                {getFullPrice(product.masterData.current.masterVariant.prices!)}
-              </span>
-            </div>
-            <Button
-              className={styles.basket_btn}
-              value={(<FaShoppingBasket />) as ReactNode}
-              color="green"
-            />
-          </div>
+        {showModal && (
+          <ProductModal
+            images={product?.masterData.current.masterVariant.images || []}
+            showModal={showModal}
+            setShowModal={setShowModal}
+          />
         )}
-        <hr />
 
-        {product && (
-          <div>
-            {product.masterData.current.masterVariant
-              .attributes!.slice(-2, -1)
-              .map((description) => (
-                <div className={styles.description} key="description">
-                  <strong className={styles.description_title}>
-                    Description:
-                  </strong>
-                  {splitTextIntoLines(description.value)}
-                </div>
-              ))}
+        {isLoading && (
+          <div className={styles.loader_container}>
+            <Loader />
           </div>
         )}
       </div>
-      {showModal && (
-        <ProductModal
-          images={product?.masterData.current.masterVariant.images || []}
-          showModal={showModal}
-          setShowModal={setShowModal}
-        />
-      )}
-
-      {isLoading && (
-        <div className={styles.loader_container}>
-          <Loader />
-        </div>
-      )}
     </div>
   );
 }

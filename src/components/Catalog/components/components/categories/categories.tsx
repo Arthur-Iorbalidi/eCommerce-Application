@@ -2,7 +2,12 @@ import ListGroup from 'react-bootstrap/ListGroup';
 
 import useAppSelector from '../../../../../shared/hooks/useAppSelector';
 import useAppDispatch from '../../../../../shared/hooks/useAppDispatch';
-import { setActiveCategoryId } from '../../../../../store/reducers/filtersSlice';
+import {
+  resetActiveBrands,
+  resetActiveDisplayDiagonals,
+  resetActiveOsArray,
+  setActiveCategoryId,
+} from '../../../../../store/reducers/filtersSlice';
 
 import styles from './categories.module.scss';
 
@@ -17,6 +22,9 @@ const Categories: React.FC = () => {
   const handleCategoryClick = (categoryId: string) => {
     if (activeCategory !== categoryId) {
       dispatch(setActiveCategoryId(categoryId));
+      dispatch(resetActiveBrands());
+      dispatch(resetActiveOsArray());
+      dispatch(resetActiveDisplayDiagonals());
     }
   };
 

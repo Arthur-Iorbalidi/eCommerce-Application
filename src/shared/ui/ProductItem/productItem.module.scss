@@ -1,13 +1,13 @@
 .productItem {
   cursor: pointer;
   border-radius: 15px;
-  border: 2px solid rgb(226, 226, 226);
+  border: 2px solid #e2e2e2;
   overflow: hidden;
   background-color: #fff;
   .photoWrapper {
     position: relative;
     padding: 5%;
-    border-bottom: 2px solid rgb(226, 226, 226);
+    border-bottom: 2px solid #e2e2e2;
     &::before {
       transition: 300ms all;
       content: '';
