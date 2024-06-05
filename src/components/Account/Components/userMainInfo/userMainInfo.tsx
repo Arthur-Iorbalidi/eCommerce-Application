@@ -56,6 +56,34 @@ function TransformData(data: RegistrationFormFields, userInfo: Customer) {
   };
 }
 
+function SelectCurrentUserInfo(userInfo: Customer) {
+  return {
+    id: userInfo.id,
+    version: userInfo.version,
+    email: userInfo.email,
+    firstName: userInfo.firstName,
+    lastName: userInfo.lastName,
+    dateOfBirth: userInfo.dateOfBirth,
+    addresses: [
+      {
+        key: 'SHIPPING',
+        streetName: userInfo.addresses[0].streetName,
+        postalCode: userInfo.addresses[0].postalCode,
+        city: userInfo.addresses[0].city,
+        country: userInfo.addresses[0].country,
+      },
+      {
+        key: 'BILLING',
+        streetName: userInfo.addresses[1].streetName,
+        postalCode: userInfo.addresses[1].postalCode,
+        city: userInfo.addresses[1].city,
+        country: userInfo.addresses[1].country,
+      },
+    ],
+  };
+}
+
+
 function UserMainInfo() {
   //   const dispatch = useAppDispatch();
 
@@ -179,7 +207,14 @@ function UserMainInfo() {
   const onSubmit: SubmitHandler<RegistrationFormFields> = (
     data: RegistrationFormFields,
   ) => {
-    changeUser(TransformData(data, userInfo));
+    if (
+      // eslint-disable-next-line operator-linebreak
+      JSON.stringify(SelectCurrentUserInfo(userInfo)) !==
+      JSON.stringify(TransformData(data, userInfo))
+    ) {
+      changeUser(TransformData(data, userInfo));
+    }
+
     // setIsLoading(true);
   };
 

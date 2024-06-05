@@ -7,7 +7,7 @@ import {
   ProductProjectionPagedSearchResponse,
 } from '@commercetools/platform-sdk';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 
 import useAppDispatch from '../../shared/hooks/useAppDispatch';
@@ -193,7 +193,6 @@ function Catalog() {
           </Form.Select>
         </div>
       </div>
-
       {products.length > 0 ? (
         <div className={styles.productList}>
           {products.map((product) => (
@@ -211,7 +210,6 @@ function Catalog() {
           </p>
         )
       )}
-
       {showFilters && (
         <Filters showFilters={showFilters} setShowFilters={setShowFilters} />
       )}
