@@ -1,5 +1,6 @@
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Categories from './components/categories/categories';
 import PriceRangeFilter from './components/priceRangeFilter/priceRangeFilter';
@@ -27,6 +28,7 @@ interface FiltersProps {
 }
 
 const Filters: React.FC<FiltersProps> = (props: FiltersProps) => {
+  const navigate = useNavigate();
   const { showFilters, setShowFilters } = props;
 
   const dispatch = useAppDispatch();
@@ -53,6 +55,7 @@ const Filters: React.FC<FiltersProps> = (props: FiltersProps) => {
     dispatch(resetActiveBrands());
     dispatch(resetActiveOsArray());
     dispatch(resetActiveDisplayDiagonals());
+    navigate('/catalog');
   };
 
   return (
