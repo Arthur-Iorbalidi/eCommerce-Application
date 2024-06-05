@@ -7,7 +7,7 @@ const sortOptions: ISortOption[] = [
   { name: 'ID', value: 'id' },
   { name: 'Price', value: 'price' },
   { name: 'Name', value: 'name.en' },
-  { name: 'Date of creation', value: 'createdAt' },
+  { name: 'Publication date', value: 'createdAt' },
 ];
 
 const orderOptions: ISortOption[] = [

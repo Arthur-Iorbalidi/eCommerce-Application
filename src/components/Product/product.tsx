@@ -9,11 +9,11 @@ import { FaShoppingBasket } from 'react-icons/fa';
 import Button from '../../shared/ui/Button/Button';
 import getProductByKey from '../../services/api/products/getProductByKey';
 import Loader from '../../shared/ui/Loader/loader';
-import ProductModal from './productModal/productModal';
+import ProductModal from './components/productModal';
 import 'bootstrap/dist/css/bootstrap.css';
-import splitTextIntoLines from '../../services/api/helpers/splitTextIntoLines';
-import getDiscountedPrice from '../../services/api/helpers/getDiscountedPrice';
-import getFullPrice from '../../services/api/helpers/getFullPrice';
+import splitTextIntoLines from '../../services/helpers/splitTextIntoLines';
+import getDiscountedPrice from '../../services/helpers/getDiscountedPrice';
+import getFullPrice from '../../services/helpers/getFullPrice';
 
 import styles from './product.module.scss';
 

@@ -10,8 +10,7 @@ import { Customer } from '@commercetools/platform-sdk';
 import { Alert } from 'react-bootstrap';
 import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
 import useAppSelector from '../../../../shared/hooks/useAppSelector';
-import { changeUserInfo } from '../../../../store/reducers/authorizationState';
-
+import { changeUserInfo } from '../../../../store/reducers/authorizationSlice';
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
 import styles from './userPassword.module.scss';

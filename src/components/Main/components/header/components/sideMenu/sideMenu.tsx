@@ -17,7 +17,7 @@ import checkToken from '../../../../../../services/api/auth/checkToken';
 import {
   activateAuthorizationState,
   changeUserInfo,
-} from '../../../../../../store/reducers/authorizationState';
+} from '../../../../../../store/reducers/authorizationSlice';
 
 export default function SideMenu() {
   const navigate = useNavigate();

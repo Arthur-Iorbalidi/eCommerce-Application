@@ -12,11 +12,12 @@ import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
 import {
   activateAuthorizationState,
   changeUserInfo,
-} from '../../../../store/reducers/authorizationState';
+} from '../../../../store/reducers/authorizationSlice';
 
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
 import Loader from '../../../../shared/ui/Loader/loader';
+
 import styles from './loginForm.module.scss';
 
 // api
@@ -30,10 +31,6 @@ interface LoginFormFields {
 
 function LoginForm() {
   const navigate = useNavigate();
-
-  // const res = useAppSelector(
-  //   (state) => state.authorizationStateReducer.isAuthorized,
-  // );
 
   const dispatch = useAppDispatch();
   const [modal, setModal] = useState({

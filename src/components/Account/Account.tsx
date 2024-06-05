@@ -5,7 +5,7 @@ import useAppDispatch from '../../shared/hooks/useAppDispatch';
 import {
   activateAuthorizationState,
   changeUserInfo,
-} from '../../store/reducers/authorizationState';
+} from '../../store/reducers/authorizationSlice';
 import UserMainInfo from './Components/userMainInfo/userMainInfo';
 import UserPassword from './Components/userPassword/userPassword';
 import checkToken from '../../services/api/auth/checkToken';
