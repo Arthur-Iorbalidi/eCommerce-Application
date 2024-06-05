@@ -18,7 +18,6 @@ import { Customer } from '@commercetools/platform-sdk';
 import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
 import useAppSelector from '../../../../shared/hooks/useAppSelector';
 import { changeUserInfo } from '../../../../store/reducers/authorizationSlice';
-
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
 import styles from './userMainInfo.module.scss';
