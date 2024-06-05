@@ -25,7 +25,8 @@ export default function Main() {
 
         <Route
           path="account"
-          element={authorizationState ? <Account /> : <Navigate to="error" />}
+          // element={authorizationState ? <Account /> : <Navigate to="error" />}
+          element={<Account />}
         />
         <Route path="purchases" element={<div>purchases</div>} />
         <Route path="*" element={<Navigate to="error" />} />

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 import * as yup from 'yup';
 
 export interface CountryRegex {
@@ -11,8 +12,9 @@ export const countries: CountryRegex = {
 };
 
 const getValidationSchema = (
-  currentCountryShipping?: string,
-  currentCountryBilling?: string,
+  isAlsoBilling: boolean,
+  currentCountryShipping: string,
+  currentCountryBilling: string,
 ) =>
   yup.object().shape({
     firstName: yup
@@ -131,32 +133,30 @@ const getValidationSchema = (
       .string()
       .required('Postal Code is required')
       .test('postal', 'Postal code should be valid', (value) => {
-        if (currentCountryShipping) {
-          return countries[currentCountryShipping].test(value);
-        }
-        return undefined;
+        return countries[currentCountryShipping].test(value);
       }),
 
     country: yup.string().required('Country is required'),
 
-    streetNameBilling: yup.string().required('Street Name is required'),
-    cityBilling: yup
-      .string()
-      .required('City is required')
-      .matches(
-        /^[^!@#$%^&*()_\-=+~`[\]{}|\\;:,.<>/?0-9]+$/,
-        "Shouldn't contain special characters and numbers",
-      ),
-    postalCodeBilling: yup
-      .string()
-      .required('Postal Code is required')
-      .test('postal', 'Postal code should be valid', (value) => {
-        if (currentCountryBilling) {
-          return countries[currentCountryBilling].test(value);
+    ...(!isAlsoBilling
+      ? {
+          streetNameBilling: yup.string().required('Street Name is required'),
+          cityBilling: yup
+            .string()
+            .required('City is required')
+            .matches(
+              /^[^!@#$%^&*()_\-=+~`[\]{}|\\;:,.<>/?0-9]+$/,
+              "Shouldn't contain special characters and numbers",
+            ),
+          postalCodeBilling: yup
+            .string()
+            .required('Postal Code is required')
+            .test('postal', 'Postal code should be valid', (value) => {
+              return countries[currentCountryBilling].test(value);
+            }),
+          countryBilling: yup.string().required('Country is required'),
         }
-        return undefined;
-      }),
-    countryBilling: yup.string().required('Country is required'),
+      : {}),
   });
 
 export default getValidationSchema;

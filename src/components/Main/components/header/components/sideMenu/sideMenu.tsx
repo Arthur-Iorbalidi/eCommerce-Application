@@ -1,15 +1,23 @@
 import './sideMenu.scss';
 
-import { BsXLg } from 'react-icons/bs';
+import { BsXLg, BsBasket2 } from 'react-icons/bs';
+import { Customer } from '@commercetools/platform-sdk';
 
 import { useNavigate } from 'react-router-dom';
-import useAppDispatch from '../../../../../../shared/hooks/useAppDispatch';
+import { BiLogOut, BiLogIn } from 'react-icons/bi';
+import { FaAddressCard } from 'react-icons/fa';
+
 import { activateSideMenu } from '../../../../../../store/reducers/sideMenuSlice';
 import useAppSelector from '../../../../../../shared/hooks/useAppSelector';
-import { activateAuthorizationState } from '../../../../../../store/reducers/authorizationState';
+import useAppDispatch from '../../../../../../shared/hooks/useAppDispatch';
 
 import NavBar from '../navBar/navBar';
-import Button from '../../../../../../shared/ui/Button/Button';
+import checkToken from '../../../../../../services/api/auth/checkToken';
+
+import {
+  activateAuthorizationState,
+  changeUserInfo,
+} from '../../../../../../store/reducers/authorizationState';
 
 export default function SideMenu() {
   const navigate = useNavigate();
@@ -18,6 +26,14 @@ export default function SideMenu() {
   const authorizationState = useAppSelector(
     (state) => state.authorizationStateReducer.isAuthorized,
   );
+
+  function authCheckCallback(value: boolean, userInfo: Customer | null) {
+    if (!value) {
+      navigate('/');
+    }
+    dispatch(activateAuthorizationState(value));
+    dispatch(changeUserInfo(userInfo));
+  }
 
   return (
     <div className="main-page_side-menu">
@@ -29,39 +45,53 @@ export default function SideMenu() {
       />
       <div className="main-page_side-menu_wrapper">
         <NavBar position="side" />
-        <div className="main-page_header_wrapper-all_buttons side">
-          {!authorizationState ? (
-            <>
-              <Button
-                value="Sign In"
-                color="green"
-                className="header-button"
-                onClick={() => {
-                  dispatch(activateSideMenu(false));
-                  navigate('login');
-                }}
-              />
-              <Button
-                value="Sign Up"
-                color="green"
-                onClick={() => {
-                  dispatch(activateSideMenu(false));
-                  navigate('registration');
-                }}
-              />
-            </>
-          ) : (
-            <Button
-              value="Logout"
-              color="green"
-              className="header-button"
-              onClick={() => {
-                dispatch(activateSideMenu(false));
-                dispatch(activateAuthorizationState(false));
-              }}
-            />
-          )}
+
+        {authorizationState ? (
+          <div
+            className="main-page_header_wrapper_userCabinet_userInfoNav_button side"
+            onClick={() => {
+              dispatch(activateSideMenu(false));
+              navigate('/account');
+            }}
+          >
+            <FaAddressCard />
+            <p>Account</p>
+          </div>
+        ) : null}
+        <div
+          className="main-page_header_wrapper_userCabinet_userInfoNav_button side"
+          onClick={() => {
+            dispatch(activateSideMenu(false));
+            navigate('/purchases');
+          }}
+        >
+          <BsBasket2 />
+          <p>Purchases</p>
         </div>
+        {authorizationState ? (
+          <div
+            className="main-page_header_wrapper_userCabinet_userInfoNav_button side"
+            onClick={() => {
+              dispatch(activateSideMenu(false));
+              localStorage.removeItem('token');
+              checkToken(authCheckCallback);
+            }}
+          >
+            <BiLogOut />
+            <p>Log out</p>
+          </div>
+        ) : (
+          <div
+            className="main-page_header_wrapper_userCabinet_userInfoNav_button side"
+            onClick={() => {
+              dispatch(activateSideMenu(false));
+              navigate('login');
+            }}
+          >
+            <BiLogIn />
+            <p>Log In</p>
+          </div>
+        )}
       </div>
     </div>
   );

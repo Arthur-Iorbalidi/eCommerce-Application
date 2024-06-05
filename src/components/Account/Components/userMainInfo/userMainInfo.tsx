@@ -6,58 +6,56 @@ import { FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
 import { LiaCitySolid } from 'react-icons/lia';
 import { IoMdMail } from 'react-icons/io';
 import { Form } from 'react-bootstrap';
-// import Alert from "react-bootstrap/Alert";
+import Alert from 'react-bootstrap/Alert';
 
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 
 import { useEffect, useRef, useState } from 'react';
 import moment, { Moment } from 'moment';
-import { Customer } from '@commercetools/platform-sdk';
+import { ClientResponse, Customer } from '@commercetools/platform-sdk';
 
-// import useAppDispatch from "../../../../shared/hooks/useAppDispatch";
+import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
 import useAppSelector from '../../../../shared/hooks/useAppSelector';
-// import { changeUserInfo } from "../../../../store/reducers/authorizationState";
+import { changeUserInfo } from '../../../../store/reducers/authorizationState';
 
 import Button from '../../../../shared/ui/Button/Button';
 import Input from '../../../../shared/ui/Input/Input';
 import styles from './userMainInfo.module.scss';
 
-import getValidationSchema, { countries } from '../../validationSchema';
+import getValidationSchema, { countries } from './userValidtaionSchema';
 
 // api
-// import changeUserSettings from "../../../../services/api/userAccount/changeUserSettings";
+import changeUserSettings from '../../../../services/api/userAccount/changeUserSettings';
 
-import type { RegistrationFormFields } from '../interfaces';
+import type { RegistrationFormFields, ChangeUserProps } from '../interfaces';
 
-// function TransformData(data: RegistrationFormFields) {
-//   return {
-//     email: data.email,
-//     firstName: data.firstName,
-//     lastName: data.lastName,
-//     dateOfBirth: data.birthDate,
-//     addresses: [
-//       {
-//         key: "SHIPPING",
-//         streetName: data.streetName,
-//         postalCode: data.postalCode,
-//         city: data.city,
-//         country: data.country,
-//       },
-//       {
-//         key: "BILLING",
-//         streetName: isAlsoBilling ? data.streetName : data.streetNameBilling,
-//         postalCode: isAlsoBilling ? data.postalCode : data.postalCodeBilling,
-//         city: isAlsoBilling ? data.city : data.cityBilling,
-//         country: isAlsoBilling ? data.country : data.countryBilling,
-//       },
-//     ],
-//     billingAddresses: [1],
-//     shippingAddresses: [0],
-//     ...(isDefaultBilling ? { defaultBillingAddress: 1 } : {}),
-//     ...(isDefaultShipping ? { defaultShippingAddress: 0 } : {}),
-//   };
-// }
+function TransformData(data: RegistrationFormFields, userInfo: Customer) {
+  return {
+    id: userInfo.id,
+    version: userInfo.version,
+    email: data.email,
+    firstName: data.firstName,
+    lastName: data.lastName,
+    dateOfBirth: data.birthDate,
+    addresses: [
+      {
+        key: 'SHIPPING',
+        streetName: data.streetName,
+        postalCode: data.postalCode,
+        city: data.city,
+        country: data.country,
+      },
+      {
+        key: 'BILLING',
+        streetName: data.streetNameBilling,
+        postalCode: data.postalCodeBilling,
+        city: data.cityBilling,
+        country: data.countryBilling,
+      },
+    ],
+  };
+}
 
 function UserMainInfo() {
   //   const dispatch = useAppDispatch();
@@ -65,20 +63,69 @@ function UserMainInfo() {
   const userInfo = useAppSelector(
     (state) => state.authorizationStateReducer.userInfo as unknown as Customer,
   );
-  //   function changeUserInfroFromChild(value): void {
-  //     dispatch(changeUserInfo(value));
-  //   }
-  //   function changeUser() {
-  //     const token = JSON.parse(localStorage.getItem("token")).refreshToken;
-  //     changeUserSettings({ token, ...userInfo })(changeUserInfroFromChild);
-  //   }
 
-  //   const [modal, setModal] = useState({
-  //     isShowed: true,
-  //     text: "ErrorHandle",
-  //   });
+  const [modalError, setModalError] = useState({
+    isShowed: false,
+    text: '',
+  });
+  const [modalSuccess, setModalSuccess] = useState({
+    isShowed: false,
+    text: '',
+  });
 
+  const [activateProfile, changeActivateProfile] = useState(true);
+  const [activateShipping, changeShipping] = useState(true);
+  const [activateBilling, changeBilling] = useState(true);
   //   const [isLoading, setIsLoading] = useState(false);
+
+  function requestEffects(requestStatus: number) {
+    changeActivateProfile(() => true);
+    changeBilling(() => true);
+    changeShipping(() => true);
+
+    if (requestStatus === 200) {
+      setModalSuccess(() => ({
+        isShowed: true,
+        text: 'Changes successfully applied.',
+      }));
+      setTimeout(
+        () =>
+          setModalSuccess((state) => ({
+            ...state,
+            isShowed: false,
+          })),
+        3000,
+      );
+    } else {
+      setModalError(() => ({
+        isShowed: true,
+        text: 'An error occurred while making changes.',
+      }));
+      setTimeout(
+        () =>
+          setModalError((state) => ({
+            ...state,
+            isShowed: false,
+          })),
+        3000,
+      );
+    }
+  }
+
+  const dispatch = useAppDispatch();
+  function changeUserInfoFromChild(value: Customer): void {
+    dispatch(changeUserInfo(value));
+  }
+  function changeUser(userState: ChangeUserProps) {
+    const token = JSON.parse(
+      localStorage.getItem('token') as string,
+    ).refreshToken;
+    changeUserSettings({ token, ...userState })(
+      changeUserInfoFromChild,
+      requestEffects,
+    );
+  }
+
   const [currentCountryShipping, setCurrentCountryShipping] = useState('US');
   const handleCountryShippingChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -129,24 +176,21 @@ function UserMainInfo() {
       countryBilling: userInfo.addresses[1].country,
     },
   });
+
   const onSubmit: SubmitHandler<RegistrationFormFields> = (
     data: RegistrationFormFields,
   ) => {
-    return data;
+    changeUser(TransformData(data, userInfo));
     // setIsLoading(true);
-    // changeUser();
   };
 
   const inputRef = useRef(null);
-
-  const [activateProfile, changeActivateProfile] = useState(true);
-  const [activateShipping, changeShipping] = useState(true);
-  const [activateBilling, changeBilling] = useState(true);
 
   return (
     <form
       data-testid="userMainInfo"
       className={styles.registration_form}
+      // @ts-expect-error: Unreachable code error
       onSubmit={handleSubmit(onSubmit)}
     >
       <h2>My Profile</h2>
@@ -336,7 +380,16 @@ function UserMainInfo() {
         onClick={() => changeBilling((state) => !state)}
       />
 
-      {/* {modal.isShowed && <Alert variant="danger">{modal.text}</Alert>} */}
+      {modalError.isShowed && (
+        <Alert variant="danger" className={styles.modal}>
+          {modalError.text}
+        </Alert>
+      )}
+      {modalSuccess.isShowed && (
+        <Alert variant="success" className={styles.modal}>
+          {modalSuccess.text}
+        </Alert>
+      )}
 
       <div className={styles.saveButtonString}>
         <Button value="Save" color="grey" type="submit" />
