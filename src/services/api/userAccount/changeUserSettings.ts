@@ -1,19 +1,22 @@
 import { Customer, ClientResponse } from '@commercetools/platform-sdk';
 import tokenClientApi from '../TokenAuth';
 import { projectKey } from '..';
-
-interface UserSettingsProps {
-  token: string;
-  id: string;
-  version: number;
-}
+import type { UserSettingsProps } from '../../../components/Account/Components/interfaces';
 
 export default function changeUserSettings({
   token,
   id,
   version,
+  firstName,
+  lastName,
+  email,
+  dateOfBirth,
+  addresses,
 }: UserSettingsProps) {
-  return (callBack: (a: ClientResponse<Customer>) => void) =>
+  return (
+    callBack: (a: Customer) => void,
+    requestEffects: (val: number) => void,
+  ) =>
     tokenClientApi(token)
       .withProjectKey({ projectKey })
       .customers()
@@ -22,19 +25,19 @@ export default function changeUserSettings({
         body: {
           version,
           actions: [
-            { action: 'setFirstName', firstName: 'Bomzh2' },
-            { action: 'setLastName', lastName: 'Mr Lox' },
-            { action: 'changeEmail', email: 'Bomzh2777@gmai.de' },
-            { action: 'setDateOfBirth', dateOfBirth: '1993-02-01' },
+            { action: 'setFirstName', firstName },
+            { action: 'setLastName', lastName },
+            { action: 'changeEmail', email },
+            { action: 'setDateOfBirth', dateOfBirth },
             {
               action: 'changeAddress',
               addressKey: 'SHIPPING',
               address: {
                 key: 'SHIPPING',
-                country: 'RU',
-                streetName: 'Pushkina',
-                city: 'Moscow',
-                postalCode: '12345',
+                country: addresses[0].country,
+                streetName: addresses[0].streetName,
+                city: addresses[0].city,
+                postalCode: addresses[0].postalCode,
               },
             },
             {
@@ -42,10 +45,10 @@ export default function changeUserSettings({
               addressKey: 'BILLING',
               address: {
                 key: 'BILLING',
-                country: 'US',
-                streetName: 'Ad',
-                city: 'Washington',
-                postalCode: '666662',
+                country: addresses[1].country,
+                streetName: addresses[1].streetName,
+                city: addresses[1].city,
+                postalCode: addresses[1].postalCode,
               },
             },
           ],
@@ -53,6 +56,9 @@ export default function changeUserSettings({
       })
       .execute()
       .then((res) => {
-        callBack(res);
+        if (res.statusCode === 200) {
+          callBack(res.body);
+        }
+        requestEffects(res.statusCode as number);
       });
 }

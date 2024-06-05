@@ -9,6 +9,8 @@ export default function logInUser(
   successCallback?: (value: Customer) => void,
   errorCallback?: (message?: string) => void,
 ) {
+  localStorage.removeItem('token');
+
   zeroClientApi()
     .withProjectKey({ projectKey })
     .login()
