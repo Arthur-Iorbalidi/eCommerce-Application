@@ -1,5 +1,10 @@
 @import '../../constants/global.scss';
 
+.product_wrapper {
+  height: calc(100dvh - 50px);
+  overflow-y: auto;
+}
+
 .product_container {
   min-height: calc(100dvh - 50px);
   display: flex;

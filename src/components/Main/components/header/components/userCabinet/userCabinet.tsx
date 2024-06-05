@@ -2,7 +2,8 @@ import { useState } from 'react';
 import './userCabinet.scss';
 
 import { useNavigate } from 'react-router-dom';
-import { BsFillPersonFill, BsBasket2 } from 'react-icons/bs';
+import { HiUser } from 'react-icons/hi2';
+import { BsBasket2 } from 'react-icons/bs';
 import { BiLogOut, BiLogIn } from 'react-icons/bi';
 import { FaAddressCard } from 'react-icons/fa';
 import { Customer } from '@commercetools/platform-sdk';
@@ -42,7 +43,7 @@ export default function UserCabinet() {
         onClick={() => changeShowCabinet((state) => !state)}
       >
         <div className="main-page_header_wrapper_userCabinet_wrap_icon">
-          <BsFillPersonFill className="userIcon" viewBox="0 0 15 15" />
+          <HiUser className="userIcon" />
         </div>
         <div className="main-page_header_wrapper_userCabinet_wrap_name">
           {/* <p>{userInfo.firstName}</p> */}

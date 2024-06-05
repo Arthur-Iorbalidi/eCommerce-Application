@@ -43,15 +43,11 @@
   &.active {
     border-left-color: $universalColor;
     border-right-color: $universalColor;
+    background-color: $primaryBackgroundColor;
   }
 
   &.top:hover {
     cursor: pointer;
     background-color: $primaryBackgroundColor;
-    border-right-color: $secondaryColor;
-    border-left-color: $secondaryColor;
-    &:not(.active) {
-      border-bottom-color: $universalColor;
-    }
   }
 }

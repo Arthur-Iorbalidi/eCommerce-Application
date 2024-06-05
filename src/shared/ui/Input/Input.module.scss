@@ -2,33 +2,33 @@
 
 .input_group {
   width: 100%;
-}
 
-.input {
-  min-height: 40px;
-  width: 100%;
-  padding-left: 5px;
-  outline: none;
-  border: none;
-  border-radius: 40px;
-  box-shadow: $box-shadow-smallGrey;
+  .input {
+    min-height: 4rem;
+    width: 100%;
+    padding-left: 5px;
+    outline: none;
+    border: none;
+    border-radius: 40px;
+    box-shadow: $box-shadow-smallGrey;
 
-  &:focus {
-    box-shadow: $box-shadow-smallGreen;
+    &:focus {
+      box-shadow: $box-shadow-smallGreen;
+    }
+  }
+
+  .input__icon,
+  .input__toggle_button {
+    padding: 10px;
+    color: $thirdColor;
+    background-color: $secondaryBackgroundColor;
+    border: none;
+    border-radius: 40px;
+    box-shadow: $box-shadow-smallGrey;
   }
 }
 
-.input__icon,
-.input__toggle_button {
-  padding: 10px;
-  color: $thirdColor;
-  background-color: $secondaryBackgroundColor;
-  border: none;
-  border-radius: 40px;
-  box-shadow: $box-shadow-smallGrey;
-}
-
 .error_text {
-  color: $errorColor;
-  font-size: 1.1rem;
+  color: $errorColor !important;
+  font-size: 1.1rem !important;
 }
