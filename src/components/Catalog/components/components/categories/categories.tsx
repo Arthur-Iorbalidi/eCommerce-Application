@@ -1,4 +1,5 @@
 import ListGroup from 'react-bootstrap/ListGroup';
+import { Link } from 'react-router-dom';
 
 import useAppSelector from '../../../../../shared/hooks/useAppSelector';
 import useAppDispatch from '../../../../../shared/hooks/useAppDispatch';
@@ -25,15 +26,17 @@ const Categories: React.FC = () => {
       <div className={styles.categories_title}>Categories:</div>
       <ListGroup className={styles.categories_list} variant="flush">
         {categories.map((category) => (
-          <ListGroup.Item
-            className={`${styles.category} ${activeCategory === category.id ? styles.active : ''}`}
-            variant="light"
-            key={category.id}
-            action
-            onClick={() => handleCategoryClick(category.id)}
-          >
-            {category.name.en}
-          </ListGroup.Item>
+          <Link to={`/catalog/${category.externalId}`}>
+            <ListGroup.Item
+              className={`${styles.category} ${activeCategory === category.id ? styles.active : ''}`}
+              variant="light"
+              key={category.id}
+              action
+              onClick={() => handleCategoryClick(category.id)}
+            >
+              {category.name.en}
+            </ListGroup.Item>
+          </Link>
         ))}
       </ListGroup>
     </div>
