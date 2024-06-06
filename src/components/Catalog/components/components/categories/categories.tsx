@@ -34,7 +34,10 @@ const Categories: React.FC = () => {
       <div className={styles.categories_title}>Categories:</div>
       <ListGroup className={styles.categories_list} variant="flush">
         {categories.map((category) => (
-          <Link to={`/catalog/${category.externalId}`}>
+          <Link
+            to={`/catalog/${category.externalId}`}
+            className={styles.category_link}
+          >
             <ListGroup.Item
               className={`${styles.category} ${activeCategory === category.id ? styles.active : ''}`}
               variant="light"

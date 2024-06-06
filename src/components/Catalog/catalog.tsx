@@ -7,12 +7,19 @@ import {
   ProductProjectionPagedSearchResponse,
 } from '@commercetools/platform-sdk';
 
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 
+import { HiOutlineHome } from 'react-icons/hi2';
 import useAppDispatch from '../../shared/hooks/useAppDispatch';
 import useAppSelector from '../../shared/hooks/useAppSelector';
 import {
+  resetActiveBrands,
+  resetActiveCategoryId,
+  resetActiveDisplayDiagonals,
+  resetActiveOsArray,
+  resetPriceRange,
+  setActiveCategoryId,
   setBrands,
   setCategories,
   setDisplayDiagonals,
@@ -38,6 +45,8 @@ import styles from './catalog.module.scss';
 const PRODUCTS_LIMIT = 100;
 
 function Catalog() {
+  const { categ } = useParams();
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -45,6 +54,9 @@ function Catalog() {
   const [products, setProducts] = useState<ProductProjection[]>([]);
   const [showFilters, setShowFilters] = useState(false);
 
+  const allCategories = useAppSelector(
+    (state) => state.filtersReducer.categories,
+  );
   const activeCategoryId = useAppSelector(
     (state) => state.filtersReducer.activeCategoryId,
   );
@@ -101,12 +113,23 @@ function Catalog() {
   }
 
   useEffect(() => {
-    setIsLoading(true);
-
     getCategories((response) => {
       const categories: Category[] = response.body.results;
       dispatch(setCategories(categories));
     });
+  }, []);
+
+  useEffect(() => {
+    if (categ && allCategories.length > 0) {
+      const category = allCategories.find((cat) => cat.externalId === categ);
+      if (category) {
+        dispatch(setActiveCategoryId(category.id));
+      }
+    }
+  }, [categ, allCategories]);
+
+  useEffect(() => {
+    setIsLoading(true);
 
     const convertedPriceRange = {
       min: convertDollarsToCents(priceRange.min),
@@ -192,6 +215,24 @@ function Catalog() {
             ))}
           </Form.Select>
         </div>
+      </div>
+      <div className={styles.breadcrumbs}>
+        {categ && (
+          <Link
+            to="/catalog"
+            onClick={() => {
+              dispatch(resetActiveCategoryId());
+              dispatch(resetActiveBrands());
+              dispatch(resetActiveDisplayDiagonals());
+              dispatch(resetActiveOsArray());
+              dispatch(resetPriceRange());
+            }}
+            className={styles.breadcrumbs_link}
+          >
+            Catalog
+            <HiOutlineHome />
+          </Link>
+        )}
       </div>
       {products.length > 0 ? (
         <div className={styles.productList}>
