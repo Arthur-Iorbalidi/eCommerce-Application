@@ -9,7 +9,13 @@ import { FaShoppingBasket } from 'react-icons/fa';
 import { HiArrowRight, HiOutlineHome } from 'react-icons/hi2';
 
 import useAppDispatch from '../../shared/hooks/useAppDispatch';
-import { resetActiveCategoryId } from '../../store/reducers/filtersSlice';
+import {
+  resetActiveBrands,
+  resetActiveCategoryId,
+  resetActiveDisplayDiagonals,
+  resetActiveOsArray,
+  resetPriceRange,
+} from '../../store/reducers/filtersSlice';
 
 import Button from '../../shared/ui/Button/Button';
 
@@ -64,6 +70,10 @@ function ProductPage() {
               to="/catalog"
               onClick={() => {
                 dispatch(resetActiveCategoryId());
+                dispatch(resetActiveBrands());
+                dispatch(resetActiveDisplayDiagonals());
+                dispatch(resetActiveOsArray());
+                dispatch(resetPriceRange());
               }}
               className={styles.breadcrumbs_link}
             >

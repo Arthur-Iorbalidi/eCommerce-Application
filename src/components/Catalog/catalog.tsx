@@ -14,7 +14,11 @@ import { HiOutlineHome } from 'react-icons/hi2';
 import useAppDispatch from '../../shared/hooks/useAppDispatch';
 import useAppSelector from '../../shared/hooks/useAppSelector';
 import {
+  resetActiveBrands,
   resetActiveCategoryId,
+  resetActiveDisplayDiagonals,
+  resetActiveOsArray,
+  resetPriceRange,
   setActiveCategoryId,
   setBrands,
   setCategories,
@@ -153,6 +157,7 @@ function Catalog() {
     activeBrands,
     activeOsArray,
     activeDisplayDiagonals,
+    dispatch,
   ]);
 
   const navigateToProduct = (productKey: string) => {
@@ -217,6 +222,10 @@ function Catalog() {
             to="/catalog"
             onClick={() => {
               dispatch(resetActiveCategoryId());
+              dispatch(resetActiveBrands());
+              dispatch(resetActiveDisplayDiagonals());
+              dispatch(resetActiveOsArray());
+              dispatch(resetPriceRange());
             }}
             className={styles.breadcrumbs_link}
           >
