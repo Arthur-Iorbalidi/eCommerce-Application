@@ -8,8 +8,31 @@
 .product_container {
   min-height: calc(100dvh - 50px);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 20px 0;
+
+  .breadcrumbs {
+    min-height: 25px;
+    align-items: start;
+    align-self: start;
+
+    .breadcrumbs_link {
+      color: $universalColor;
+      text-decoration: none;
+      text-align: start;
+      transition: color $shortDuration;
+
+      &:hover {
+        color: $secondaryColor;
+      }
+    }
+
+    .breadcrumb_arrow {
+      margin: 0 10px;
+    }
+  }
 
   .product_box {
     display: flex;

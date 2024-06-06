@@ -4,6 +4,22 @@
   height: calc(100dvh - 50px);
   padding: 25px;
   overflow-y: auto;
+
+  .breadcrumbs {
+    min-height: 25px;
+    margin: 2px auto;
+    max-width: 1300px;
+
+    .breadcrumbs_link {
+      color: $universalColor;
+      text-decoration: none;
+      transition: color $shortDuration;
+
+      &:hover {
+        color: $secondaryColor;
+      }
+    }
+  }
 }
 
 .search {

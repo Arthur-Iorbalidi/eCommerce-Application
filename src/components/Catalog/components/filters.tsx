@@ -73,11 +73,13 @@ const Filters: React.FC<FiltersProps> = (props: FiltersProps) => {
       <Offcanvas.Body className={styles.offcanvas_body}>
         <hr />
         <Categories />
+        <hr />
         <PriceRangeFilter
           inputValues={inputValues}
           setInputValues={setInputValues}
           onApply={handlePricesApply}
         />
+        <hr />
         <BrandsFilter />
         <OsFilter />
         <DisplayDiagonalFilter />

@@ -3,22 +3,29 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ClientResponse, Product } from '@commercetools/platform-sdk';
+
 import Carousel from 'react-bootstrap/Carousel';
-import { BsArrowLeftShort } from 'react-icons/bs';
 import { FaShoppingBasket } from 'react-icons/fa';
+import { HiArrowRight, HiOutlineHome } from 'react-icons/hi2';
+
+import useAppDispatch from '../../shared/hooks/useAppDispatch';
+import { resetActiveCategoryId } from '../../store/reducers/filtersSlice';
+
 import Button from '../../shared/ui/Button/Button';
-import getProductByKey from '../../services/api/products/getProductByKey';
+
 import Loader from '../../shared/ui/Loader/loader';
 import ProductModal from './components/productModal';
-import 'bootstrap/dist/css/bootstrap.css';
+
 import splitTextIntoLines from '../../services/helpers/splitTextIntoLines';
 import getDiscountedPrice from '../../services/helpers/getDiscountedPrice';
 import getFullPrice from '../../services/helpers/getFullPrice';
+import getProductByKey from '../../services/api/products/getProductByKey';
 
 import styles from './product.module.scss';
 
 function ProductPage() {
-  const { key } = useParams();
+  const { categ, key } = useParams();
+  const dispatch = useAppDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -52,19 +59,30 @@ function ProductPage() {
     <div className={styles.product_wrapper}>
       <div className={styles.product_container}>
         <div className={styles.product_box}>
-          <div className={styles.goBack_btn_wrapper}>
-            <Link to="/catalog">
-              <Button
-                className={styles.goBack_btn}
-                value={
-                  (
-                    <BsArrowLeftShort className={styles.goBack_btn_arrow} />
-                  ) as ReactNode
-                }
-                color="green"
-              />
+          <div className={styles.breadcrumbs}>
+            <Link
+              to="/catalog"
+              onClick={() => {
+                dispatch(resetActiveCategoryId());
+              }}
+              className={styles.breadcrumbs_link}
+            >
+              Catalog
+              <HiOutlineHome />
             </Link>
+            {categ && (
+              <>
+                <HiArrowRight className={styles.breadcrumb_arrow} />
+                <Link
+                  to={`/catalog/${categ}`}
+                  className={styles.breadcrumbs_link}
+                >
+                  {categ}
+                </Link>
+              </>
+            )}
           </div>
+
           {product && (
             <h2 className={styles.product_title}>
               {product.masterData.current.name.en}
