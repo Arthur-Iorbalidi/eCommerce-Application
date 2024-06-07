@@ -5,6 +5,17 @@ import { Link, useLocation } from 'react-router-dom';
 import useAppDispatch from '../../../../../../shared/hooks/useAppDispatch';
 import useAppSelector from '../../../../../../shared/hooks/useAppSelector';
 import { activateSideMenu } from '../../../../../../store/reducers/sideMenuSlice';
+import {
+  resetSortOption,
+  resetSortOrderOption,
+} from '../../../../../../store/reducers/sortSlice';
+import {
+  resetActiveBrands,
+  resetActiveCategoryId,
+  resetActiveDisplayDiagonals,
+  resetActiveOsArray,
+  resetPriceRange,
+} from '../../../../../../store/reducers/filtersSlice';
 
 interface Props {
   position: 'top' | 'side';
@@ -29,6 +40,17 @@ export default function NavBar({ position }: Props) {
     return currentLocation === value ? 'active' : null;
   }
 
+  function handleCatalogReset() {
+    dispatch(resetActiveCategoryId());
+    dispatch(resetActiveBrands());
+    dispatch(resetActiveDisplayDiagonals());
+    dispatch(resetActiveOsArray());
+    dispatch(resetPriceRange());
+
+    dispatch(resetSortOption());
+    dispatch(resetSortOrderOption());
+  }
+
   return (
     <div className={`main-page_header_wrapper_header_nav ${position}`}>
       <Link
@@ -44,6 +66,7 @@ export default function NavBar({ position }: Props) {
         to="/catalog"
         onClick={() => {
           positionChecker();
+          handleCatalogReset();
         }}
         className={`main-page_header_wrapper_header_nav_button ${position} ${routeChecker('/catalog')}`}
       >

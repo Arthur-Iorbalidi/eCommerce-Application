@@ -25,6 +25,10 @@ import {
   setDisplayDiagonals,
   setOsArray,
 } from '../../store/reducers/filtersSlice';
+import {
+  setSortOption,
+  setSortOrderOption,
+} from '../../store/reducers/sortSlice';
 
 import Button from '../../shared/ui/Button/Button';
 import ProductItem from '../../shared/ui/ProductItem/productItem';
@@ -71,17 +75,12 @@ function Catalog() {
     (state) => state.filtersReducer.activeDisplayDiagonals,
   );
 
-  const [sortOption, setSortOption] = useState(sortOptions[0].value);
-  const [orderOption, setOrderOption] = useState(orderOptions[0].value);
+  const sortOption = useAppSelector((state) => state.sortReducer.sortOption);
+  const orderOption = useAppSelector((state) => state.sortReducer.orderOption);
+
   const [searchText, setSearchText] = useState('');
   const [inputSearchText, setInputSearchText] = useState('');
 
-  const selectSortOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortOption(event.target.value);
-  };
-  const selectOrderOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setOrderOption(event.target.value);
-  };
   const search = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSearchText(inputSearchText);
@@ -197,7 +196,13 @@ function Catalog() {
       <div className={styles.sortField}>
         <div className={styles.sortBlock}>
           <span className={styles.sortHeader}>Sort by</span>
-          <Form.Select onChange={selectSortOption} className={styles.sort}>
+          <Form.Select
+            onChange={(event) => {
+              dispatch(setSortOption(event.target.value));
+            }}
+            value={sortOption}
+            className={styles.sort}
+          >
             {sortOptions.map((option) => (
               <option key={option.name} value={option.value}>
                 {option.name}
@@ -207,7 +212,13 @@ function Catalog() {
         </div>
         <div className={styles.orderBlock}>
           <span className={styles.orderHeader}>Order by</span>
-          <Form.Select onChange={selectOrderOption} className={styles.order}>
+          <Form.Select
+            onChange={(event) => {
+              dispatch(setSortOrderOption(event.target.value));
+            }}
+            value={orderOption}
+            className={styles.order}
+          >
             {orderOptions.map((option) => (
               <option key={option.name} value={option.value}>
                 {option.name}

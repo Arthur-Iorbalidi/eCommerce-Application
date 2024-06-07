@@ -37,6 +37,7 @@ const Categories: React.FC = () => {
           <Link
             to={`/catalog/${category.externalId}`}
             className={styles.category_link}
+            key={category.id}
           >
             <ListGroup.Item
               className={`${styles.category} ${activeCategory === category.id ? styles.active : ''}`}

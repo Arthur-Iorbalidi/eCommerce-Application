@@ -2,13 +2,6 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Categories from './components/categories/categories';
-import PriceRangeFilter from './components/priceRangeFilter/priceRangeFilter';
-import BrandsFilter from './components/brandsFilter/brandsFilter';
-import OsFilter from './components/osFilter/osFilter';
-import DisplayDiagonalFilter from './components/displayDiagonalFilter/displayDiagonalFilter';
-import Button from '../../../shared/ui/Button/Button';
-
 import useAppDispatch from '../../../shared/hooks/useAppDispatch';
 import useAppSelector from '../../../shared/hooks/useAppSelector';
 import {
@@ -19,6 +12,14 @@ import {
   resetPriceRange,
   setPriceRange,
 } from '../../../store/reducers/filtersSlice';
+
+import Categories from './components/categories/categories';
+import PriceRangeFilter from './components/priceRangeFilter/priceRangeFilter';
+import BrandsFilter from './components/brandsFilter/brandsFilter';
+import OsFilter from './components/osFilter/osFilter';
+import DisplayDiagonalFilter from './components/displayDiagonalFilter/displayDiagonalFilter';
+
+import Button from '../../../shared/ui/Button/Button';
 
 import styles from './filters.module.scss';
 
@@ -55,6 +56,7 @@ const Filters: React.FC<FiltersProps> = (props: FiltersProps) => {
     dispatch(resetActiveBrands());
     dispatch(resetActiveOsArray());
     dispatch(resetActiveDisplayDiagonals());
+
     navigate('/catalog');
   };
 
