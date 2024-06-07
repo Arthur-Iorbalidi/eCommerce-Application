@@ -6,7 +6,7 @@ import { ClientResponse, Product } from '@commercetools/platform-sdk';
 
 import Carousel from 'react-bootstrap/Carousel';
 import { FaShoppingBasket } from 'react-icons/fa';
-import { HiArrowRight, HiOutlineHome } from 'react-icons/hi2';
+import { HiArrowRight, HiArrowLeft, HiOutlineHome } from 'react-icons/hi2';
 
 import useAppDispatch from '../../shared/hooks/useAppDispatch';
 import {
@@ -16,6 +16,10 @@ import {
   resetActiveOsArray,
   resetPriceRange,
 } from '../../store/reducers/filtersSlice';
+import {
+  resetSortOption,
+  resetSortOrderOption,
+} from '../../store/reducers/sortSlice';
 
 import Button from '../../shared/ui/Button/Button';
 
@@ -61,6 +65,18 @@ function ProductPage() {
     return <Navigate to="/error" replace />;
   }
 
+  const resetFilters = () => {
+    dispatch(resetActiveBrands());
+    dispatch(resetActiveDisplayDiagonals());
+    dispatch(resetActiveOsArray());
+    dispatch(resetPriceRange());
+  };
+
+  const resetSorting = () => {
+    dispatch(resetSortOption());
+    dispatch(resetSortOrderOption());
+  };
+
   return (
     <div className={styles.product_wrapper}>
       <div className={styles.product_container}>
@@ -70,10 +86,8 @@ function ProductPage() {
               to="/catalog"
               onClick={() => {
                 dispatch(resetActiveCategoryId());
-                dispatch(resetActiveBrands());
-                dispatch(resetActiveDisplayDiagonals());
-                dispatch(resetActiveOsArray());
-                dispatch(resetPriceRange());
+                resetFilters();
+                resetSorting();
               }}
               className={styles.breadcrumbs_link}
             >
@@ -85,6 +99,10 @@ function ProductPage() {
                 <HiArrowRight className={styles.breadcrumb_arrow} />
                 <Link
                   to={`/catalog/${categ}`}
+                  onClick={() => {
+                    resetFilters();
+                    resetSorting();
+                  }}
                   className={styles.breadcrumbs_link}
                 >
                   {categ}
@@ -95,6 +113,13 @@ function ProductPage() {
 
           {product && (
             <h2 className={styles.product_title}>
+              <Link to={categ ? `/catalog/${categ}` : '/catalog'}>
+                <Button
+                  className={styles.goBack_btn}
+                  value={(<HiArrowLeft />) as ReactNode}
+                  color="green"
+                />
+              </Link>
               {product.masterData.current.name.en}
             </h2>
           )}
