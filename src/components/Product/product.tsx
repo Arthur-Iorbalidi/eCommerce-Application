@@ -65,6 +65,18 @@ function ProductPage() {
     return <Navigate to="/error" replace />;
   }
 
+  const resetFilters = () => {
+    dispatch(resetActiveBrands());
+    dispatch(resetActiveDisplayDiagonals());
+    dispatch(resetActiveOsArray());
+    dispatch(resetPriceRange());
+  };
+
+  const resetSorting = () => {
+    dispatch(resetSortOption());
+    dispatch(resetSortOrderOption());
+  };
+
   return (
     <div className={styles.product_wrapper}>
       <div className={styles.product_container}>
@@ -74,13 +86,8 @@ function ProductPage() {
               to="/catalog"
               onClick={() => {
                 dispatch(resetActiveCategoryId());
-                dispatch(resetActiveBrands());
-                dispatch(resetActiveDisplayDiagonals());
-                dispatch(resetActiveOsArray());
-                dispatch(resetPriceRange());
-
-                dispatch(resetSortOption());
-                dispatch(resetSortOrderOption());
+                resetFilters();
+                resetSorting();
               }}
               className={styles.breadcrumbs_link}
             >
@@ -93,10 +100,8 @@ function ProductPage() {
                 <Link
                   to={`/catalog/${categ}`}
                   onClick={() => {
-                    dispatch(resetActiveBrands());
-                    dispatch(resetActiveDisplayDiagonals());
-                    dispatch(resetActiveOsArray());
-                    dispatch(resetPriceRange());
+                    resetFilters();
+                    resetSorting();
                   }}
                   className={styles.breadcrumbs_link}
                 >
