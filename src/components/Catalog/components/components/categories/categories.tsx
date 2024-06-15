@@ -11,6 +11,7 @@ import {
 } from '../../../../../store/reducers/filtersSlice';
 
 import styles from './categories.module.scss';
+import { resetCurrentPage } from '../../../../../store/reducers/sortSlice';
 
 const Categories: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +27,7 @@ const Categories: React.FC = () => {
       dispatch(resetActiveBrands());
       dispatch(resetActiveOsArray());
       dispatch(resetActiveDisplayDiagonals());
+      dispatch(resetCurrentPage());
     }
   };
 

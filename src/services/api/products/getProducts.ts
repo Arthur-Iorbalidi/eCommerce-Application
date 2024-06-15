@@ -17,6 +17,7 @@ type QueryParam = string | string[];
 interface QueryArgs {
   [key: string]: QueryParam | boolean | number | undefined;
   limit?: number;
+  offset?: number;
   sort?: string;
   'text.EN'?: QueryParam;
   filter?: QueryParam;
@@ -27,6 +28,7 @@ export default function getProducts(
     value: ClientResponse<ProductProjectionPagedSearchResponse>,
   ) => void,
   limit: number = 100,
+  offset: number,
   sortOption?: string,
   orderOption?: string,
   searchText?: string,
@@ -38,6 +40,7 @@ export default function getProducts(
 ): void {
   const queryArgs: QueryArgs = {
     limit,
+    offset,
     sort: `${sortOption} ${orderOption}`,
     'text.EN': searchText ? [searchText] : undefined,
   };

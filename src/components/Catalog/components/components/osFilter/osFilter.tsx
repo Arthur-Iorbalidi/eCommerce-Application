@@ -9,6 +9,7 @@ import {
 } from '../../../../../store/reducers/filtersSlice';
 
 import FilterComponent from '../../../../../shared/ui/FilterComponent/FilterComponent';
+import { resetCurrentPage } from '../../../../../store/reducers/sortSlice';
 
 const OsFilter: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -37,10 +38,12 @@ const OsFilter: React.FC = () => {
 
   const handleApplyOsFilter = () => {
     dispatch(setActiveOsArray(localSelectedOs));
+    dispatch(resetCurrentPage());
   };
 
   const handleResetOsFilter = () => {
     dispatch(resetActiveOsArray());
+    dispatch(resetCurrentPage());
   };
 
   return (
