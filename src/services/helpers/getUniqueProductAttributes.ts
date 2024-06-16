@@ -7,7 +7,7 @@ export default function getUniqueProductAttributes(
   products: ProductProjection[],
   filterAttribute: FilterAttribute,
 ) {
-  const brands = products
+  const attributes = products
     .map((product) => {
       const attribute = product.masterVariant?.attributes?.find(
         (attr) => attr.name === filterAttribute.value,
@@ -20,9 +20,9 @@ export default function getUniqueProductAttributes(
     })
     .filter(Boolean);
 
-  const uniqueBrandSet = new Set(brands);
+  const uniqueAttributesSet = new Set(attributes);
 
-  const uniqueBrandsArray = Array.from(uniqueBrandSet);
+  const uniqueAttributesArray = Array.from(uniqueAttributesSet);
 
-  return sortProductAttributesAscending(uniqueBrandsArray);
+  return sortProductAttributesAscending(uniqueAttributesArray);
 }

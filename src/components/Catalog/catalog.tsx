@@ -10,7 +10,7 @@ import {
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 
-import { HiOutlineHome } from 'react-icons/hi2';
+import { HiArrowRight, HiOutlineHome } from 'react-icons/hi2';
 import useAppDispatch from '../../shared/hooks/useAppDispatch';
 import useAppSelector from '../../shared/hooks/useAppSelector';
 import {
@@ -112,10 +112,12 @@ function Catalog() {
   }
 
   useEffect(() => {
-    getCategories((response) => {
-      const categories: Category[] = response.body.results;
-      dispatch(setCategories(categories));
-    });
+    if (!allCategories[0]) {
+      getCategories((response) => {
+        const categories: Category[] = response.body.results;
+        dispatch(setCategories(categories));
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -161,6 +163,14 @@ function Catalog() {
 
   const navigateToProduct = (productKey: string) => {
     navigate(`product/${productKey}`);
+  };
+
+  const resetCatalogFilters = () => {
+    dispatch(resetActiveCategoryId());
+    dispatch(resetActiveBrands());
+    dispatch(resetActiveDisplayDiagonals());
+    dispatch(resetActiveOsArray());
+    dispatch(resetPriceRange());
   };
 
   return (
@@ -228,21 +238,24 @@ function Catalog() {
         </div>
       </div>
       <div className={styles.breadcrumbs}>
+        <Link
+          to="/"
+          onClick={() => resetCatalogFilters()}
+          className={styles.breadcrumbs_link}
+        >
+          <HiOutlineHome />
+        </Link>
         {categ && (
-          <Link
-            to="/catalog"
-            onClick={() => {
-              dispatch(resetActiveCategoryId());
-              dispatch(resetActiveBrands());
-              dispatch(resetActiveDisplayDiagonals());
-              dispatch(resetActiveOsArray());
-              dispatch(resetPriceRange());
-            }}
-            className={styles.breadcrumbs_link}
-          >
-            Catalog
-            <HiOutlineHome />
-          </Link>
+          <>
+            <HiArrowRight className={styles.breadcrumb_arrow} />
+            <Link
+              to="/catalog"
+              onClick={() => resetCatalogFilters()}
+              className={styles.breadcrumbs_link}
+            >
+              Catalog
+            </Link>
+          </>
         )}
       </div>
       {products.length > 0 ? (

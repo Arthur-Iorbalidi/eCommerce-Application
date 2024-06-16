@@ -1,0 +1,41 @@
+@import '../../../../constants/global.scss';
+
+.mainInfo_wrapper {
+  height: calc(100vh - 50px);
+  overflow-y: scroll;
+
+  .mainInfo_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+
+    section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-self: center;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+    }
+
+    .loader_container {
+      background-color: $primaryBackgroundColor;
+      position: fixed;
+      min-height: calc(100dvh - 50px);
+      width: 100%;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 4;
+    }
+  }
+}

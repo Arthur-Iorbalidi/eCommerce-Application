@@ -21,8 +21,8 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = (
   const { inputValues, setInputValues, onApply } = props;
 
   return (
-    <>
-      <div className={styles.prices_title}> Prices:</div>
+    <div className={styles.prices}>
+      <div className={styles.prices_title}>Prices:</div>
       <ReactSlider
         value={inputValues}
         onAfterChange={(newValue) => {
@@ -52,7 +52,7 @@ const PriceRangeFilter: React.FC<PriceRangeFilterProps> = (
         color="green"
         onClick={onApply}
       />
-    </>
+    </div>
   );
 };
 

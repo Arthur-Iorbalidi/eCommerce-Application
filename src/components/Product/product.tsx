@@ -83,6 +83,18 @@ function ProductPage() {
         <div className={styles.product_box}>
           <div className={styles.breadcrumbs}>
             <Link
+              to="/"
+              onClick={() => {
+                dispatch(resetActiveCategoryId());
+                resetFilters();
+                resetSorting();
+              }}
+              className={styles.breadcrumbs_link}
+            >
+              <HiOutlineHome />
+            </Link>
+            <HiArrowRight className={styles.breadcrumb_arrow} />
+            <Link
               to="/catalog"
               onClick={() => {
                 dispatch(resetActiveCategoryId());
@@ -92,7 +104,6 @@ function ProductPage() {
               className={styles.breadcrumbs_link}
             >
               Catalog
-              <HiOutlineHome />
             </Link>
             {categ && (
               <>

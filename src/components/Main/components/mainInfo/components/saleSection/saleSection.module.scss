@@ -1,0 +1,57 @@
+@import '../../../../../../constants/global.scss';
+
+.sale_section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 27rem;
+  padding: 21px 0;
+
+  // background-color: $primaryColor;
+  // box-shadow: $box-shadow-smallGrey;
+
+  background-color: $primaryBackgroundColor;
+  border-top: 4px solid $primaryColor;
+  border-bottom: 4px solid $primaryColor;
+  border-radius: 30% 0 30% 0;
+
+  .carousel {
+    width: 100%;
+
+    .carousel_item {
+      width: 100%;
+      min-height: 25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: $secondaryBackgroundColor;
+      border-radius: 40% 0 40% 0;
+      padding: 20px;
+
+      h5 {
+        font-size: 2.6rem;
+        margin-bottom: 10px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+      }
+
+      p {
+        font-size: 2.2rem;
+      }
+
+      .sale_date {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+
+        span {
+          font-size: 2rem;
+        }
+      }
+    }
+  }
+}

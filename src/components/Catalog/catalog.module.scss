@@ -8,16 +8,21 @@
   .breadcrumbs {
     min-height: 25px;
     margin: 3rem auto;
-    max-width: 1300px;
+    max-width: 1430px;
 
     .breadcrumbs_link {
       color: $universalColor;
       text-decoration: none;
+      text-align: center;
       transition: color $shortDuration;
 
       &:hover {
         color: $secondaryColor;
       }
+    }
+
+    .breadcrumb_arrow {
+      margin: 0 10px;
     }
   }
 }
@@ -82,13 +87,13 @@
 }
 
 .productList {
-  max-width: 1300px;
+  max-width: 1430px;
   margin: 0 auto;
   margin-top: 30px;
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3vw;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1vw;
 }
 
 .noProducts_message {

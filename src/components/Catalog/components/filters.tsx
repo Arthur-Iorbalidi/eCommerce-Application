@@ -72,25 +72,27 @@ const Filters: React.FC<FiltersProps> = (props: FiltersProps) => {
           Filters
         </Offcanvas.Title>
       </Offcanvas.Header>
+
       <Offcanvas.Body className={styles.offcanvas_body}>
-        <hr />
-        <Categories />
-        <hr />
-        <PriceRangeFilter
-          inputValues={inputValues}
-          setInputValues={setInputValues}
-          onApply={handlePricesApply}
-        />
-        <hr />
-        <BrandsFilter />
-        <OsFilter />
-        <DisplayDiagonalFilter />
-        <Button
-          className={styles.filters_reset_btn}
-          value="Reset"
-          color="green"
-          onClick={handleFiltersReset}
-        />
+        <div className={styles.offcanvas_body_container}>
+          <Categories />
+          <hr />
+          <PriceRangeFilter
+            inputValues={inputValues}
+            setInputValues={setInputValues}
+            onApply={handlePricesApply}
+          />
+          <hr />
+          <BrandsFilter />
+          <OsFilter />
+          <DisplayDiagonalFilter />
+          <Button
+            className={styles.filters_reset_btn}
+            value="Reset"
+            color="green"
+            onClick={handleFiltersReset}
+          />
+        </div>
       </Offcanvas.Body>
     </Offcanvas>
   );
