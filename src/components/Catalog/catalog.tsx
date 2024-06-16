@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable prettier/prettier */
 import { useEffect, useState } from 'react';
 import {
   Category,
@@ -11,6 +12,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 
 import { HiOutlineHome } from 'react-icons/hi2';
+import { FaCircleArrowLeft, FaCircleArrowRight } from 'react-icons/fa6';
 import useAppDispatch from '../../shared/hooks/useAppDispatch';
 import useAppSelector from '../../shared/hooks/useAppSelector';
 import {
@@ -26,6 +28,8 @@ import {
   setOsArray,
 } from '../../store/reducers/filtersSlice';
 import {
+  resetCurrentPage,
+  setCurrentPage,
   setSortOption,
   setSortOrderOption,
 } from '../../store/reducers/sortSlice';
@@ -46,7 +50,7 @@ import getProducts from '../../services/api/products/getProducts';
 
 import styles from './catalog.module.scss';
 
-const PRODUCTS_LIMIT = 100;
+const PRODUCTS_LIMIT = 6;
 
 function Catalog() {
   const { categ } = useParams();
@@ -57,6 +61,7 @@ function Catalog() {
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState<ProductProjection[]>([]);
   const [showFilters, setShowFilters] = useState(false);
+  const [totalProductsNumber, setTotalProductsNumber] = useState(0);
 
   const allCategories = useAppSelector(
     (state) => state.filtersReducer.categories,
@@ -75,6 +80,7 @@ function Catalog() {
     (state) => state.filtersReducer.activeDisplayDiagonals,
   );
 
+  const currentPage = useAppSelector((state) => state.sortReducer.currentPage);
   const sortOption = useAppSelector((state) => state.sortReducer.sortOption);
   const orderOption = useAppSelector((state) => state.sortReducer.orderOption);
 
@@ -84,12 +90,14 @@ function Catalog() {
   const search = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSearchText(inputSearchText);
+    dispatch(resetCurrentPage());
   };
 
   function processProductsResponse(
     value: ClientResponse<ProductProjectionPagedSearchResponse>,
   ) {
     setProducts(value.body.results);
+    setTotalProductsNumber(value.body.total as number);
     setIsLoading(false);
     dispatch(
       setBrands(
@@ -138,6 +146,7 @@ function Catalog() {
     getProducts(
       processProductsResponse,
       PRODUCTS_LIMIT,
+      (currentPage - 1) * PRODUCTS_LIMIT,
       sortOption,
       orderOption,
       searchText,
@@ -148,6 +157,7 @@ function Catalog() {
       activeDisplayDiagonals,
     );
   }, [
+    currentPage,
     sortOption,
     orderOption,
     searchText,
@@ -262,6 +272,38 @@ function Catalog() {
           </p>
         )
       )}
+      <div className={styles.paginationWrapper}>
+        <div className={styles.pagination}>
+          {currentPage > 1 && (
+            <FaCircleArrowLeft
+              className={styles.arrowLeft}
+              onClick={() => dispatch(setCurrentPage(currentPage - 1))}
+            />
+          )}
+          <select
+            className={styles.pageNumber}
+            name="pageNumber"
+            value={currentPage}
+            onChange={(event) =>
+              dispatch(setCurrentPage(parseInt(event.target.value, 10)))}
+          >
+            {Array.from(
+              { length: Math.ceil(totalProductsNumber / PRODUCTS_LIMIT) },
+              (_, i) => i + 1,
+            ).map((option) => (
+              <option value={option} key={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+          {currentPage < totalProductsNumber / PRODUCTS_LIMIT && (
+            <FaCircleArrowRight
+              className={styles.arrowRight}
+              onClick={() => dispatch(setCurrentPage(currentPage + 1))}
+            />
+          )}
+        </div>
+      </div>
       {showFilters && (
         <Filters showFilters={showFilters} setShowFilters={setShowFilters} />
       )}
