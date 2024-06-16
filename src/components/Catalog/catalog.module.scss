@@ -104,14 +104,12 @@
     background-color: $secondaryColor;
     min-height: 40px;
     min-width: 40px;
-    border-radius: 50%;
+    border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    span {
-      color: #fff;
-      font-size: 2.2rem;
-    }
+    padding: 5px;
+    font-size: 2.2rem;
   }
   .arrowLeft, .arrowRight {
     width: 30px;

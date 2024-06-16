@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable prettier/prettier */
 import { useEffect, useState } from 'react';
 import {
   Category,
@@ -279,9 +280,22 @@ function Catalog() {
               onClick={() => dispatch(setCurrentPage(currentPage - 1))}
             />
           )}
-          <div className={styles.pageNumber}>
-            <span>{currentPage}</span>
-          </div>
+          <select
+            className={styles.pageNumber}
+            name="pageNumber"
+            value={currentPage}
+            onChange={(event) =>
+              dispatch(setCurrentPage(parseInt(event.target.value, 10)))}
+          >
+            {Array.from(
+              { length: Math.ceil(totalProductsNumber / PRODUCTS_LIMIT) },
+              (_, i) => i + 1,
+            ).map((option) => (
+              <option value={option} key={option}>
+                {option}
+              </option>
+            ))}
+          </select>
           {currentPage < totalProductsNumber / PRODUCTS_LIMIT && (
             <FaCircleArrowRight
               className={styles.arrowRight}
