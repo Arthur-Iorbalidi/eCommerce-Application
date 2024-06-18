@@ -11,7 +11,7 @@ import {
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import { HiArrowRight, HiOutlineHome } from 'react-icons/hi2';
-
+import { FaCircleArrowLeft, FaCircleArrowRight } from 'react-icons/fa6';
 import useAppDispatch from '../../shared/hooks/useAppDispatch';
 import useAppSelector from '../../shared/hooks/useAppSelector';
 import {
@@ -49,7 +49,7 @@ import getProducts from '../../services/api/products/getProducts';
 
 import styles from './catalog.module.scss';
 
-const PRODUCTS_LIMIT = 6;
+const PRODUCTS_LIMIT = 8;
 
 function Catalog() {
   const { categ } = useParams();
