@@ -6,7 +6,6 @@ import Header from './components/header/header';
 import Account from '../Account/Account';
 
 import CatalogRouter from '../Catalog/catalogRouter';
-import ProductPage from '../Product/product';
 
 export default function Main() {
   // const authorizationState = useAppSelector(

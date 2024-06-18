@@ -1,4 +1,4 @@
-import { Customer, ClientResponse } from '@commercetools/platform-sdk';
+import { Customer } from '@commercetools/platform-sdk';
 import tokenClientApi from '../TokenAuth';
 import { projectKey } from '..';
 import type { UserSettingsProps } from '../../../components/Account/Components/interfaces';
