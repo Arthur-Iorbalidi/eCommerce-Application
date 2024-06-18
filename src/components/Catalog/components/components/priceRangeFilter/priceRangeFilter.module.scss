@@ -1,37 +1,42 @@
 @import '../../../../../constants/global.scss';
 
-.horizontal_slider {
-  width: 80%;
-  align-self: center;
-  min-height: 60px;
+.prices {
+  display: flex;
+  flex-direction: column;
 
-  .slider_thumb {
-    top: 1px;
-    width: 25px;
-    height: 25px;
-    line-height: 80px;
-    font-size: 1.8rem;
-    text-align: center;
-    background-color: $primaryColor;
-    cursor: pointer;
-    border-radius: 50%;
+  .horizontal_slider {
+    width: 80%;
+    align-self: center;
+    min-height: 60px;
 
-    &:active {
-      background-color: $secondaryColor;
+    .slider_thumb {
+      top: 1px;
+      width: 25px;
+      height: 25px;
+      line-height: 80px;
+      font-size: 1.8rem;
+      text-align: center;
+      background-color: $primaryColor;
+      cursor: pointer;
+      border-radius: 50%;
+
+      &:active {
+        background-color: $secondaryColor;
+      }
+    }
+
+    .slider_track {
+      position: relative;
+      top: 12px;
+      height: 8px;
+      background: #eee9e9;
     }
   }
-
-  .slider_track {
-    position: relative;
-    top: 12px;
-    height: 8px;
-    background: #eee9e9;
+  .prices_title {
+    text-align: center;
   }
-}
-.prices_title {
-  text-align: center;
-}
 
-.apply_btn {
-  align-self: center;
+  .apply_btn {
+    align-self: center;
+  }
 }

@@ -57,6 +57,7 @@ export default function NavBar({ position }: Props) {
         to="/"
         onClick={() => {
           positionChecker();
+          handleCatalogReset();
         }}
         className={`main-page_header_wrapper_header_nav_button ${position} ${routeChecker('/')}`}
       >

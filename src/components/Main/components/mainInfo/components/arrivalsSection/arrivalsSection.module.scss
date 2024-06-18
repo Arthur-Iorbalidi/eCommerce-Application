@@ -1,0 +1,56 @@
+@import '../../../../../../constants/global.scss';
+
+.arrivals_section {
+  padding: 5rem 0;
+
+  .carousel {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 35px;
+
+    .product_carousel_item {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 20px;
+
+      .product_list_link {
+        width: 30%;
+        max-width: 290px;
+        min-width: 170px;
+        min-height: 32rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        text-decoration: none;
+        text-align: center;
+        border-radius: 15px;
+        background-color: $secondaryBackgroundColor;
+        color: $universalColor;
+        transition: transform $shortDuration ease-in-out;
+
+        &:hover {
+          transform: scale(1.03);
+        }
+
+        .product_img {
+          width: 20rem;
+        }
+
+        .product_name {
+          font-size: 1.6rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 560px) {
+  .product_carousel_item {
+    flex-direction: column;
+    align-items: center;
+  }
+}
