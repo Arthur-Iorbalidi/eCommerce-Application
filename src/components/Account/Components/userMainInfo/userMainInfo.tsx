@@ -200,7 +200,7 @@ function UserMainInfo() {
       cityBilling: userInfo.addresses[1].city,
       postalCodeBilling: userInfo.addresses[1].postalCode,
       countryBilling: userInfo.addresses[1].country,
-    },
+    } as RegistrationFormFields,
   });
 
   const onSubmit: SubmitHandler<RegistrationFormFields> = (
@@ -223,7 +223,6 @@ function UserMainInfo() {
     <form
       data-testid="userMainInfo"
       className={styles.registration_form}
-      // @ts-expect-error: Unreachable code error
       onSubmit={handleSubmit(onSubmit)}
     >
       <h2>My Profile</h2>
