@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable prettier/prettier */
+/* eslint-disable react/jsx-curly-newline */
 import { useEffect, useState } from 'react';
 import {
   Category,
@@ -285,7 +285,8 @@ function Catalog() {
             name="pageNumber"
             value={currentPage}
             onChange={(event) =>
-              dispatch(setCurrentPage(parseInt(event.target.value, 10)))}
+              dispatch(setCurrentPage(parseInt(event.target.value, 10)))
+            }
           >
             {Array.from(
               { length: Math.ceil(totalProductsNumber / PRODUCTS_LIMIT) },
