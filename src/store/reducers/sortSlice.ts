@@ -8,6 +8,7 @@ import {
 const initialState = {
   sortOption: sortOptions[0].value,
   orderOption: orderOptions[0].value,
+  currentPage: 1,
 };
 
 export const sortSlice = createSlice({
@@ -27,6 +28,13 @@ export const sortSlice = createSlice({
     resetSortOrderOption: (state) => {
       state.orderOption = orderOptions[0].value;
     },
+
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload;
+    },
+    resetCurrentPage: (state) => {
+      state.currentPage = 1;
+    },
   },
 });
 
@@ -36,6 +44,9 @@ export const {
 
   setSortOrderOption,
   resetSortOrderOption,
+
+  setCurrentPage,
+  resetCurrentPage,
 } = sortSlice.actions;
 
 export const sortReducer = sortSlice.reducer;

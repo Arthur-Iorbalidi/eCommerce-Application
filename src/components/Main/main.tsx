@@ -2,12 +2,12 @@ import './main.scss';
 
 import { Navigate, Routes, Route } from 'react-router-dom';
 
+import About from '../About/about';
 import Header from './components/header/header';
 import Account from '../Account/Account';
 import MainInfo from './components/mainInfo/mainInfo';
 
 import CatalogRouter from '../Catalog/catalogRouter';
-import About from '../About/about';
 
 export default function Main() {
   return (

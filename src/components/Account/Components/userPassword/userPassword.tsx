@@ -130,7 +130,6 @@ function UserPassword() {
     <form
       data-testid="ccountInfo2"
       className={styles.registration_form}
-      // @ts-expect-error: Unreachable code error
       onSubmit={handleSubmit(onSubmit)}
     >
       <h3 className={styles.password_main}>Change password</h3>

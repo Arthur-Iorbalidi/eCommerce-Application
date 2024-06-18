@@ -22,6 +22,7 @@ import DisplayDiagonalFilter from './components/displayDiagonalFilter/displayDia
 import Button from '../../../shared/ui/Button/Button';
 
 import styles from './filters.module.scss';
+import { resetCurrentPage } from '../../../store/reducers/sortSlice';
 
 interface FiltersProps {
   showFilters: boolean;
@@ -47,6 +48,7 @@ const Filters: React.FC<FiltersProps> = (props: FiltersProps) => {
 
   const handlePricesApply = () => {
     dispatch(setPriceRange({ min: inputValues[0], max: inputValues[1] }));
+    dispatch(resetCurrentPage());
   };
 
   const handleFiltersReset = () => {
@@ -56,6 +58,7 @@ const Filters: React.FC<FiltersProps> = (props: FiltersProps) => {
     dispatch(resetActiveBrands());
     dispatch(resetActiveOsArray());
     dispatch(resetActiveDisplayDiagonals());
+    dispatch(resetCurrentPage());
 
     navigate('/catalog');
   };

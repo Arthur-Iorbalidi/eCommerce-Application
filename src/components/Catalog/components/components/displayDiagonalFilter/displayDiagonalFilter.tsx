@@ -8,6 +8,7 @@ import {
 } from '../../../../../store/reducers/filtersSlice';
 
 import FilterComponent from '../../../../../shared/ui/FilterComponent/FilterComponent';
+import { resetCurrentPage } from '../../../../../store/reducers/sortSlice';
 
 const DisplayDiagonalFilter: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -41,10 +42,12 @@ const DisplayDiagonalFilter: React.FC = () => {
 
   const handleApplyDisplayDiagonalFilter = () => {
     dispatch(setActiveDisplayDiagonals(localSelectedDiagonals));
+    dispatch(resetCurrentPage());
   };
 
   const handleResetDisplayDiagonalFilter = () => {
     dispatch(resetActiveDisplayDiagonals());
+    dispatch(resetCurrentPage());
   };
 
   return (

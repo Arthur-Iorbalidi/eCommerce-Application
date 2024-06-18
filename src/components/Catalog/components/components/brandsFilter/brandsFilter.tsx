@@ -9,6 +9,7 @@ import {
 } from '../../../../../store/reducers/filtersSlice';
 
 import FilterComponent from '../../../../../shared/ui/FilterComponent/FilterComponent';
+import { resetCurrentPage } from '../../../../../store/reducers/sortSlice';
 
 const BrandsFilter: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -39,10 +40,12 @@ const BrandsFilter: React.FC = () => {
 
   const handleApplyBrandsFilter = () => {
     dispatch(setActiveBrands(localSelectedBrands));
+    dispatch(resetCurrentPage());
   };
 
   const handleResetBrandsFilter = () => {
     dispatch(resetActiveBrands());
+    dispatch(resetCurrentPage());
   };
 
   return (
