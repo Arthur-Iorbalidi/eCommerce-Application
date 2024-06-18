@@ -49,6 +49,7 @@ const MainInfo: React.FC = () => {
     value: ClientResponse<ProductProjectionPagedSearchResponse>,
   ) {
     setIsLoading(false);
+
     setProducts(value.body.results);
 
     setBrands(
@@ -60,6 +61,7 @@ const MainInfo: React.FC = () => {
     value: ClientResponse<ProductDiscountPagedQueryResponse>,
   ): void {
     setIsLoading(false);
+
     setProductDiscounts(value.body.results);
   }
 
@@ -69,22 +71,26 @@ const MainInfo: React.FC = () => {
     const sortByPublicationDate = sortOptions[3].value;
     const ascendingOrder = orderOptions[0].value;
 
-    if (!allCategories[0]) {
+    if (!allCategories.length) {
       getCategories((response) => {
         const categories: Category[] = response.body.results;
         dispatch(setCategories(categories));
       });
     }
 
-    getProductDiscounts(processProductDiscountsResponse);
+    if (!productDiscounts.length) {
+      getProductDiscounts(processProductDiscountsResponse);
+    }
 
-    getProductsZero(
-      processProductsResponse,
-      PRODUCTS_LIMIT,
-      sortByPublicationDate,
-      ascendingOrder,
-    );
-  }, [allCategories, dispatch]);
+    if (!products.length) {
+      getProductsZero(
+        processProductsResponse,
+        PRODUCTS_LIMIT,
+        sortByPublicationDate,
+        ascendingOrder,
+      );
+    }
+  }, [allCategories, dispatch, productDiscounts.length, products.length]);
 
   return (
     <div className={styles.mainInfo_wrapper}>

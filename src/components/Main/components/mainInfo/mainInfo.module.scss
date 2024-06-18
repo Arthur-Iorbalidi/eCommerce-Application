@@ -28,6 +28,7 @@
 
     .loader_container {
       position: fixed;
+      background-color: $primaryBackgroundColor;
       min-height: calc(100dvh - 50px);
       width: 100%;
       left: 0;

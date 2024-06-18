@@ -1,6 +1,6 @@
-// import member1 from '../../../../assets/images/AboutPage/teamMembers/member1.jpg';
-// import member2 from '../../../../assets/images/AboutPage/teamMembers/member2.jpg';
-import member3 from '../../../../assets/images/AboutPage/teamMembers/member-placeholder.png';
+import member1 from '../../../../assets/images/AboutPage/teamMembers/member1.jpg';
+import member2 from '../../../../assets/images/AboutPage/teamMembers/member2.jpg';
+import member3 from '../../../../assets/images/AboutPage/teamMembers/member3.jpg';
 
 interface TeamMember {
   id: number;
@@ -17,7 +17,7 @@ const teamMembers: TeamMember[] = [
     id: 1,
     name: 'Violetta Stolarova',
     role: 'Front-end developer',
-    bio: 'Ipsum nunc aliquet bibendum enim. Felis bibendum ut tristique et egestas quis ipsum suspendisse. Viverra nibh cross pulvinar mattis nunc sed blandit. Sed elementum tempus egestas sed sed risus pretium. ',
+    bio: "I'm a second-year student at the Belarusian State University of Informatics and Radioelectronics, specializing in automated information processing systems. My primary goal is to deepen my knowledge in front-end development. Skills: HTML, CSS(SCSS), JS, TS, React, C++, SQL.",
 
     contributions: [
       'Main Page',
@@ -27,13 +27,13 @@ const teamMembers: TeamMember[] = [
       'Catalog Filters',
     ],
     githubLink: 'https://github.com/ViolettaStolarova',
-    photo: member3,
+    photo: member1,
   },
   {
     id: 2,
     name: 'Arthur Iorbalidi',
     role: 'Front-end developer & Team Lead',
-    bio: 'Ipsum nunc aliquet bibendum enim. Felis bibendum ut tristique et egestas quis ipsum suspendisse. Viverra nibh cross pulvinar mattis nunc sed blandit. Sed elementum tempus egestas sed sed risus pretium. Nascetur ridiculus mus mauris vitae ultricies. ',
+    bio: 'I am a student at the Belarusian-Russian University, majoring in software engineering. I like programming, especially front-end development. In addition to programming, I am keen on basketball and cycling. Skills: HTML, CSS(SCSS), JS, TS, React, C#, SQL, Java.',
     contributions: [
       'Repository and task board setup',
       'Registration Page',
@@ -42,13 +42,13 @@ const teamMembers: TeamMember[] = [
       'Catalog Sort',
     ],
     githubLink: 'https://github.com/Arthur-Iorbalidi',
-    photo: member3,
+    photo: member2,
   },
   {
     id: 3,
     name: 'Stanislav Shkradov',
     role: 'Front-end developer',
-    bio: 'Ipsum nunc aliquet bibendum enim. Felis bibendum ut tristique et egestas quis ipsum suspendisse. Viverra nibh cross pulvinar mattis nunc sed blandit. Sed elementum tempus egestas sed sed risus pretium. Nascetur ridiculus mus mauris vitae ultricies. ',
+    bio: 'Lawyer by higher education, coder at heart. Skills: HTML, CSS(SCSS), JS, TS, React, Redux.',
     contributions: [
       'CommerceTools Setup',
       'API client Setup',

@@ -9,9 +9,10 @@
     flex-direction: column;
     gap: 10px;
     list-style-type: none;
+    padding: 0;
 
     li {
-      min-width: 250px;
+      min-width: 290px;
       padding: 10px 15px;
       font-size: 1.6rem;
       background-color: $primaryBackgroundColor;
@@ -20,6 +21,14 @@
 
       &:hover {
         background-color: darken($primaryBackgroundColor, 5%);
+      }
+
+      @media (max-width: 500px) {
+        min-width: 170px;
+      }
+
+      @media (max-width: 390px) {
+        min-width: 100%;
       }
     }
   }
@@ -33,7 +42,6 @@
     padding: 0 30px;
 
     .team_member_card {
-      height: auto;
       width: 60%;
       max-width: 715px;
       display: flex;
@@ -76,10 +84,19 @@
 
       img {
         margin: 0 auto;
-        max-height: 110px;
+        max-height: 150px;
         object-fit: cover;
         margin-bottom: 20px;
-        border-radius: 45%;
+        border-radius: 50%;
+        border: 2px solid $primaryColor;
+
+        @media (max-width: 768px) {
+          height: 110px;
+        }
+
+        @media (max-width: 368px) {
+          height: 70px;
+        }
       }
 
       h3 {

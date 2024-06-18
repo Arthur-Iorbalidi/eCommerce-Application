@@ -17,7 +17,8 @@
 
       .product_list_link {
         width: 30%;
-        min-width: 230px;
+        max-width: 290px;
+        min-width: 170px;
         min-height: 32rem;
         display: flex;
         flex-direction: column;
