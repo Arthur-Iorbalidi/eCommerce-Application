@@ -6,9 +6,6 @@ import { store } from '../src/store/store';
 import '@testing-library/jest-dom/vitest';
 import Header from '../src/components/Main/components/header/header';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-declare let global: any;
-
 describe('Header Component', () => {
   it('renders Logo and TopMenu on large screens', () => {
     render(
@@ -24,7 +21,7 @@ describe('Header Component', () => {
   });
 
   it('includes side menu button on tablet screen', () => {
-    global.window.innerWidth = 767;
+    window.innerWidth = 767;
 
     render(
       <Provider store={store}>
@@ -40,7 +37,7 @@ describe('Header Component', () => {
   });
 
   it('includes side menu button on mobile screen', () => {
-    global.window.innerWidth = 390;
+    window.innerWidth = 390;
 
     render(
       <Provider store={store}>
@@ -56,7 +53,7 @@ describe('Header Component', () => {
   });
 
   it('toggles Side Menu on click', () => {
-    global.window.innerWidth = 390;
+    window.innerWidth = 390;
 
     render(
       <Provider store={store}>
