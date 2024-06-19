@@ -2,8 +2,8 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import useAppDispatch from '../../../shared/hooks/useAppDispatch';
-import useAppSelector from '../../../shared/hooks/useAppSelector';
+import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
+import useAppSelector from '../../../../shared/hooks/useAppSelector';
 import {
   resetActiveBrands,
   resetActiveCategoryId,
@@ -11,7 +11,7 @@ import {
   resetActiveOsArray,
   resetPriceRange,
   setPriceRange,
-} from '../../../store/reducers/filtersSlice';
+} from '../../../../store/reducers/filtersSlice';
 
 import Categories from './components/categories/categories';
 import PriceRangeFilter from './components/priceRangeFilter/priceRangeFilter';
@@ -19,10 +19,10 @@ import BrandsFilter from './components/brandsFilter/brandsFilter';
 import OsFilter from './components/osFilter/osFilter';
 import DisplayDiagonalFilter from './components/displayDiagonalFilter/displayDiagonalFilter';
 
-import Button from '../../../shared/ui/Button/Button';
+import Button from '../../../../shared/ui/Button/Button';
 
 import styles from './filters.module.scss';
-import { resetCurrentPage } from '../../../store/reducers/sortSlice';
+import { resetCurrentPage } from '../../../../store/reducers/sortSlice';
 
 interface FiltersProps {
   showFilters: boolean;

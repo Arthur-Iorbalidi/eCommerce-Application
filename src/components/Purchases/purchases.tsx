@@ -12,8 +12,23 @@ import styles from './purchases.module.scss';
 import Button from '../../shared/ui/Button/Button';
 import deleteItemFromCart from '../../services/api/cart/deleteItemFromCart';
 import getCalculatedPrice from '../../services/helpers/getCalculatedPrice';
+import useAppDispatch from '../../shared/hooks/useAppDispatch';
+import {
+  resetActiveBrands,
+  resetActiveCategoryId,
+  resetActiveDisplayDiagonals,
+  resetActiveOsArray,
+  resetPriceRange,
+} from '../../store/reducers/filtersSlice';
+import {
+  resetCurrentPage,
+  resetSortOption,
+  resetSortOrderOption,
+} from '../../store/reducers/sortSlice';
 
 export default function Purchases() {
+  const dispatch = useAppDispatch();
+
   const [cart, changeCart] = useState({});
   const [stateWithProducts, changeStateWithProducts] = useState([]);
 
@@ -31,6 +46,19 @@ export default function Purchases() {
   // function nav(value: string) {
   //   navigate(`/catalog/product/${value}`);
   // }
+
+  function handleCatalogReset() {
+    dispatch(resetActiveCategoryId());
+    dispatch(resetActiveBrands());
+    dispatch(resetActiveDisplayDiagonals());
+    dispatch(resetActiveOsArray());
+    dispatch(resetPriceRange());
+
+    dispatch(resetCurrentPage());
+    dispatch(resetSortOption());
+    dispatch(resetSortOrderOption());
+  }
+
   return (
     <div>
       {stateWithProducts.length !== 0 ? (
@@ -50,7 +78,14 @@ export default function Purchases() {
       ) : (
         <div>
           Ваша корзина пуста
-          <Link to="/catalog">Catalog</Link>
+          <Link
+            to="/catalog"
+            onClick={() => {
+              handleCatalogReset();
+            }}
+          >
+            Catalog
+          </Link>
         </div>
       )}
     </div>

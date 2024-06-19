@@ -4,10 +4,9 @@ interface ISortOption {
 }
 
 const sortOptions: ISortOption[] = [
-  { name: 'ID', value: 'id' },
+  { name: 'Publication date', value: 'createdAt' },
   { name: 'Price', value: 'price' },
   { name: 'Name', value: 'name.en' },
-  { name: 'Publication date', value: 'createdAt' },
 ];
 
 const orderOptions: ISortOption[] = [

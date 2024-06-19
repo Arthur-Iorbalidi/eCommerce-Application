@@ -1,0 +1,65 @@
+@import '../../../../constants/global.scss';
+
+.paginationWrapper {
+  display: flex;
+  margin-top: 4rem;
+
+  .pagination {
+    margin: 0 auto;
+
+    .pagination_item {
+      text-align: center;
+      max-height: 35px;
+      a,
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        padding: 3px 7px;
+        border: 2px solid #e2e2e2;
+        text-align: center;
+        height: 100%;
+        color: $universalColor;
+        font-size: 1.7rem;
+      }
+
+      span {
+        text-align: center;
+        background-color: #e2e2e2;
+      }
+    }
+
+    .pagination_arrow {
+      width: 28px;
+      max-height: 35px;
+
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: $universalColor;
+        border: 2px solid $secondaryColor;
+        background-color: $primaryColor;
+      }
+
+      span {
+        max-height: 35px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.8rem;
+
+        :hover {
+          background-color: $secondaryColor;
+        }
+      }
+
+      li {
+        max-height: 35px;
+      }
+    }
+  }
+}
