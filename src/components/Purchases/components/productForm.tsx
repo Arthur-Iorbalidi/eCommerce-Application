@@ -1,6 +1,6 @@
 import { BiX } from 'react-icons/bi';
-import { ClientResponse, Product } from '@commercetools/platform-sdk';
 import { ReactNode } from 'react';
+import { LineItem } from '@commercetools/platform-sdk';
 import Button from '../../../shared/ui/Button/Button';
 import styles from './productForm.module.scss';
 import deleteItemFromCart from '../../../services/api/cart/deleteItemFromCart';
@@ -8,7 +8,8 @@ import getCalculatedPrice from '../../../services/helpers/getCalculatedPrice';
 
 interface Props {
   key: string;
-  data;
+  data: LineItem;
+  onDelete: () => void;
 }
 
 function ProductForm(product: Props) {
