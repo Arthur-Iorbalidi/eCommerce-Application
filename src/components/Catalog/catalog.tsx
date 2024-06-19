@@ -63,13 +63,11 @@ function Catalog() {
   const [totalProductsNumber, setTotalProductsNumber] = useState(0);
   const [currency] = useState('USD');
 
-  useEffect(
-    () =>
-      createMyCart(
-        // Здесь забит в тупую тип валюты. Желательно переделать, чтоб завиело от чего-то
-        currency,
-      ),
-    products,
+  useEffect(() =>
+    createMyCart(
+      // Здесь забит в тупую тип валюты. Желательно переделать, чтоб завиело от чего-то
+      currency,
+    ),
   );
 
   const allCategories = useAppSelector(

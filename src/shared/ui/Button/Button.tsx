@@ -7,7 +7,7 @@ interface Props {
   className?: string | undefined | null;
   disabled?: boolean;
   type?: 'reset' | 'submit' | 'button' | undefined;
-  onClick?: (() => void) | undefined | null;
+  onClick?: ((val?: MouseEvent) => void | null) | undefined | null;
 }
 
 export default function Button({
@@ -24,7 +24,7 @@ export default function Button({
       type={type}
       disabled={disabled}
       className={`button ${color} ${className}`}
-      onClick={(event: MouseEvent) => {
+      onClick={(event) => {
         event.stopPropagation();
         return onClick ? onClick() : null;
       }}
