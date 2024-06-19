@@ -34,7 +34,7 @@ export default function Purchases() {
         </div>
       ) : (
         <div>
-          Ваша корзина пуста
+          No products...
           <Link to="/catalog">Catalog</Link>
         </div>
       )}
