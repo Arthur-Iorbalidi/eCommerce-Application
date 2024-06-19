@@ -32,6 +32,7 @@
   border-right: 2px solid transparent;
   border-left: 2px solid transparent;
   border-bottom: 2px solid transparent;
+  border-radius: 15px 15px 0 0;
   transition:
     border-color $shortDuration,
     background-color $shortDuration;
@@ -41,8 +42,6 @@
   }
 
   &.active {
-    border-left-color: $universalColor;
-    border-right-color: $universalColor;
     background-color: $primaryBackgroundColor;
   }
 

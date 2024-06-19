@@ -13,7 +13,7 @@
   background-color: $secondaryBackgroundColor;
   height: 50px;
   padding: 0 20px;
-  box-shadow: $box-shadow-mediumGrey;
+  border: 0.5px solid $primaryBackgroundColor;
   font-family: 'Poppins';
   & * {
     font-family: 'Poppins';

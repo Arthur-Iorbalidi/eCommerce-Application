@@ -10,10 +10,7 @@ export const countries: CountryRegex = {
   BY: /^\d{6}$/,
 };
 
-const getValidationSchema = (
-  currentCountryShipping?: string,
-  currentCountryBilling?: string,
-) =>
+const getValidationSchema = () =>
   yup.object().shape({
     currentPassword: yup
       .string()

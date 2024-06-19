@@ -1,0 +1,145 @@
+@import '../../../../constants/global.scss';
+
+.team_members_section {
+  width: 100%;
+  padding: 4rem 0;
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style-type: none;
+    padding: 0;
+
+    li {
+      min-width: 290px;
+      padding: 10px 15px;
+      font-size: 1.6rem;
+      background-color: $primaryBackgroundColor;
+      border-radius: 15px;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: darken($primaryBackgroundColor, 5%);
+      }
+
+      @media (max-width: 500px) {
+        min-width: 170px;
+      }
+
+      @media (max-width: 390px) {
+        min-width: 100%;
+      }
+    }
+  }
+
+  .team_members {
+    width: 100%;
+    max-width: 1400px;
+    display: flex;
+    margin: 0 auto;
+    gap: 30px;
+    padding: 0 30px;
+
+    .team_member_card {
+      width: 60%;
+      max-width: 715px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      padding: 25px;
+      background-color: $secondaryBackgroundColor;
+      box-shadow: $box-shadow-smallGrey;
+      border-radius: 15px;
+      border-top: 4px solid $primaryColor;
+      border-bottom: 4px solid $primaryColor;
+
+      @media (max-width: 768px) {
+        width: 100%;
+      }
+
+      .team_member_mainInfo {
+        text-decoration: none;
+        display: flex;
+        gap: 6px;
+
+        &:hover {
+          .github_icon {
+            color: $secondaryColor;
+          }
+        }
+
+        .github_icon {
+          color: $thirdColor;
+          font-size: 2.4rem;
+          margin: 0 7px 3px 0;
+          transition: color $shortDuration;
+        }
+      }
+
+      .team_member_role {
+        color: $thirdColor;
+      }
+
+      img {
+        margin: 0 auto;
+        max-height: 150px;
+        object-fit: cover;
+        margin-bottom: 20px;
+        border-radius: 50%;
+        border: 2px solid $primaryColor;
+
+        @media (max-width: 768px) {
+          height: 110px;
+        }
+
+        @media (max-width: 368px) {
+          height: 70px;
+        }
+      }
+
+      h3 {
+        letter-spacing: 0.07em;
+        text-align: center;
+        font-size: 1.9rem;
+        color: $universalColor;
+        font-weight: 600;
+      }
+
+      p {
+        margin: 0;
+        max-width: 400px;
+        font-size: 1.6rem;
+      }
+
+      .team_member_contributions {
+        margin-top: auto;
+        font-size: 1.5rem;
+        background-color: $secondaryBackgroundColor;
+
+        h5 {
+          letter-spacing: 0.07em;
+          font-size: 1.7rem;
+          font-weight: 600;
+          text-align: center;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1170px) {
+  .team_members {
+    flex-direction: column;
+
+    .team_member_card_even {
+      align-self: start;
+    }
+
+    .team_member_card_odd {
+      align-self: end;
+    }
+  }
+}

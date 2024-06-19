@@ -16,9 +16,15 @@
     flex-direction: column;
     gap: 5px;
 
-    .filters_reset_btn {
-      width: 100%;
-      margin-top: auto;
+    .offcanvas_body_container {
+      padding-right: 5px;
+
+      overflow-y: auto;
+
+      .filters_reset_btn {
+        width: 100%;
+        margin-top: auto;
+      }
     }
   }
 }

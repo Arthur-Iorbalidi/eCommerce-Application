@@ -4,7 +4,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ClientResponse, Product, Cart } from '@commercetools/platform-sdk';
 import Carousel from 'react-bootstrap/Carousel';
-import { BsArrowLeftShort } from 'react-icons/bs';
+import { HiOutlineHome, HiArrowRight } from 'react-icons/hi2';
 import { FaShoppingBasket } from 'react-icons/fa';
 import Button from '../../shared/ui/Button/Button';
 import getProductByKey from '../../services/api/products/getProductByKey';
@@ -16,11 +16,38 @@ import getDiscountedPrice from '../../services/helpers/getDiscountedPrice';
 import getFullPrice from '../../services/helpers/getFullPrice';
 import addItemInCart from '../../services/api/cart/addItemInCart';
 import getMyCart from '../../services/api/cart/getMyCart';
+import useAppDispatch from '../../shared/hooks/useAppDispatch';
 
 import styles from './product.module.scss';
 import deleteItemFromCart from '../../services/api/cart/deleteItemFromCart';
+import {
+  resetActiveBrands,
+  resetActiveCategoryId,
+  resetActiveDisplayDiagonals,
+  resetActiveOsArray,
+  resetPriceRange,
+} from '../../store/reducers/filtersSlice';
+import {
+  resetCurrentPage,
+  resetSortOption,
+  resetSortOrderOption,
+} from '../../store/reducers/sortSlice';
 
 function ProductPage() {
+  const dispatch = useAppDispatch();
+  const resetFilters = () => {
+    dispatch(resetActiveBrands());
+    dispatch(resetActiveDisplayDiagonals());
+    dispatch(resetActiveOsArray());
+    dispatch(resetPriceRange());
+    dispatch(resetCurrentPage());
+  };
+
+  const resetSorting = () => {
+    dispatch(resetSortOption());
+    dispatch(resetSortOrderOption());
+  };
+
   const { key } = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -74,17 +101,29 @@ function ProductPage() {
     <div className={styles.product_wrapper}>
       <div className={styles.product_container}>
         <div className={styles.product_box}>
-          <div className={styles.goBack_btn_wrapper}>
-            <Link to="/catalog">
-              <Button
-                className={styles.goBack_btn}
-                value={
-                  (
-                    <BsArrowLeftShort className={styles.goBack_btn_arrow} />
-                  ) as ReactNode
-                }
-                color="green"
-              />
+          <div className={styles.breadcrumbs}>
+            <Link
+              to="/"
+              onClick={() => {
+                dispatch(resetActiveCategoryId());
+                resetFilters();
+                resetSorting();
+              }}
+              className={styles.breadcrumbs_link}
+            >
+              <HiOutlineHome />
+            </Link>
+            <HiArrowRight className={styles.breadcrumb_arrow} />
+            <Link
+              to="/catalog"
+              onClick={() => {
+                dispatch(resetActiveCategoryId());
+                resetFilters();
+                resetSorting();
+              }}
+              className={styles.breadcrumbs_link}
+            >
+              Catalog
             </Link>
           </div>
           {product && (
