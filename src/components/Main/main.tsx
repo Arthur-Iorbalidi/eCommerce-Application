@@ -8,6 +8,7 @@ import Account from '../Account/Account';
 import MainInfo from './components/mainInfo/mainInfo';
 
 import CatalogRouter from '../Catalog/catalogRouter';
+import Purchases from '../Purchases/purchases';
 
 export default function Main() {
   return (
@@ -22,7 +23,8 @@ export default function Main() {
 
           <Route path="account" element={<Account />} />
 
-          <Route path="purchases" element={<div>purchases</div>} />
+          <Route path="purchases" element={<Purchases />} />
+
           <Route path="*" element={<Navigate to="error" />} />
         </Routes>
       </div>

@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/jsx-curly-newline */
 import { useEffect, useState } from 'react';
 import {
   Category,
@@ -12,6 +11,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import { HiArrowRight, HiOutlineHome } from 'react-icons/hi2';
 import { FaCircleArrowLeft, FaCircleArrowRight } from 'react-icons/fa6';
+import createMyCart from '../../services/api/cart/createMyCart';
 import useAppDispatch from '../../shared/hooks/useAppDispatch';
 import useAppSelector from '../../shared/hooks/useAppSelector';
 import {
@@ -61,6 +61,16 @@ function Catalog() {
   const [products, setProducts] = useState<ProductProjection[]>([]);
   const [showFilters, setShowFilters] = useState(false);
   const [totalProductsNumber, setTotalProductsNumber] = useState(0);
+  const [currency] = useState('USD');
+
+  useEffect(
+    () =>
+      createMyCart(
+        // Здесь забит в тупую тип валюты. Желательно переделать, чтоб завиело от чего-то
+        currency,
+      ),
+    products,
+  );
 
   const allCategories = useAppSelector(
     (state) => state.filtersReducer.categories,

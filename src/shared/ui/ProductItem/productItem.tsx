@@ -1,6 +1,13 @@
-import { ProductProjection } from '@commercetools/platform-sdk';
+import {
+  ProductProjection,
+  ClientResponse,
+  Cart,
+} from '@commercetools/platform-sdk';
 import { FaShoppingBasket } from 'react-icons/fa';
-import { ReactNode } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
+import addItemInCart from '../../../services/api/cart/addItemInCart';
+import deleteItemFromCart from '../../../services/api/cart/deleteItemFromCart';
+import getMyCart from '../../../services/api/cart/getMyCart';
 import Button from '../Button/Button';
 import styles from './productItem.module.scss';
 import splitTextIntoLines from '../../../services/helpers/splitTextIntoLines';
@@ -14,6 +21,24 @@ interface Props {
 }
 
 function ProductItem(product: Props) {
+  const [isInCart, changeIsInCart] = useState(false);
+
+  function checkIfInCart(val: ClientResponse<Cart>) {
+    const arrayOfProducts = val.body.lineItems;
+    changeIsInCart(false);
+
+    // eslint-disable-next-line array-callback-return
+    arrayOfProducts.map((elem) => {
+      if (elem.productId === product.value.id) {
+        changeIsInCart(true);
+      }
+    });
+  }
+  useEffect(() => {
+    getMyCart(checkIfInCart);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product]);
+
   return (
     <div className={styles.productItem} onClick={product.onClick}>
       <div className={styles.photoWrapper}>
@@ -33,7 +58,23 @@ function ProductItem(product: Props) {
               {getFullPrice(product.value.masterVariant.prices!)}
             </span>
           </div>
-          <Button value={(<FaShoppingBasket />) as ReactNode} color="green" />
+          <Button
+            value={
+              isInCart
+                ? 'Delete from cart'
+                : ((<FaShoppingBasket />) as ReactNode)
+            }
+            color="green"
+            onClick={() => {
+              if (isInCart) {
+                deleteItemFromCart(product.value.id, () =>
+                  getMyCart(checkIfInCart),
+                );
+              } else {
+                addItemInCart(product.value.id, () => getMyCart(checkIfInCart));
+              }
+            }}
+          />
         </div>
         <div className={styles.nameBlock}>
           <span className={styles.name}>{product.value.name.en}</span>

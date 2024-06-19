@@ -1,4 +1,3 @@
-/* eslint-disable function-paren-newline */
 import { render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import '@testing-library/jest-dom/vitest';

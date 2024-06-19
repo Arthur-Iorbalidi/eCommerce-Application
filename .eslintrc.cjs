@@ -35,6 +35,8 @@ module.exports = {
     ],
     //Исключение нужно, чтобы Airbnb не ругался на ('React' must be in scope when using JSX react/react-in-jsx-scope)
     'react/react-in-jsx-scope': 'off',
+    'react/jsx-curly-newline': 'off',
+    'function-paren-newline': 'off',
     // Чтобы не помечало разрывы строки из-за разницы в ОС
     'linebreak-style': 0,
     'prettier/prettier': 'error',
