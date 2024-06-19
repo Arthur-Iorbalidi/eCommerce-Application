@@ -1,46 +1,51 @@
-/* eslint-disable react/no-array-index-key */
 /* eslint-disable operator-linebreak */
+/* eslint-disable react/no-array-index-key */
 import { ReactNode, useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { ClientResponse, Product } from '@commercetools/platform-sdk';
-
+import { ClientResponse, Product, Cart } from '@commercetools/platform-sdk';
 import Carousel from 'react-bootstrap/Carousel';
+import { BsArrowLeftShort } from 'react-icons/bs';
 import { FaShoppingBasket } from 'react-icons/fa';
-import { HiArrowRight, HiArrowLeft, HiOutlineHome } from 'react-icons/hi2';
-
-import useAppDispatch from '../../shared/hooks/useAppDispatch';
-import {
-  resetActiveBrands,
-  resetActiveCategoryId,
-  resetActiveDisplayDiagonals,
-  resetActiveOsArray,
-  resetPriceRange,
-} from '../../store/reducers/filtersSlice';
-import {
-  resetSortOption,
-  resetSortOrderOption,
-} from '../../store/reducers/sortSlice';
-
 import Button from '../../shared/ui/Button/Button';
-
+import getProductByKey from '../../services/api/products/getProductByKey';
 import Loader from '../../shared/ui/Loader/loader';
 import ProductModal from './components/productModal';
-
+import 'bootstrap/dist/css/bootstrap.css';
 import splitTextIntoLines from '../../services/helpers/splitTextIntoLines';
 import getDiscountedPrice from '../../services/helpers/getDiscountedPrice';
 import getFullPrice from '../../services/helpers/getFullPrice';
-import getProductByKey from '../../services/api/products/getProductByKey';
+import addItemInCart from '../../services/api/cart/addItemInCart';
+import getMyCart from '../../services/api/cart/getMyCart';
 
 import styles from './product.module.scss';
+import deleteItemFromCart from '../../services/api/cart/deleteItemFromCart';
 
 function ProductPage() {
-  const { categ, key } = useParams();
-  const dispatch = useAppDispatch();
+  const { key } = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
   const [showModal, setShowModal] = useState(false);
+
+  const [isInCart, changeIsInCart] = useState(false);
+
+  function checkIfInCart(val: ClientResponse<Cart>) {
+    const arrayOfProducts = val.body.lineItems;
+    changeIsInCart(false);
+
+    // eslint-disable-next-line array-callback-return
+    arrayOfProducts.map((elem) => {
+      if (elem.productId === product!.id) {
+        changeIsInCart(true);
+      }
+    });
+  }
+
+  useEffect(() => {
+    getMyCart(checkIfInCart);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product!]);
 
   const errorProductFetch = () => {
     setIsLoading(false);
@@ -65,61 +70,25 @@ function ProductPage() {
     return <Navigate to="/error" replace />;
   }
 
-  const resetFilters = () => {
-    dispatch(resetActiveBrands());
-    dispatch(resetActiveDisplayDiagonals());
-    dispatch(resetActiveOsArray());
-    dispatch(resetPriceRange());
-  };
-
-  const resetSorting = () => {
-    dispatch(resetSortOption());
-    dispatch(resetSortOrderOption());
-  };
-
   return (
     <div className={styles.product_wrapper}>
       <div className={styles.product_container}>
         <div className={styles.product_box}>
-          <div className={styles.breadcrumbs}>
-            <Link
-              to="/catalog"
-              onClick={() => {
-                dispatch(resetActiveCategoryId());
-                resetFilters();
-                resetSorting();
-              }}
-              className={styles.breadcrumbs_link}
-            >
-              Catalog
-              <HiOutlineHome />
+          <div className={styles.goBack_btn_wrapper}>
+            <Link to="/catalog">
+              <Button
+                className={styles.goBack_btn}
+                value={
+                  (
+                    <BsArrowLeftShort className={styles.goBack_btn_arrow} />
+                  ) as ReactNode
+                }
+                color="green"
+              />
             </Link>
-            {categ && (
-              <>
-                <HiArrowRight className={styles.breadcrumb_arrow} />
-                <Link
-                  to={`/catalog/${categ}`}
-                  onClick={() => {
-                    resetFilters();
-                    resetSorting();
-                  }}
-                  className={styles.breadcrumbs_link}
-                >
-                  {categ}
-                </Link>
-              </>
-            )}
           </div>
-
           {product && (
             <h2 className={styles.product_title}>
-              <Link to={categ ? `/catalog/${categ}` : '/catalog'}>
-                <Button
-                  className={styles.goBack_btn}
-                  value={(<HiArrowLeft />) as ReactNode}
-                  color="green"
-                />
-              </Link>
               {product.masterData.current.name.en}
             </h2>
           )}
@@ -187,7 +156,20 @@ function ProductPage() {
               </div>
               <Button
                 className={styles.basket_btn}
-                value={(<FaShoppingBasket />) as ReactNode}
+                value={
+                  isInCart
+                    ? 'Delete from cart'
+                    : ((<FaShoppingBasket />) as ReactNode)
+                }
+                onClick={() => {
+                  if (isInCart) {
+                    deleteItemFromCart(product.id, () =>
+                      getMyCart(checkIfInCart),
+                    );
+                  } else {
+                    addItemInCart(product.id, () => getMyCart(checkIfInCart));
+                  }
+                }}
                 color="green"
               />
             </div>

@@ -6,7 +6,7 @@ import Header from './components/header/header';
 import Account from '../Account/Account';
 
 import CatalogRouter from '../Catalog/catalogRouter';
-import ProductPage from '../Product/product';
+import Purchases from '../Purchases/purchases';
 
 export default function Main() {
   // const authorizationState = useAppSelector(
@@ -24,7 +24,8 @@ export default function Main() {
 
         <Route path="account" element={<Account />} />
 
-        <Route path="purchases" element={<div>purchases</div>} />
+        <Route path="purchases" element={<Purchases />} />
+
         <Route path="*" element={<Navigate to="error" />} />
       </Routes>
     </div>
