@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import ReactSlider from 'react-slider';
-import Button from '../../../../../shared/ui/Button/Button';
+import Button from '../../../../../../shared/ui/Button/Button';
 
 import styles from './priceRangeFilter.module.scss';
 

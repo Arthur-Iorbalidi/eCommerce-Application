@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { Category } from '@commercetools/platform-sdk';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PriceRanges } from '../../components/Catalog/components/components/priceRangeFilter/priceRangeFilter';
+import { PriceRanges } from '../../components/Catalog/components/filters/components/priceRangeFilter/priceRangeFilter';
 
 const initialState = {
   categories: [] as Category[],

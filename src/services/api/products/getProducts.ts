@@ -10,7 +10,7 @@ import {
   createCategoryFilter,
   createPriceRangeFilter,
 } from '../../helpers/createFilterParams';
-import filterAttributes from '../../../components/Catalog/components/filterAttributes';
+import filterAttributes from '../../../components/Catalog/components/filters/filterAttributes';
 
 type QueryParam = string | string[];
 

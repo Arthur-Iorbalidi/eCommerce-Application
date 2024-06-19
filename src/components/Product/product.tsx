@@ -3,23 +3,26 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ClientResponse, Product, Cart } from '@commercetools/platform-sdk';
+
 import Carousel from 'react-bootstrap/Carousel';
 import { HiOutlineHome, HiArrowRight } from 'react-icons/hi2';
 import { FaShoppingBasket } from 'react-icons/fa';
-import Button from '../../shared/ui/Button/Button';
-import getProductByKey from '../../services/api/products/getProductByKey';
+
+import useAppDispatch from '../../shared/hooks/useAppDispatch';
+
 import Loader from '../../shared/ui/Loader/loader';
+import Button from '../../shared/ui/Button/Button';
 import ProductModal from './components/productModal';
-import 'bootstrap/dist/css/bootstrap.css';
+
+import getProductByKey from '../../services/api/products/getProductByKey';
+import addItemInCart from '../../services/api/cart/addItemInCart';
+import getMyCart from '../../services/api/cart/getMyCart';
+import deleteItemFromCart from '../../services/api/cart/deleteItemFromCart';
+
 import splitTextIntoLines from '../../services/helpers/splitTextIntoLines';
 import getDiscountedPrice from '../../services/helpers/getDiscountedPrice';
 import getFullPrice from '../../services/helpers/getFullPrice';
-import addItemInCart from '../../services/api/cart/addItemInCart';
-import getMyCart from '../../services/api/cart/getMyCart';
-import useAppDispatch from '../../shared/hooks/useAppDispatch';
 
-import styles from './product.module.scss';
-import deleteItemFromCart from '../../services/api/cart/deleteItemFromCart';
 import {
   resetActiveBrands,
   resetActiveCategoryId,
@@ -33,22 +36,12 @@ import {
   resetSortOrderOption,
 } from '../../store/reducers/sortSlice';
 
+import styles from './product.module.scss';
+
 function ProductPage() {
+  const { categ, key } = useParams();
+
   const dispatch = useAppDispatch();
-  const resetFilters = () => {
-    dispatch(resetActiveBrands());
-    dispatch(resetActiveDisplayDiagonals());
-    dispatch(resetActiveOsArray());
-    dispatch(resetPriceRange());
-    dispatch(resetCurrentPage());
-  };
-
-  const resetSorting = () => {
-    dispatch(resetSortOption());
-    dispatch(resetSortOrderOption());
-  };
-
-  const { key } = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -97,6 +90,19 @@ function ProductPage() {
     return <Navigate to="/error" replace />;
   }
 
+  const resetFilters = () => {
+    dispatch(resetActiveBrands());
+    dispatch(resetActiveDisplayDiagonals());
+    dispatch(resetActiveOsArray());
+    dispatch(resetPriceRange());
+    dispatch(resetCurrentPage());
+  };
+
+  const resetSorting = () => {
+    dispatch(resetSortOption());
+    dispatch(resetSortOrderOption());
+  };
+
   return (
     <div className={styles.product_wrapper}>
       <div className={styles.product_container}>
@@ -125,6 +131,21 @@ function ProductPage() {
             >
               Catalog
             </Link>
+            {categ && (
+              <>
+                <HiArrowRight className={styles.breadcrumb_arrow} />
+                <Link
+                  to={`/catalog/${categ}`}
+                  onClick={() => {
+                    resetFilters();
+                    resetSorting();
+                  }}
+                  className={styles.breadcrumbs_link}
+                >
+                  {categ}
+                </Link>
+              </>
+            )}
           </div>
           {product && (
             <h2 className={styles.product_title}>

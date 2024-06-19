@@ -10,8 +10,7 @@ import {
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import { HiArrowRight, HiOutlineHome } from 'react-icons/hi2';
-import { FaCircleArrowLeft, FaCircleArrowRight } from 'react-icons/fa6';
-import createMyCart from '../../services/api/cart/createMyCart';
+
 import useAppDispatch from '../../shared/hooks/useAppDispatch';
 import useAppSelector from '../../shared/hooks/useAppSelector';
 import {
@@ -28,24 +27,25 @@ import {
 } from '../../store/reducers/filtersSlice';
 import {
   resetCurrentPage,
-  setCurrentPage,
   setSortOption,
   setSortOrderOption,
 } from '../../store/reducers/sortSlice';
 
+import PaginationItem from './components/paginationItem/paginationItem';
 import Button from '../../shared/ui/Button/Button';
 import ProductItem from '../../shared/ui/ProductItem/productItem';
 import Loader from '../../shared/ui/Loader/loader';
-import Filters from './components/filters';
+import Filters from './components/filters/filters';
 
-import filterAttributes from './components/filterAttributes';
-
+import filterAttributes from './components/filters/filterAttributes';
 import { orderOptions, sortOptions } from './sortOptions';
+
 import convertDollarsToCents from '../../services/helpers/convertDollarsToCents';
 import getUniqueProductAttributes from '../../services/helpers/getUniqueProductAttributes';
 
 import getCategories from '../../services/api/categories/getCategories';
 import getProducts from '../../services/api/products/getProducts';
+import createMyCart from '../../services/api/cart/createMyCart';
 
 import styles from './catalog.module.scss';
 
@@ -103,9 +103,12 @@ function Catalog() {
   function processProductsResponse(
     value: ClientResponse<ProductProjectionPagedSearchResponse>,
   ) {
-    setProducts(value.body.results);
-    setTotalProductsNumber(value.body.total as number);
     setIsLoading(false);
+
+    setProducts(value.body.results);
+
+    setTotalProductsNumber(value.body.total as number);
+
     dispatch(
       setBrands(
         getUniqueProductAttributes(value.body.results, filterAttributes.BRAND),
@@ -188,6 +191,8 @@ function Catalog() {
     dispatch(resetActiveDisplayDiagonals());
     dispatch(resetActiveOsArray());
     dispatch(resetPriceRange());
+
+    dispatch(resetCurrentPage());
   };
 
   return (
@@ -197,6 +202,7 @@ function Catalog() {
           <Loader />
         </div>
       )}
+
       <div className={styles.search}>
         <Button
           className={styles.filterBtn}
@@ -220,11 +226,14 @@ function Catalog() {
           />
         </form>
       </div>
+
       <div className={styles.sortField}>
         <div className={styles.sortBlock}>
           <span className={styles.sortHeader}>Sort by</span>
           <Form.Select
             onChange={(event) => {
+              dispatch(resetCurrentPage());
+
               dispatch(setSortOption(event.target.value));
             }}
             value={sortOption}
@@ -241,6 +250,8 @@ function Catalog() {
           <span className={styles.orderHeader}>Order by</span>
           <Form.Select
             onChange={(event) => {
+              dispatch(resetCurrentPage());
+
               dispatch(setSortOrderOption(event.target.value));
             }}
             value={orderOption}
@@ -254,6 +265,7 @@ function Catalog() {
           </Form.Select>
         </div>
       </div>
+
       <div className={styles.breadcrumbs}>
         <Link
           to="/"
@@ -275,6 +287,7 @@ function Catalog() {
           </>
         )}
       </div>
+
       {products.length > 0 ? (
         <div className={styles.productList}>
           {products.map((product) => (
@@ -292,39 +305,11 @@ function Catalog() {
           </p>
         )
       )}
-      <div className={styles.paginationWrapper}>
-        <div className={styles.pagination}>
-          {currentPage > 1 && (
-            <FaCircleArrowLeft
-              className={styles.arrowLeft}
-              onClick={() => dispatch(setCurrentPage(currentPage - 1))}
-            />
-          )}
-          <select
-            className={styles.pageNumber}
-            name="pageNumber"
-            value={currentPage}
-            onChange={(event) =>
-              dispatch(setCurrentPage(parseInt(event.target.value, 10)))
-            }
-          >
-            {Array.from(
-              { length: Math.ceil(totalProductsNumber / PRODUCTS_LIMIT) },
-              (_, i) => i + 1,
-            ).map((option) => (
-              <option value={option} key={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-          {currentPage < totalProductsNumber / PRODUCTS_LIMIT && (
-            <FaCircleArrowRight
-              className={styles.arrowRight}
-              onClick={() => dispatch(setCurrentPage(currentPage + 1))}
-            />
-          )}
-        </div>
-      </div>
+
+      {!isLoading && (
+        <PaginationItem totalProductsNumber={totalProductsNumber} />
+      )}
+
       {showFilters && (
         <Filters showFilters={showFilters} setShowFilters={setShowFilters} />
       )}

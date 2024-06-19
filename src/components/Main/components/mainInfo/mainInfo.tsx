@@ -18,7 +18,7 @@ import useAppDispatch from '../../../../shared/hooks/useAppDispatch';
 import useAppSelector from '../../../../shared/hooks/useAppSelector';
 import { setCategories } from '../../../../store/reducers/filtersSlice';
 
-import filterAttributes from '../../../Catalog/components/filterAttributes';
+import filterAttributes from '../../../Catalog/components/filters/filterAttributes';
 import { orderOptions, sortOptions } from '../../../Catalog/sortOptions';
 
 import Loader from '../../../../shared/ui/Loader/loader';
@@ -48,8 +48,6 @@ const MainInfo: React.FC = () => {
   function processProductsResponse(
     value: ClientResponse<ProductProjectionPagedSearchResponse>,
   ) {
-    setIsLoading(false);
-
     setProducts(value.body.results);
 
     setBrands(
@@ -66,21 +64,25 @@ const MainInfo: React.FC = () => {
   }
 
   useEffect(() => {
-    setIsLoading(true);
-
-    const sortByPublicationDate = sortOptions[3].value;
-    const ascendingOrder = orderOptions[0].value;
-
     if (!allCategories.length) {
       getCategories((response) => {
         const categories: Category[] = response.body.results;
         dispatch(setCategories(categories));
       });
     }
+  }, [allCategories, dispatch]);
 
+  useEffect(() => {
     if (!productDiscounts.length) {
+      setIsLoading(true);
+
       getProductDiscounts(processProductDiscountsResponse);
     }
+  }, [productDiscounts.length]);
+
+  useEffect(() => {
+    const sortByPublicationDate = sortOptions[0].value;
+    const ascendingOrder = orderOptions[0].value;
 
     if (!products.length) {
       getProductsZero(
@@ -90,7 +92,7 @@ const MainInfo: React.FC = () => {
         ascendingOrder,
       );
     }
-  }, [allCategories, dispatch, productDiscounts.length, products.length]);
+  }, [products.length]);
 
   return (
     <div className={styles.mainInfo_wrapper}>

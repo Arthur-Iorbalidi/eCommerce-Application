@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import { ProductProjection } from '@commercetools/platform-sdk';
-import { FilterAttribute } from '../../components/Catalog/components/filterAttributes';
+import { FilterAttribute } from '../../components/Catalog/components/filters/filterAttributes';
 import sortProductAttributesAscending from './sortProductAttributesAscending';
 
 export default function getUniqueProductAttributes(

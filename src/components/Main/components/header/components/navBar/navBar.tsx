@@ -6,6 +6,7 @@ import useAppDispatch from '../../../../../../shared/hooks/useAppDispatch';
 import useAppSelector from '../../../../../../shared/hooks/useAppSelector';
 import { activateSideMenu } from '../../../../../../store/reducers/sideMenuSlice';
 import {
+  resetCurrentPage,
   resetSortOption,
   resetSortOrderOption,
 } from '../../../../../../store/reducers/sortSlice';
@@ -47,6 +48,7 @@ export default function NavBar({ position }: Props) {
     dispatch(resetActiveOsArray());
     dispatch(resetPriceRange());
 
+    dispatch(resetCurrentPage());
     dispatch(resetSortOption());
     dispatch(resetSortOrderOption());
   }
@@ -77,6 +79,7 @@ export default function NavBar({ position }: Props) {
         to="/about-us"
         onClick={() => {
           positionChecker();
+          handleCatalogReset();
         }}
         className={`main-page_header_wrapper_header_nav_button ${position} ${routeChecker('/about-us')}`}
       >
