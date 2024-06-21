@@ -5,8 +5,9 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { ClientResponse, Product, Cart } from '@commercetools/platform-sdk';
 
 import Carousel from 'react-bootstrap/Carousel';
-import { HiOutlineHome, HiArrowRight } from 'react-icons/hi2';
+import { HiOutlineHome, HiArrowRight, HiArrowLeft } from 'react-icons/hi2';
 import { FaShoppingBasket } from 'react-icons/fa';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
 
 import useAppDispatch from '../../shared/hooks/useAppDispatch';
 
@@ -95,6 +96,7 @@ function ProductPage() {
     dispatch(resetActiveDisplayDiagonals());
     dispatch(resetActiveOsArray());
     dispatch(resetPriceRange());
+
     dispatch(resetCurrentPage());
   };
 
@@ -149,6 +151,13 @@ function ProductPage() {
           </div>
           {product && (
             <h2 className={styles.product_title}>
+              <Link to={categ ? `/catalog/${categ}` : '/catalog'}>
+                <Button
+                  className={styles.goBack_btn}
+                  value={(<HiArrowLeft />) as ReactNode}
+                  color="green"
+                />
+              </Link>
               {product.masterData.current.name.en}
             </h2>
           )}
@@ -214,24 +223,26 @@ function ProductPage() {
                   )}
                 </span>
               </div>
-              <Button
-                className={styles.basket_btn}
-                value={
-                  isInCart
-                    ? 'Delete from cart'
-                    : ((<FaShoppingBasket />) as ReactNode)
-                }
-                onClick={() => {
-                  if (isInCart) {
+              {isInCart ? (
+                <Button
+                  className={styles.deleteFromCart_btn}
+                  value={<RiDeleteBin6Fill />}
+                  color="green"
+                  onClick={() => {
                     deleteItemFromCart(product.id, () =>
                       getMyCart(checkIfInCart),
                     );
-                  } else {
+                  }}
+                />
+              ) : (
+                <Button
+                  value={(<FaShoppingBasket />) as ReactNode}
+                  color="green"
+                  onClick={() => {
                     addItemInCart(product.id, () => getMyCart(checkIfInCart));
-                  }
-                }}
-                color="green"
-              />
+                  }}
+                />
+              )}
             </div>
           )}
           <hr />

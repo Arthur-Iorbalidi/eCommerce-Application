@@ -147,6 +147,14 @@
     }
   }
 
+  .deleteFromCart_btn {
+    background-color: #e2e2e2;
+
+    &:hover {
+      background-color: darken($color: #e2e2e2, $amount: 15%);
+    }
+  }
+
   hr {
     width: 100%;
   }

@@ -10,6 +10,8 @@ import UserMainInfo from './Components/userMainInfo/userMainInfo';
 import UserPassword from './Components/userPassword/userPassword';
 import checkToken from '../../services/api/auth/checkToken';
 
+import styles from './Account.module.scss';
+
 function Account() {
   const [authState, changeAuthState] = React.useState<boolean | null>(null);
   const dispatch = useAppDispatch();
@@ -25,7 +27,7 @@ function Account() {
 
   if (authState === true) {
     return (
-      <div>
+      <div className={styles.account_container}>
         <UserMainInfo />
         <UserPassword />
       </div>
