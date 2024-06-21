@@ -3,16 +3,23 @@ import {
   ClientResponse,
   Cart,
 } from '@commercetools/platform-sdk';
-import { FaShoppingBasket } from 'react-icons/fa';
+
 import { ReactNode, useState, useEffect } from 'react';
-import addItemInCart from '../../../services/api/cart/addItemInCart';
-import deleteItemFromCart from '../../../services/api/cart/deleteItemFromCart';
-import getMyCart from '../../../services/api/cart/getMyCart';
+
+import { FaShoppingBasket } from 'react-icons/fa';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+
 import Button from '../Button/Button';
-import styles from './productItem.module.scss';
+
 import splitTextIntoLines from '../../../services/helpers/splitTextIntoLines';
 import getDiscountedPrice from '../../../services/helpers/getDiscountedPrice';
 import getFullPrice from '../../../services/helpers/getFullPrice';
+
+import addItemInCart from '../../../services/api/cart/addItemInCart';
+import deleteItemFromCart from '../../../services/api/cart/deleteItemFromCart';
+import getMyCart from '../../../services/api/cart/getMyCart';
+
+import styles from './productItem.module.scss';
 
 interface Props {
   key: string;
@@ -37,7 +44,7 @@ function ProductItem(product: Props) {
   useEffect(() => {
     getMyCart(checkIfInCart);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [product]);
+  }, []);
 
   return (
     <div className={styles.productItem} onClick={product.onClick}>
@@ -58,23 +65,26 @@ function ProductItem(product: Props) {
               {getFullPrice(product.value.masterVariant.prices!)}
             </span>
           </div>
-          <Button
-            value={
-              isInCart
-                ? 'Delete from cart'
-                : ((<FaShoppingBasket />) as ReactNode)
-            }
-            color="green"
-            onClick={() => {
-              if (isInCart) {
+          {isInCart ? (
+            <Button
+              className={styles.deleteFromCart_btn}
+              value={<RiDeleteBin6Fill />}
+              color="green"
+              onClick={() => {
                 deleteItemFromCart(product.value.id, () =>
                   getMyCart(checkIfInCart),
                 );
-              } else {
+              }}
+            />
+          ) : (
+            <Button
+              value={(<FaShoppingBasket />) as ReactNode}
+              color="green"
+              onClick={() => {
                 addItemInCart(product.value.id, () => getMyCart(checkIfInCart));
-              }
-            }}
-          />
+              }}
+            />
+          )}
         </div>
         <div className={styles.nameBlock}>
           <span className={styles.name}>{product.value.name.en}</span>
