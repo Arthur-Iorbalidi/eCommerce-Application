@@ -1,0 +1,52 @@
+@import '../../../../../../constants/global.scss';
+
+.main-page_header_wrapper_header_nav {
+  display: flex;
+
+  &.side {
+    flex-direction: column;
+    gap: 20px;
+
+    &::after {
+      content: '';
+      border: 1px solid $universalColor;
+    }
+  }
+
+  &.top {
+    height: 100%;
+  }
+
+  & * {
+    font-size: 1.8rem;
+    text-decoration: none;
+    color: $universalColor;
+  }
+}
+
+.main-page_header_wrapper_header_nav_button {
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  border-radius: 15px 15px 0 0;
+  transition:
+    border-color $shortDuration,
+    background-color $shortDuration;
+
+  &.side {
+    height: 50px;
+  }
+
+  &.active {
+    background-color: $primaryBackgroundColor;
+  }
+
+  &.top:hover {
+    cursor: pointer;
+    background-color: $primaryBackgroundColor;
+  }
+}

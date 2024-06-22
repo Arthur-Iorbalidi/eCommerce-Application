@@ -1,0 +1,54 @@
+@import '../../../../constants/global.scss';
+
+.collaboration_section {
+  padding: 4rem;
+  border-radius: 8px;
+  width: 100%;
+
+  .collaboration_methods {
+    max-width: 1400px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+    margin: 0 auto;
+    padding: 0 30px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: none;
+    }
+
+    .collaboration_methods_item {
+      padding: 0;
+      margin-bottom: 5px;
+      background-color: $secondaryBackgroundColor;
+      border-bottom: 4px solid $primaryColor;
+      box-shadow: $box-shadow-smallGrey;
+      border-radius: 15px;
+      font-size: 2rem;
+      text-align: center;
+      letter-spacing: 0.07em;
+      list-style-type: none;
+
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        font-size: 1.6rem;
+        text-align: center;
+
+        h5 {
+          padding: 15px;
+          font-size: 1.7rem;
+          letter-spacing: 0.1em;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .collaboration_methods {
+    grid-template-columns: repeat(2, auto);
+  }
+}

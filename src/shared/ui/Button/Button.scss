@@ -1,0 +1,45 @@
+@import '../../../constants/global.scss';
+
+.button {
+  border: none;
+  font-size: 1.7rem;
+  font-family: 'Poppins';
+  font-weight: 600;
+  cursor: pointer;
+  padding: 5px 15px;
+  border-radius: 15px;
+  position: relative;
+  user-select: none;
+  box-shadow: 0 4px 15px #0000001a;
+  transition:
+    background-color $shortDuration,
+    box-shadow $shortDuration;
+
+  &:active {
+    box-shadow: none;
+  }
+}
+
+.button.green {
+  background-color: $primaryColor;
+
+  &:hover {
+    background-color: $secondaryColor;
+  }
+}
+
+.button.grey {
+  background-color: $thirdColor;
+
+  &:hover {
+    background-color: $secondaryColor;
+  }
+}
+
+.button.red {
+  background-color: rgb(173, 17, 17);
+
+  &:hover {
+    background-color: rgb(207, 15, 15);
+  }
+}

@@ -1,0 +1,45 @@
+@import '../../../../constants/global.scss';
+
+.main-page_header_wrapper-all {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-page_header {
+  background-color: $secondaryBackgroundColor;
+  height: 50px;
+  padding: 0 20px;
+  border: 0.5px solid $primaryBackgroundColor;
+  font-family: 'Poppins';
+  & * {
+    font-family: 'Poppins';
+  }
+}
+
+.main-page_header_wrapper_logo {
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+
+  & img {
+    width: 100px;
+    padding: 5px;
+  }
+}
+
+.burgerMenu {
+  position: absolute;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  left: 0;
+  transition: fill $shortDuration;
+
+  &:hover {
+    fill: $thirdColor;
+  }
+}

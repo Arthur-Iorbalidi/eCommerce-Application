@@ -1,0 +1,36 @@
+@import '../../../constants/global.scss';
+
+.filter_container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  .filter_title {
+    text-align: center;
+  }
+
+  .filter_list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    font-size: 1.8rem;
+
+    .filter_item {
+      label {
+        font-size: 1.7rem;
+      }
+    }
+  }
+
+  .filter_btns {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+  }
+
+  .notFound_message {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+}

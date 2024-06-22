@@ -1,0 +1,14 @@
+.registration_container {
+  min-height: 100vh;
+  padding: 20px 10px;
+  max-height: calc(100dvh - 50px);
+  overflow: auto;
+  background-color: #f2f2f2;
+}
+
+.wrapper {
+  min-height: calc(100dvh - 90px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,30 @@
+.offcanvas {
+  height: 100%;
+
+  & div {
+    font-size: 1.9rem;
+  }
+
+  .offcanvas_title {
+    font-size: 2.2rem;
+    font-weight: 600;
+  }
+
+  .offcanvas_body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .offcanvas_body_container {
+      padding-right: 5px;
+
+      overflow-y: auto;
+
+      .filters_reset_btn {
+        width: 100%;
+        margin-top: auto;
+      }
+    }
+  }
+}

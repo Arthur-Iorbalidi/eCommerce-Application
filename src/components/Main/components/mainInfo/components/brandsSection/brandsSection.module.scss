@@ -1,0 +1,39 @@
+@import '../../../../../../constants/global.scss';
+
+.brands_section {
+  padding: 5rem;
+  background-color: $secondaryBackgroundColor;
+
+  .brands_list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+
+    .brand_list_link {
+      width: 12.5rem;
+      text-decoration: none;
+
+      .brand_item {
+        padding: 15px 5px;
+        text-decoration: none;
+        color: $universalColor;
+        text-align: center;
+        background-color: $primaryBackgroundColor;
+        border-radius: 10px;
+        font-size: 1.7rem;
+        transition:
+          background-color $shortDuration,
+          transform $shortDuration ease-in-out;
+
+        &:hover {
+          background-color: darken(
+            $color: $primaryBackgroundColor,
+            $amount: 5%
+          );
+          transform: scale(1.03);
+        }
+      }
+    }
+  }
+}

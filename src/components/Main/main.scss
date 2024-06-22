@@ -1,0 +1,10 @@
+@import '../../constants/global.scss';
+
+.main-page {
+  height: 100vh;
+  background-color: $primaryBackgroundColor;
+  & * {
+    font-size: 16px;
+  }
+  overflow-y: hidden;
+}

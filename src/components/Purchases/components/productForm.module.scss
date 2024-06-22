@@ -1,0 +1,65 @@
+@import '../../../constants/global.scss';
+
+.productItem {
+  position: relative;
+  width: 50rem;
+  display: flex;
+  background-color: $secondaryBackgroundColor;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: $box-shadow-smallGrey;
+
+  @media (max-width: 700px) {
+    width: 100%;
+  }
+
+  h3 {
+    text-align: center;
+    font-size: 1.7rem;
+  }
+
+  img {
+    width: 20rem;
+  }
+
+  .content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    .deleteFromCart_btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #e2e2e2;
+
+      &:hover {
+        background-color: darken($color: #e2e2e2, $amount: 15%);
+      }
+    }
+
+    .prices_link {
+      gap: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .prices {
+        .currentPrice {
+          font-size: 1.9rem;
+          font-weight: 600;
+        }
+
+        .fullPrice {
+          font-size: 2rem;
+          text-decoration: line-through;
+          padding-left: 10px;
+          color: #8b96a5;
+        }
+      }
+    }
+  }
+}

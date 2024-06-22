@@ -1,0 +1,33 @@
+@import '../../../constants/global.scss';
+
+.input_group {
+  width: 100%;
+
+  .input {
+    min-height: 4rem;
+    padding-left: 5px;
+    outline: none;
+    border: none;
+    border-radius: 40px;
+    box-shadow: $box-shadow-smallGrey;
+
+    &:focus {
+      box-shadow: $box-shadow-smallGreen;
+    }
+  }
+
+  .input__icon,
+  .input__toggle_button {
+    padding: 10px;
+    color: $thirdColor;
+    background-color: $secondaryBackgroundColor;
+    border: none;
+    border-radius: 40px;
+    box-shadow: $box-shadow-smallGrey;
+  }
+}
+
+.error_text {
+  color: $errorColor !important;
+  font-size: 1.1rem !important;
+}

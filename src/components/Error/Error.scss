@@ -1,0 +1,50 @@
+.error-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  width: 100%;
+}
+
+.error-main_content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 50px;
+}
+
+.error-main_content-wrapper_oops {
+  margin: 10px;
+  font-size: 3.5rem;
+  font-weight: 600;
+}
+
+.error-main_content-wrapper_text-wrapper {
+  text-align: center;
+
+  & .error-main_content-wrapper_text-wrapper_string {
+    font-weight: 400;
+    font-size: 2.5rem;
+    margin: 0;
+    line-height: 1.3;
+  }
+}
+
+.error-main_content-wrapper_image {
+  margin-top: 35px;
+  margin-bottom: 75px;
+  width: 45rem;
+}
+
+.error-main_content-wrapper_button--goMain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.error-main_content-wrapper_button--goMain_arrow {
+  width: 3rem;
+  height: 3rem;
+}
